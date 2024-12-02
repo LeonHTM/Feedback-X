@@ -26,4 +26,4 @@ button.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER)
 button2.place(relx=0.25, rely=0.25, anchor=customtkinter.CENTER)
 label.place(relx=0.5, rely=0.05, anchor=customtkinter.CENTER)
 
-app.mainloop() # okok
+app.mainloop()
