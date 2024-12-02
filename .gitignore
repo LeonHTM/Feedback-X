@@ -1,0 +1,8 @@
+saves/
+accounts/
+selenium/
+code/__pycache__
+.vscode/
+current_fdb/
+myenv/
+.DS_Store
