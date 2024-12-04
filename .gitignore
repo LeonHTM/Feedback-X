@@ -1,8 +1,15 @@
+#Project
 saves/
 accounts/
 cookies/
 code/__pycache__
+
+
+#Non Project 
 .vscode/
 current_fdb/
 myenv/
 .DS_Store
+
+#Shit
+github-git-cheat-sheet.pdf
