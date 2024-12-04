@@ -18,7 +18,7 @@ def run(iteration_value : int) -> None:
     account_list = accounts_read("icloudmail", iteration_value)
     password_list = accounts_read("password", iteration_value)
 
-    startup()
+    startup("y")
     for index in range(0, iteration_value):
         login(account_list[index], password_list[index])
         create_feedback("Feedback Title", file_read("current_fdb/content.txt"))
@@ -34,7 +34,7 @@ def run(iteration_value : int) -> None:
 
 
 
-    
+run(1)
 
 
 

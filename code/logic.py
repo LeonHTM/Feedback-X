@@ -32,10 +32,20 @@ def chill(chill_value: int):
     time.sleep((chill_value/2))
 
 
-def startup():
+def startup(headless: str) -> None:
+    """
+    Args:
+        heeadless(str) if "y": Will run browser headless
+    Returns:
+        None
+    Example:
+        "y"
+    """
     global driver
     chrome_options = Options()
-    chrome_options.add_argument("user-data-dir=selenium")
+    chrome_options.add_argument("user-data-dir=cookies")
+    if headless == "y":
+        chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(options=chrome_options)
     
 def login(account: str, password: str) -> None:
