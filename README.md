@@ -1,5 +1,5 @@
-# Feedback-X
-Programm to file multiple Feedbacks of the same Bug at once.
+# Feedback X (Still under active development)
+Programm to multiply bug report in Apple Feedback Assistant for them to get more attention
 
 ## Prerequisite Part 1:  
 You have to have multiple Apple Accounts for the Programm to make sense. I personally recommend at least 10 because of the "More than 10" Behavior, but you can also choose to have only 5. 
