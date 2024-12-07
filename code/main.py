@@ -27,7 +27,8 @@ def run(iteration_value : int) -> None:
         if index == (iteration_value -1):
             file_save(str(identify_feedback()),file_read("current_fdb/content.txt"), "y", iteration_value)
             file_clear("current_fdb/content.txt")
-        upload_feedback("/Users/leon/Desktop/Project FeedbackX/Feedback-X/current_fdb/bugs.jpeg,/Users/leon/Desktop/Project FeedbackX/Feedback-X/current_fdb/recording.mp4")
+        upload_feedback("/Users/leon/Desktop/Feedback-X/current_fdb/bugs.jpeg,/Users/leon/Desktop/Feedback-X/current_fdb/recording.mp4")
+        chill(5)
         finish_feedback("delete")
         logout(1)
         chill(2)

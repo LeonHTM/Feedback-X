@@ -46,6 +46,8 @@ class Windows(customtkinter.CTk):
     def button_click(self):
         print("button click")"""
 
+    
+
 Window1 = Windows(0.45555,0.52,1/2,1/2)
 
 Window1.mainloop()
