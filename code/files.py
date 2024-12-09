@@ -32,7 +32,7 @@ def file_save(name: str, content: str, addon: str, walks: str) -> None:
     except OSError:
         print("Failed to create file: " + name)
    
-def file_read(file: str) -> None:
+def file_read(path: str) -> None:
     """
     Args:
         file (str) -> File Path 
@@ -40,9 +40,15 @@ def file_read(file: str) -> None:
         None
     Example:
         "saves/content.txt"
+
+    Raises:
+        ValueError: If the file is empty.
+        FileNotFoundError: If the file does not exist.
     """
-    with open(file, "r") as file:
+    with open(path, "r") as file:
         content = file.read()
+        if not content.strip():
+            raise ValueError(f"File '{path}' contains no content.")
         return content
     file.close()
 

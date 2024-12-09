@@ -1,8 +1,9 @@
-def accounts_read(type: str ,numbers: int) -> list:
+def accounts_read(type: str ,numbers: int,path: str) -> list:
     """
     Args:
         type (str): Either "account", "password" or "both"
         numbers (int): How many Account should be read
+        path (str): Path to file
     Returns:
         List of len numbers containg account data or and list containg password data
     Example:
@@ -16,7 +17,7 @@ def accounts_read(type: str ,numbers: int) -> list:
     password_list = []
     
 
-    file = open("accounts/accounts.txt","r")
+    file = open(path,"r")
     for counter, line in enumerate(file, start=1):
         if counter > int(numbers):
             break
