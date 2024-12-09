@@ -22,20 +22,22 @@ class main():
         for index in range(0, iteration_value):
             try:
                 login(account_list[index], password_list[index])
-                create_feedback("Home Accessories glitch over Navigation Bar in Home App 18.2 (22C150) ", file_read("current_fdb/content.txt"))
+                create_feedback("Controls in Control Center crash when swiping left 18.2 (22C150) ", file_read("current_fdb/content.txt"))
                 print("Feedback ID " + str(identify_feedback()))
-                detail_feedback("Home App & HomeKit / Matter Accessories,1,2,2")
+                detail_feedback("Control Center,2,5")
                 if index == (iteration_value -1):
                     file_save(str(identify_feedback()),file_read("current_fdb/content.txt"), "y", iteration_value)
-                    file_clear("current_fdb/content.txt")
-                upload_feedback("/Users/leon/Desktop/Feedback-X/current_fdb/img.jpg,/Users/leon/Desktop/Feedback-X/current_fdb/recording.mov")
+                    #file_clear("current_fdb/content.txt")
+                upload_feedback("/Users/leon/Desktop/Feedback-X/current_fdb/recording.MP4")
+                chill(2)
                 finish_feedback("submit")
                 logout(1)
                 chill(5)
                 
             except:
-                print("Failed at : " + account_list[index] + str(iteration_value))
-
+                print("Failed at : " + account_list[index] + "Iteration: " + str(index))
+                
+            
 
 
     def login_cycle(self,iteration_value,chill_value):

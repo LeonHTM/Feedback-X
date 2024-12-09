@@ -230,8 +230,10 @@ def upload_feedback(uploads: str) -> None:
         expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type='file']")))
         print("Upload Button found")
         Upload_List = uploads.split(",")
+        print(Upload_List)
         for element in Upload_List:
             Upload_Button.send_keys(element)
+            print("Uploaded" + str(element))
 
 
         
@@ -326,6 +328,7 @@ def finish_feedback(kind: str)-> None:
         buttonvalue = ".PrimaryButton__Button-sc-1si9oai-0.clOZiL"
     elif kind == "Submit" or kind == "submit":
         buttonvalue = ".PrimaryButton__Button-sc-1si9oai-0.izhSLf"
+        print("chose submit button")
     try:
         Finish_Feedback_Button = WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.CSS_SELECTOR, buttonvalue)))
@@ -335,8 +338,9 @@ def finish_feedback(kind: str)-> None:
             alert.accept()
 
         elif kind == "Submit" or kind == "submit":
-            alert = driver.switch_to.alert
-            alert.accept()
+            alert2 = driver.switch_to.alert
+            print("switched alert")
+            alert2.accept()
             WebDriverWait(driver,120).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Close Feedback']")))
 
         time.sleep(2)
