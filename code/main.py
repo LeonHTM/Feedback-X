@@ -48,16 +48,15 @@ class main():
         for index in range(0, iteration_value):
             try:
                 login(account_list[index], password_list[index])
-                chill(chill_value)
-                logout(1)
-                chill(2)
+                switchtab()
             except:
                 print("Failed at: " + account_list[index])
+        chill(chill_value)
 
     
 
 at = main()
-at.login_cycle(10,10)
+at.login_cycle(1,240)
 
 
 

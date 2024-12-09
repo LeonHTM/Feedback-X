@@ -9,12 +9,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.keys import *
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options 
 from selenium.webdriver.support.select import Select
 
 #Import from other files
 from option_lists import Area_Options
 from option_lists import Type_Options
+
+
+def switchtab():
+    """
+    Creates a new browser tab and switches to it.
+    """
+    driver.execute_script("window.open();") 
+    new_tab_handle = driver.window_handles[-1]  
+    driver.switch_to.window(new_tab_handle) 
+
 
 
 def chill(chill_value: int):
