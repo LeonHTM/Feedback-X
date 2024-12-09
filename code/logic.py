@@ -46,6 +46,7 @@ def startup(headless: str) -> None:
     chrome_options.add_argument("user-data-dir=cookies")
     if headless == "y":
         chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
     driver = webdriver.Chrome(options=chrome_options)
     
 def login(account: str, password: str) -> None:
