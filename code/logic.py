@@ -333,6 +333,12 @@ def finish_feedback(kind: str)-> None:
         if kind == "delete" or kind == "Delete":
             alert = driver.switch_to.alert
             alert.accept()
+
+        elif kind == "Submit" or kind == "submit":
+            alert = driver.switch_to.alert
+            alert.accept()
+            WebDriverWait(driver,120).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Close Feedback']")))
+
         time.sleep(2)
         print("Finished Feedback with Action: " +kind)
     except TimeoutException:
