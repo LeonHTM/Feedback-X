@@ -1,6 +1,9 @@
 #Project
-saves/
+saves/*
+!saves/.gitkeep
+
 accounts/
+
 cookies/
 current_fdb/*
 !current_fdb/.gitkeep
