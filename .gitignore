@@ -11,7 +11,7 @@ cookies/*
 current_fdb/*
 !current_fdb/.gitkeep
 
-
+README2.md
 
 #Non Project 
 .vscode/
