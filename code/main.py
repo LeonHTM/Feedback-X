@@ -1,7 +1,7 @@
 from read import *
 from logic import *
 from files import *
-import datetime
+
 
 
 
@@ -37,7 +37,7 @@ class main():
                 login(account_list[index], password_list[index])
                 create_feedback("App Library Blur displayed wrong iOS 18.2 (22C151) ", file_read("current_fdb/content.txt"))
                 print("Feedback ID " + str(identify_feedback()))
-                feedback_id_list.append(str(identify_feedback))
+                feedback_id_list.append(str(identify_feedback()))
                 detail_feedback("Home Screen,1,1")
                 if index == (iteration_value -1) and (submit == "submit" or submit =="Submit" or submit == "save" or submit == "Save"):
                     file_save(str(identify_feedback()),file_read("current_fdb/content.txt"), "y", iteration_value,feedback_id_list)

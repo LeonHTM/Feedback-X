@@ -31,6 +31,7 @@ def file_save(name: str, content: str, addon: str, iteration: str,feedback_id_li
         for element in feedback_id_list:
             file.write(element + "\n")
         file.write("\n")
+        file.write("Content" + "\n")
         file.write(content)
         
       
