@@ -1,13 +1,15 @@
 import datetime
 
 
-def file_save(name: str, content: str, addon: str, walks: str) -> None:
+def file_save(name: str, content: str, addon: str, iteration: str,feedback_id_list : list) -> None:
     """
     Args:
         name(str): name of file one wants to save with or withouout suffix
         content(str): content of file
         addon(str): If equal to "y": Will add date and time to Beginnig of file
-        walks(str): On how many accounts an action has been performed
+        iteration(str): On how many accounts an action has been performed
+        feedback_id_list(list) Append list to file
+        
     Returns:
         
     Example:
@@ -25,7 +27,12 @@ def file_save(name: str, content: str, addon: str, walks: str) -> None:
     try:
         file = open(name,"x")
         print("Created File:" + name)
-        file.write(current_stuff + " " + str(walks) + "\n" +  "\n" + content)
+        file.write(current_stuff + " " + str(iteration) + "\n" +  "\n" )
+        for element in feedback_id_list:
+            file.write(element + "\n")
+        file.write("\n")
+        file.write(content)
+        
       
         print("Filled Content in File: " + name)
         file.close

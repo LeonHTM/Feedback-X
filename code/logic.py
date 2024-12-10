@@ -12,6 +12,7 @@ from selenium.webdriver.common.keys import *
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options 
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.alert import *
 
 #Import from other files
 from option_lists import Area_Options
@@ -58,6 +59,9 @@ def startup(headless: str) -> None:
     if headless == "y":
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_argument("--enable-javascript")
+        chrome_options.add_argument("--disable-features=EnableAccessibilityObjectModel")
+        chrome_options.add_argument("--remote-debugging-port=9222") 
     driver = webdriver.Chrome(options=chrome_options)
     
 def login(account: str, password: str) -> None:
@@ -76,7 +80,7 @@ def login(account: str, password: str) -> None:
     driver.get("https://feedbackassistant.apple.com/")
     #Wait Until on the right Page
     try:
-        title = WebDriverWait(driver, 5).until(expected_conditions.title_contains("Sign In"))
+        title = WebDriverWait(driver, 10).until(expected_conditions.title_contains("Sign In"))
         print("Apple Sign in Page recognized")
     except TimeoutException:
         print("Could not find Sign In in page")
@@ -90,13 +94,13 @@ def login(account: str, password: str) -> None:
         print("Could not localize iframe")
     #Account
     try:
-        account_box = WebDriverWait(driver, 5).until(
+        account_box = WebDriverWait(driver, 30).until(
         expected_conditions.presence_of_element_located((By.ID, "account_name_text_field"))
         )
         account_box.send_keys(account)
-        time.sleep(0.5)
+        chill(2)
         account_box.send_keys(Keys.RETURN)
-        time.sleep(1.5)
+        chill(1.5)
         print("Entered Account Credentials")
     except TimeoutException:
         print("Could not Find Account Box")
@@ -242,7 +246,6 @@ def upload_feedback(uploads: str) -> None:
         expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type='file']")))
         print("Upload Button found")
         Upload_List = uploads.split(",")
-        print(Upload_List)
         for element in Upload_List:
             Upload_Button.send_keys(element)
             print("Uploaded" + str(element))
@@ -339,21 +342,31 @@ def finish_feedback(kind: str)-> None:
     elif kind == "Delete" or kind =="delete":
         buttonvalue = ".PrimaryButton__Button-sc-1si9oai-0.clOZiL"
     elif kind == "Submit" or kind == "submit":
-        buttonvalue = ".PrimaryButton__Button-sc-1si9oai-0.izhSLf"
-        print("chose submit button")
+        buttonvalue = "//button[text()='Submit']"
     try:
-        Finish_Feedback_Button = WebDriverWait(driver,5).until(
-        expected_conditions.presence_of_element_located((By.CSS_SELECTOR, buttonvalue)))
-        Finish_Feedback_Button.click()
         if kind == "delete" or kind == "Delete":
+            Finish_Feedback_Button = WebDriverWait(driver,5).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, buttonvalue)))
+            Finish_Feedback_Button.click()
             alert = driver.switch_to.alert
             alert.accept()
 
         elif kind == "Submit" or kind == "submit":
-            alert2 = driver.switch_to.alert
-            print("switched alert")
-            alert2.accept()
-            WebDriverWait(driver,120).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Close Feedback']")))
+            try:
+                Finish_Feedback_Button = WebDriverWait(driver,5).until(
+                expected_conditions.presence_of_element_located((By.XPATH, buttonvalue)))
+                Finish_Feedback_Button.click()
+                print("chose submit button")
+                WebDriverWait(driver, 10).until(expected_conditions.alert_is_present())
+                alert2 = driver.switch_to.alert
+                alert2.accept()
+                print("Alert handled successfully.")
+                WebDriverWait(driver,120).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Close Feedback']")))
+            except TimeoutException:
+                print("No alert appeared within the given timeframe.")
+            except NoAlertPresentException:
+                print("No alert was present to switch to.")
+            
 
         time.sleep(2)
         print("Finished Feedback with Action: " +kind)
