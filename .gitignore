@@ -5,7 +5,9 @@ saves/*
 accounts/*
 !accounts/.gitkeep
 
-cookies/
+cookies/*
+!cookies/.gitkeep
+
 current_fdb/*
 !current_fdb/.gitkeep
 
