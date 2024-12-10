@@ -19,7 +19,7 @@ from option_lists import Area_Options
 from option_lists import Type_Options
 
 
-def switchtab():
+def switchtab() -> None:
     """
     Creates a new browser tab and switches to it.
     """
@@ -29,14 +29,18 @@ def switchtab():
 
 
 
-def chill(chill_value: int):
+def chill(chill_value: int) -> None:
     """
+    Pauses the execution of the program for the specified amount of time.
+    
     Args:
-        Seconds (int)
+        chill_value (int): Time in seconds to sleep.
+    
     Returns:
         None
+    
     Example:
-        16
+        chill(16) will pause for 16, but print a warning after 8 Seconds
     """
     print("Sleeping: " + str(chill_value))
     time.sleep((chill_value/2))
@@ -46,12 +50,16 @@ def chill(chill_value: int):
 
 def startup(headless: str) -> None:
     """
+    Initializes the Chrome browser with optional headless mode.
+    
     Args:
-        heeadless(str) if "y": Will run browser headless
+        headless (str): If "y", the browser will run in headless mode (without UI).
+    
     Returns:
         None
+    
     Example:
-        "y"
+        startup("y") will start the browser in headless mode.
     """
     global driver
     chrome_options = Options()
@@ -67,16 +75,18 @@ def startup(headless: str) -> None:
 def login(account: str, password: str) -> None:
 
     """
+    Logs into the Apple Feedback Assistant website using the provided account and password.
+    
     Args:
-        Account (str): Account Data 
-        Password (str): Password Data
+        account (str): The user's account name (email).
+        password (str): The user's account password.
+    
     Returns:
         None
+    
     Example:
-        "Textemail@icloud.com", "1234isnotasecurepasswordLOL"
+        login("Testemail@icloud.com", "neverusepassword1234")
     """
-
-
     driver.get("https://feedbackassistant.apple.com/")
     #Wait Until on the right Page
     try:
@@ -118,12 +128,16 @@ def login(account: str, password: str) -> None:
 
 def logout(delay: int) -> None: 
     """
+    Logs out from the Apple Feedback Assistant website.
+    
     Args:
-        Delay to Logout (int)
+        delay (int): Time to wait before logging out.
+    
     Returns:
         None
+    
     Example:
-        1
+        logout(1) will log out after a 1-second delay.
     """
     try: 
         WebDriverWait(driver, 5).until(expected_conditions.title_contains("Feedback"))
@@ -160,12 +174,16 @@ def logout(delay: int) -> None:
 
 def detail_feedback(path: str) -> None:
     """
+    Fills out the feedback form based on the provided path.
+    
     Args:
-        path (str): String must be given in this format: Feedback Area, Type, First Dropdown, Second Dropdown, Third Dropdown,...
+        path (str): A comma-separated string of selections for the feedback form. First Value has to be Name of Category
+    
     Returns:
         None
+    
     Example:
-        "Wallpaper,2,2,2"
+        detail_feedback("Wallpaper,2,2,2") will fill out the feedback form accordingly.
     """
 
     #Path Auseinandernehmen
@@ -235,11 +253,13 @@ def detail_feedback(path: str) -> None:
 
 def upload_feedback(uploads: str) -> None:
     """
+    Uploads files to the feedback form.
+    
     Args:
-        uploads(str): paths to files to uplads, sepereated by , IMPORTANT: Have to be absolute
-        
+        uploads (str): A comma-separated list of file paths to upload.
+    
     Example:
-        "/Users/leon/Desktop/Project FeedbackX/Feedback-X/current_fdb/bugs.jpeg,/Users/leon/Desktop/Project FeedbackX/Feedback-X/current_fdb/recording.mp4"
+        upload_feedback("/path/to/file1,/path/to/file2")
     """
     try:
         Upload_Button = WebDriverWait(driver,10).until(
@@ -259,12 +279,13 @@ def upload_feedback(uploads: str) -> None:
 
 def identify_feedback() -> int:
     """
-    Args:
-        None
+    Identifies the feedback ID from the current URL.
+    
     Returns:
-        Feedback ID (int) of len 8
+        int: The feedback ID as an integer.
+    
     Example:
-        16923777
+        identify_feedback() returns 16923777
     """
     Feedback_ID = driver.current_url
     Feedback_URL_List = Feedback_ID.split("/")
@@ -274,13 +295,17 @@ def identify_feedback() -> int:
     
 def create_feedback(title: str, file: str) -> None:
     """
+    Creates a new feedback form with the given title and content.
+    
     Args:
-        title (str): Title of Feedback
-        file (str): Path of Feedback content, or Feedback Content itsself
+        title (str): The title of the feedback.
+        file (str): The content of the feedback or a path to the content.
+    
     Returns:
         None
+    
     Example:
-        "iOS 18.4 Beta 4: Wallpaper desaturates after unlocking iPhone"
+        create_feedback("App Library Blur displayed wrong iOS 18.2 (22C151) ", "I like Potatoes" ))
     """
     #New Feedback
     try:
@@ -319,12 +344,15 @@ def create_feedback(title: str, file: str) -> None:
 
 def finish_feedback(kind: str)-> None:
     """
+    Finishes Feedback: Either Saves, Submits or Deletes it.
+    
     Args:
-        kind(str)
+        kind (str): Defines the action to be taken. Can be "Save", "Submit", or "Delete". Both written with Capitalzed first Letter or not
     Returns:
         None
+    
     Example:
-        "Delete" / "delete" or "Save" / "save" or "Submit" / "submit"
+        finish_feedback("Submit")
     """
 
     buttonvalue = "button"

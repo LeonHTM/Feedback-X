@@ -3,18 +3,23 @@ import datetime
 
 def file_save(name: str, content: str, addon: str, iteration: str,feedback_id_list : list) -> None:
     """
-    Args:
-        name(str): name of file one wants to save with or withouout suffix
-        content(str): content of file
-        addon(str): If equal to "y": Will add date and time to Beginnig of file
-        iteration(str): On how many accounts an action has been performed
-        feedback_id_list(list) Append list to file
-        
-    Returns:
-        
-    Example:
-        piis3141.py
+    Saves content to a file with optional metadata and feedback IDs.
 
+    Args:
+        name (str): Name of the file to save. Can be given with or without a suffix.
+        content (str): Content to write to the file.
+        addon (str): If equal to "y", appends the current date and time at the beginning of the file.
+        iteration (str): The number of iterations or accounts the action has been performed on.
+        feedback_id_list (list): A list of feedback IDs to be appended to the file.
+
+    Returns:
+        None
+
+    Example:
+        file_save(str(identify_feedback()), file_read("current_fdb/content.txt"), "y", iteration_value, feedback_id_list)
+
+    Raises:
+        OSError: If there is an issue creating or writing to the file.
     """
     if name[-4:] != ".txt":
         name +=  ".txt"
@@ -42,12 +47,16 @@ def file_save(name: str, content: str, addon: str, iteration: str,feedback_id_li
    
 def file_read(path: str) -> None:
     """
+    Reads content from a file.
+
     Args:
-        file (str) -> File Path 
+        path (str): Path to the file to read from.
+
     Returns:
-        None
+        str: The content of the file.
+
     Example:
-        "saves/content.txt"
+        content = file_read("saves/content.txt")
 
     Raises:
         ValueError: If the file is empty.
@@ -62,12 +71,16 @@ def file_read(path: str) -> None:
 
 def file_clear(name: str) -> None:
     """
+    Clears the content of a specified file.
+
     Args:
-        name(str) -> File Path 
+        name (str): Path to the file to clear.
+
     Returns:
         None
+
     Example:
-        "saves/content.txt"
+        file_clear("saves/content.txt")
     """
     file = open(name,"w")
     print("Cleared file: " + name)
