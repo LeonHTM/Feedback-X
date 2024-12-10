@@ -8,18 +8,17 @@ from files import *
 
 class main():
 
-    def duplication_cycle(self,start_value: int,iteration_value: int ,submit :str):
+    def duplication_cycle(self,start_value: int,iteration_value: int ,submit :str) -> None:
         """
-        
-        Args:
-            start_value(int): Account to start
-            iteration_value(int): How many accounts to fill
-            submit(str): "Submit" or "Submit" or "Delete" or "delete" or "save" or "Save"
+        Handles the cycle for duplicating feedback submissions across multiple accounts.
 
+        Args:
+            start_value (int): Account to start (index for account list).
+            iteration_value (int): How many accounts to process.
+            submit (str): Action for submitting feedback. Can be "submit", "Save", or "Delete".
 
         Returns:
             None
-        
         """
    
         account_list = accounts_read("icloudmail", start_value,iteration_value,"accounts/accounts.txt")
@@ -54,7 +53,18 @@ class main():
             
 
 
-    def login_cycle(self,start_value, iteration_value,chill_value):
+    def login_cycle(self,start_value: int, iteration_value,chill_value: int) -> None:
+        """
+        Handles the cycle for logging into multiple accounts, for example to control if the Feedbacks were filed
+
+        Args:
+            start_value (int): The starting index for the account list.
+            iteration_value (int): The number of accounts to process.
+            chill_value (int): The number of seconds to pause (chill) after each login.
+
+        Returns:
+            None
+        """
         account_list = accounts_read("icloudmail",start_value, iteration_value,"accounts/accounts.txt")
         password_list = accounts_read("password",start_value, iteration_value,"accounts/accounts.txt")
         startup("n")
