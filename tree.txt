@@ -3,19 +3,17 @@
 ├── accounts
 │   └── accounts.txt
 ├── code
-│   ├── __pycache__
-│   │   ├── files.cpython-313.pyc
-│   │   ├── logic.cpython-313.pyc
-│   │   ├── option_lists.cpython-313.pyc
-│   │   └── read.cpython-313.pyc
 │   ├── files.py
 │   ├── logic.py
 │   ├── main.py
 │   ├── option_lists.py
 │   └── read.py
+├── cookies
 ├── current_fdb
-│   └── content.txt
-├── github-git-cheat-sheet.pdf
+│   ├── content.txt
+│   ├── image.png
+│   └── recording.mov
+├── myenv
 ├── saves
 │   ├── 41377292.txt
 │   ├── 41378057.txt
@@ -25,4 +23,4 @@
     ├── violett.json
     └── window.py
 
-7 directories, 19 files
+7 directories, 15 files
