@@ -2,7 +2,8 @@
 saves/*
 !saves/.gitkeep
 
-accounts/
+accounts/*
+!accounts/.gitkeep
 
 cookies/
 current_fdb/*
