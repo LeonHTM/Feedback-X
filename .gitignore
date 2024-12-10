@@ -2,12 +2,14 @@
 saves/
 accounts/
 cookies/
-code/__pycache__
+current_fdb/*
+!current_fdb/.gitkeep
+
 
 
 #Non Project 
 .vscode/
-current_fdb/
+code/__pycache__
 myenv/
 .DS_Store
 
