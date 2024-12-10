@@ -13,7 +13,7 @@ def file_save(name: str, content: str, addon: str, iteration: str,feedback_id_li
     Returns:
         
     Example:
-        piis3141.py or piis3141
+        piis3141.py
 
     """
     if name[-4:] != ".txt":

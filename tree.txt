@@ -1,0 +1,28 @@
+.
+├── README.md
+├── accounts
+│   └── accounts.txt
+├── code
+│   ├── __pycache__
+│   │   ├── files.cpython-313.pyc
+│   │   ├── logic.cpython-313.pyc
+│   │   ├── option_lists.cpython-313.pyc
+│   │   └── read.cpython-313.pyc
+│   ├── files.py
+│   ├── logic.py
+│   ├── main.py
+│   ├── option_lists.py
+│   └── read.py
+├── current_fdb
+│   └── content.txt
+├── github-git-cheat-sheet.pdf
+├── saves
+│   ├── 41377292.txt
+│   ├── 41378057.txt
+│   ├── 41403820.txt
+│   └── 41407089.txt
+└── ui
+    ├── violett.json
+    └── window.py
+
+7 directories, 19 files
