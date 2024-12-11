@@ -20,5 +20,6 @@ github-git-cheat-sheet.pdf
 
 #Swift
 
-swift/Feedback X.xcodeproj
+swift/Feedback X.xcodeproj/*
+!swift/Feedback X.xcodeproj/.gitkeep
 
