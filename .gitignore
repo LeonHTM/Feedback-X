@@ -1,21 +1,21 @@
 #Project
-saves/*
+python/saves/*
 !saves/.gitkeep
 
-accounts/*
+python/accounts/*
 !accounts/.gitkeep
 
-cookies/*
+python/cookies/*
 !cookies/.gitkeep
 
-current_fdb/*
+python/current_fdb/*
 !current_fdb/.gitkeep
 
 README2.md
 
 #Non Project 
 .vscode/
-code/__pycache__
+python/code/__pycache__
 myenv/
 .DS_Store
 
