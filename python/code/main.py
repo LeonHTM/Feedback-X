@@ -2,12 +2,12 @@ from read import *
 from logic import *
 from files import *
 from error import ErrorListHandler
+import time
 
 
 
 
 class main():
-
     def duplication_cycle(self,start_value: int,iteration_value: int ,submit :str,title : str) -> None:
         """
         Handles the cycle for duplicating feedback submissions across multiple accounts.
@@ -20,15 +20,11 @@ class main():
         Returns:
             None
         """
-   
+        start_time = time.time()
         account_list = accounts_read("icloudmail", start_value,iteration_value,"python/accounts/accounts.txt")
         password_list = accounts_read("password", start_value,iteration_value, "python/accounts/accounts.txt")
         feedback_id_list = []
         error = ErrorListHandler(15)
-        
-        
-        
-
         
         try:
             file_read("python/current_fdb/content.txt")
@@ -78,7 +74,7 @@ class main():
                 chill(5)
         for report_str in error.report():
             print(report_str)
-                
+        print("Runtime: " + str(time.time()-start_time)) 
             
                 
             
@@ -96,24 +92,34 @@ class main():
         Returns:
             None
         """
+
+        
+        start_time = time.time()
         account_list = accounts_read("icloudmail",start_value, iteration_value,"python/accounts/accounts.txt")
         password_list = accounts_read("password",start_value, iteration_value,"python/accounts/accounts.txt")
-        startup("n")
+        error = ErrorListHandler(2)
+        startup("y")
         for index in range(0, iteration_value):
-            #try:
-                login(account_list[index], password_list[index])
+                try: 
+                    login(account_list[index], password_list[index])
+                except:
+                     error.add(1,1)
+                     return
                 chill(chill_value)
-                logout(1)
+                try:
+                    logout(1)
+                except:
+                    error.add(2,1)
                 chill(2)
-            #except:
-                print("Failed at: " + account_list[index])
-        
 
+        for report_str in error.report():
+            print(report_str)
+        print("Runtime: " + str(time.time()-start_time)) 
     
 
 at = main()
-at.duplication_cycle(1,2,"save","App Library Blur displayed wrong iOS 18.2 (22C151)")
-#at.login_cycle(1,10,15)
+#at.duplication_cycle(1,2,"save","App Library Blur displayed wrong iOS 18.2 (22C151)")
+at.login_cycle(1,10,1)
 
 
 
