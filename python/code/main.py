@@ -1,7 +1,7 @@
-from read import *
-from logic import *
+from seleniumcore import *
 from files import *
 from error import ErrorListHandler
+from chill import chill
 import time
 
 
@@ -20,6 +20,7 @@ class main():
         Returns:
             None
         """
+        print("Started Duplication Cycle")
         start_time = time.time()
         account_list = accounts_read("icloudmail", start_value,iteration_value,"python/accounts/accounts.txt")
         password_list = accounts_read("password", start_value,iteration_value, "python/accounts/accounts.txt")
@@ -80,7 +81,7 @@ class main():
             
 
 
-    def login_cycle(self,start_value: int, iteration_value,chill_value: int) -> None:
+    def login_cycle(self,start_value: int, iteration_value: int,chill_value: int) -> None:
         """
         Handles the cycle for logging into multiple accounts, for example to control if the Feedbacks were filed
 
@@ -93,12 +94,12 @@ class main():
             None
         """
 
-        
+        print("Started Login Cycle")
         start_time = time.time()
         account_list = accounts_read("icloudmail",start_value, iteration_value,"python/accounts/accounts.txt")
         password_list = accounts_read("password",start_value, iteration_value,"python/accounts/accounts.txt")
         error = ErrorListHandler(2)
-        startup("n")
+        startup("y")
         for index in range(0, iteration_value):
                 try: 
                     login(account_list[index], password_list[index])
@@ -118,8 +119,8 @@ class main():
     
 
 at = main()
-#at.duplication_cycle(1,10,"save","test")
-#at.login_cycle(1,10,10)
+#at.duplication_cycle(start_value=1,iteration_value=10,submit="save",title="test")
+at.login_cycle(start_value=1,iteration_value=10,chill_value=1)
 
 
 

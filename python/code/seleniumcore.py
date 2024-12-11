@@ -17,6 +17,7 @@ from selenium.webdriver.common.alert import *
 #Import from other files
 from option_lists import Area_Options
 from option_lists import Type_Options
+from chill import chill
 
 
 def switchtab() -> None:
@@ -29,23 +30,7 @@ def switchtab() -> None:
 
 
 
-def chill(chill_value: int) -> None:
-    """
-    Pauses the execution of the program for the specified amount of time.
-    
-    Args:
-        chill_value (int): Time in seconds to sleep.
-    
-    Returns:
-        None
-    
-    Example:
-        chill(16) will pause for 16, but print a warning after 8 Seconds
-    """
-    #print("Sleeping: " + str(chill_value))
-    time.sleep((chill_value/2))
-    #print("Sleeping: " + str(chill_value/2) + " To go")
-    time.sleep((chill_value/2))
+
 
 
 def startup(headless: str) -> None:

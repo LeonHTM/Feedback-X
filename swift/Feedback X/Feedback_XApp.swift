@@ -13,5 +13,6 @@ struct Feedback_XApp: App {
         WindowGroup {
             ContentView()
         }
+        .defaultSize(width:1000,height:1000)
     }
 }
