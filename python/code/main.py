@@ -24,7 +24,7 @@ class main():
         account_list = accounts_read("icloudmail", start_value,iteration_value,"python/accounts/accounts.txt")
         password_list = accounts_read("password", start_value,iteration_value, "python/accounts/accounts.txt")
         feedback_id_list = []
-        error = ErrorListHandler(15)
+        error = ErrorListHandler(10)
         
         try:
             file_read("python/current_fdb/content.txt")
@@ -74,7 +74,7 @@ class main():
                 chill(5)
         for report_str in error.report():
             print(report_str)
-        print("Runtime: " + str(time.time()-start_time)) 
+        print("Runtime: " + str(round(time.time()-start_time))) 
             
                 
             
@@ -98,28 +98,28 @@ class main():
         account_list = accounts_read("icloudmail",start_value, iteration_value,"python/accounts/accounts.txt")
         password_list = accounts_read("password",start_value, iteration_value,"python/accounts/accounts.txt")
         error = ErrorListHandler(2)
-        startup("y")
+        startup("n")
         for index in range(0, iteration_value):
                 try: 
                     login(account_list[index], password_list[index])
                 except:
-                     error.add(1,1)
+                     error.add(0,1)
                      return
                 chill(chill_value)
                 try:
                     logout(1)
                 except:
-                    error.add(2,1)
+                    error.add(1,1)
                 chill(2)
 
         for report_str in error.report():
             print(report_str)
-        print("Runtime: " + str(time.time()-start_time)) 
+        print("Runtime: " + str(round(time.time()-start_time))) 
     
 
 at = main()
-#at.duplication_cycle(1,2,"save","App Library Blur displayed wrong iOS 18.2 (22C151)")
-at.login_cycle(1,10,1)
+#at.duplication_cycle(1,10,"save","test")
+#at.login_cycle(1,10,10)
 
 
 

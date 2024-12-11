@@ -16,7 +16,7 @@ class ErrorListHandler:
         if 0 <= position < len(self.error_list):  # Ensure the position is within bounds
             self.error_list[position] += value_to_add
         else:
-            print("Error: Position out of bounds.")
+            print("ErrorHandler Error: Position out of bounds.")
 
     def get_list(self) -> list:
         """
