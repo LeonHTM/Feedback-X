@@ -1,4 +1,4 @@
-#Project
+#Python
 python/saves/*
 !python/saves/.gitkeep
 
@@ -9,11 +9,7 @@ python/cookies/*
 !python/cookies/.gitkeep
 
 python/current_fdb/*
-!python/current_fdb/.gitkeep
 
-README2.md
-
-#Non Project 
 .vscode/
 python/code/__pycache__
 myenv/
@@ -21,3 +17,8 @@ myenv/
 
 #Shit
 github-git-cheat-sheet.pdf
+
+#Swift
+
+swift/Feedback X.xcodeproj
+
