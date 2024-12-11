@@ -42,9 +42,9 @@ def chill(chill_value: int) -> None:
     Example:
         chill(16) will pause for 16, but print a warning after 8 Seconds
     """
-    print("Sleeping: " + str(chill_value))
+    #print("Sleeping: " + str(chill_value))
     time.sleep((chill_value/2))
-    print("Sleeping: " + str(chill_value/2) + " To go")
+    #print("Sleeping: " + str(chill_value/2) + " To go")
     time.sleep((chill_value/2))
 
 
@@ -91,17 +91,19 @@ def login(account: str, password: str) -> None:
     #Wait Until on the right Page
     try:
         title = WebDriverWait(driver, 10).until(expected_conditions.title_contains("Sign In"))
-        print("Apple Sign in Page recognized")
+        #print("Apple Sign in Page recognized")
     except TimeoutException:
         print("Could not find Sign In in page")
+        
     #iFrame Localisation
     try:
         iframe = WebDriverWait(driver, 5).until(
         expected_conditions.presence_of_element_located((By.ID, "aid-auth-widget-iFrame")))
         driver.switch_to.frame(iframe)
-        print("Iframe localized and switched")
+        #print("Iframe localized and switched")
     except TimeoutException:
         print("Could not localize iframe")
+        
     #Account
     try:
         account_box = WebDriverWait(driver, 30).until(
@@ -111,9 +113,10 @@ def login(account: str, password: str) -> None:
         chill(2)
         account_box.send_keys(Keys.RETURN)
         chill(1.5)
-        print("Entered Account Credentials")
+        #print("Entered Account Credentials")
     except TimeoutException:
         print("Could not Find Account Box")
+        
     #Password
     try:
         password_box = WebDriverWait(driver,5).until(
@@ -122,9 +125,10 @@ def login(account: str, password: str) -> None:
         password_box.send_keys(password)
         time.sleep(1)
         account_box.send_keys(Keys.RETURN)
-        print("Entered Password")
+        #print("Entered Password")
     except TimeoutException:
         print("Could not Find Password Box")
+        
 
 def logout(delay: int) -> None: 
     """
@@ -141,10 +145,11 @@ def logout(delay: int) -> None:
     """
     try: 
         WebDriverWait(driver, 5).until(expected_conditions.title_contains("Feedback"))
-        print("On FeedbackPage")
+        #print("On FeedbackPage")
         driver.switch_to.default_content()
     except TimeoutException:
         print("Could not find Feedback in Name of Page")
+        
 
     #SignOut
     try:
@@ -154,22 +159,25 @@ def logout(delay: int) -> None:
             chill(delay)
         else:
              raise ValueError
-        print("Found Log Out Menu")
+        #print("Found Log Out Menu")
         Logout_Tent.click()
     except TimeoutException:
         print("Could not Find Log out Button UWU")
+        
     except ValueError:
         print("delay has to bigger than 0 and and integer")
+        
     
 
     try:
         Logout_Button = WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//span[@role='button' and .//p[text()='Sign Out']]")))
-        print("Found Logout button")
+        #print("Found Logout button")
         Logout_Button.click()
-        print("Logged out")
+        #print("Logged out")
     except TimeoutException:
         print("Could not Find Log out Button inside thingy you know kuss JO")
+    
     
 
 def detail_feedback(path: str) -> None:
@@ -194,12 +202,13 @@ def detail_feedback(path: str) -> None:
     try:
         Area_Box = Select(WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".FormSelect-sc-13ke276-3.jSUKpU"))))
-        print("Found Feedback Area Box")
+        #print("Found Feedback Area Box")
         WebDriverWait(driver,1)
         Area_Box.select_by_index(int(Path_List[0]))
-        print("Chosing Area " + Path_List[0] + " = " + Area_Options[int(Path_List[0])])
+        #print("Chosing Area " + Path_List[0] + " = " + Area_Options[int(Path_List[0])])
     except TimeoutException:
         print("Could not Find Feedback Area Box")
+        
     except UnexpectedTagNameException:
         print("Select of Area Failed")
     except NoSuchElementException:
@@ -207,10 +216,10 @@ def detail_feedback(path: str) -> None:
     try:
         Type_Box = Select(WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//select[@aria-label='What type of feedback are you reporting?']"))))
-        print("Found Type Area Box")
+        #print("Found Type Area Box")
         WebDriverWait(driver,1)
         Type_Box.select_by_index(int(Path_List[1]))
-        print("Choosing Type: " + Type_Options[1])    
+        #print("Choosing Type: " + Type_Options[1])    
     except TimeoutException:
         print("Could not Find Feedback Type Box")
         Path_List.pop(1)
@@ -245,7 +254,7 @@ def detail_feedback(path: str) -> None:
     try:
         Time_Box = WebDriverWait(driver,2).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//*[@aria-label='What time was it when this last occurred?']")))
-        print("Found Time Box")
+        #print("Found Time Box")
         current_stuff = datetime.datetime.now()
         Time_Box.send_keys(str(current_stuff.time().strftime("%I:%M %p %Z") + " CET " + str(current_stuff.date().strftime("%m/%d/%Y"))))
     except TimeoutException:
@@ -264,11 +273,11 @@ def upload_feedback(uploads: str) -> None:
     try:
         Upload_Button = WebDriverWait(driver,10).until(
         expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type='file']")))
-        print("Upload Button found")
+        #print("Upload Button found")
         Upload_List = uploads.split(",")
         for element in Upload_List:
             Upload_Button.send_keys(element)
-            print("Uploaded" + str(element))
+            #print("Uploaded" + str(element))
 
 
         
@@ -311,13 +320,13 @@ def create_feedback(title: str, file: str) -> None:
     try:
         WebDriverWait(driver,5).until(expected_conditions.url_contains("feedbackassistant"))
         driver.get("https://feedbackassistant.apple.com/new")
-        print("Found Feedback in URL")
+        #print("Found Feedback in URL")
     except TimeoutException:
         print("Couldnt find Feedback in URL")
     try:
         New_Feedback_Button = WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//button[.//span[text()='iOS & iPadOS']]")))
-        print("Found iOS and iPadOS Feedback button")
+        #print("Found iOS and iPadOS Feedback button")
         New_Feedback_Button.click()
         time.sleep(1)
     except TimeoutException:
@@ -326,7 +335,7 @@ def create_feedback(title: str, file: str) -> None:
     try:
         Title_Box = WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.CSS_SELECTOR,".baseElements__Input-sc-18y8gd-8.dVgMTz.FormInput-sc-1iqn2wi-0.clIAZU")))
-        print("Found Title Field")
+        #print("Found Title Field")
         Title_Box.send_keys(title)
     except TimeoutException:
         print("Could not find Title Field")
@@ -335,7 +344,7 @@ def create_feedback(title: str, file: str) -> None:
     try:
         Issue_Box = WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.CSS_SELECTOR,".baseElements__Textarea-sc-18y8gd-9.gVqitQ.FormTextArea-sc-bqtfhn-0.khwtsT")))
-        print("Found Feedback Content Field")
+        #print("Found Feedback Content Field")
         Issue_Box.send_keys(file)
     except TimeoutException:
         print("Could not find Issue Field")
@@ -363,7 +372,7 @@ def finish_feedback(kind: str)-> None:
             expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Save']")))
             Finish_Feedback_Button.click()
             
-            print("Finished Feedback with Action:  " +kind)
+            #print("Finished Feedback with Action:  " +kind)
         except TimeoutException:
             print("Could not finish with Action " + kind)
             return
@@ -385,11 +394,11 @@ def finish_feedback(kind: str)-> None:
                 Finish_Feedback_Button = WebDriverWait(driver,5).until(
                 expected_conditions.presence_of_element_located((By.XPATH, buttonvalue)))
                 Finish_Feedback_Button.click()
-                print("chose submit button")
+                #print("chose submit button")
                 WebDriverWait(driver, 10).until(expected_conditions.alert_is_present())
                 alert2 = driver.switch_to.alert
                 alert2.accept()
-                print("Alert handled successfully.")
+                #print("Alert handled successfully.")
                 WebDriverWait(driver,120).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Close Feedback']")))
             except TimeoutException:
                 print("No alert appeared within the given timeframe.")
@@ -398,7 +407,7 @@ def finish_feedback(kind: str)-> None:
             
 
         time.sleep(2)
-        print("Finished Feedback with Action: " +kind)
+        #print("Finished Feedback with Action: " +kind)
     except TimeoutException:
         print("Could not finish Feedback with Action: " + kind)
     
