@@ -18,10 +18,7 @@
 │   ├── current_fdb
 │   │   └── content.txt
 │   └── saves
-│       ├── 41377292.txt
-│       ├── 41378057.txt
-│       ├── 41403820.txt
-│       └── 41407089.txt
+│       └── example.txt
 ├── swift
 │   ├── Feedback X
 │   │   ├── Assets.xcassets
