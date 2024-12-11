@@ -37,20 +37,6 @@
 │   │       └── Preview Assets.xcassets
 │   │           └── Contents.json
 │   └── Feedback X.xcodeproj
-│       ├── project.pbxproj
-│       ├── project.xcworkspace
-│       │   ├── contents.xcworkspacedata
-│       │   ├── xcshareddata
-│       │   │   └── swiftpm
-│       │   │       └── configuration
-│       │   └── xcuserdata
-│       │       └── leon.xcuserdatad
-│       │           └── UserInterfaceState.xcuserstate
-│       └── xcuserdata
-│           └── leon.xcuserdatad
-│               └── xcschemes
-│                   └── xcschememanagement.plist
 ├── README.md
 └── tree.txt
-
 
