@@ -1,15 +1,15 @@
 #Project
 python/saves/*
-!saves/.gitkeep
+!python/saves/.gitkeep
 
 python/accounts/*
-!accounts/.gitkeep
+!python/accounts/.gitkeep
 
 python/cookies/*
-!cookies/.gitkeep
+!python/cookies/.gitkeep
 
 python/current_fdb/*
-!current_fdb/.gitkeep
+!python/current_fdb/.gitkeep
 
 README2.md
 
