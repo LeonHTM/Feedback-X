@@ -57,7 +57,7 @@ def startup(headless: bool) -> None:
         chrome_options.add_argument("--remote-debugging-port=9222") 
     driver = webdriver.Chrome(options=chrome_options)
     
-def login(account: str, password: str) -> None:
+def login(account: str, password: str,cycle_value: bool) -> None:
 
     """
     Logs into the Apple Feedback Assistant website using the provided account and password.
@@ -72,14 +72,11 @@ def login(account: str, password: str) -> None:
     Example:
         login("Testemail@icloud.com", "neverusepassword1234")
     """
+    
     driver.get("https://feedbackassistant.apple.com/")
-    #Wait Until on the right Page
-    try:
-        title = WebDriverWait(driver, 10).until(expected_conditions.title_contains("Sign In"))
-        #print("Apple Sign in Page recognized")
-    except TimeoutException:
-        print("Could not find Sign In in page")
-        
+    
+    
+            
     #iFrame Localisation
     try:
         iframe = WebDriverWait(driver, 5).until(
@@ -144,7 +141,7 @@ def logout(delay: int) -> None:
             chill(delay)
         else:
              raise ValueError
-        #print("Found Log Out Menu")
+        
         Logout_Tent.click()
     except TimeoutException:
         print("Could not Find Log out Button UWU")
