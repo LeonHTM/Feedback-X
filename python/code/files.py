@@ -1,4 +1,5 @@
 import datetime
+import os
 
 
 def file_save(name: str,title: str, content: str, addon: str, iteration: str,feedback_id_list : list) -> None:
@@ -158,3 +159,19 @@ def accounts_read(type: str, start: int, end: int, path: str) -> list | tuple[li
         return account_list
     else:
         return password_list
+    
+
+def file_path( relative_path: str) -> str:
+        """
+        Returns the absolute path based on the script's location.
+        
+        Args:
+            relative_path (str): The relative path to the file.
+            
+        Returns:
+            str: The absolute path to the file.
+        """
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
+        user_data_dir = os.path.join(script_dir, relative_path)
+        user_data_dir = os.path.abspath(user_data_dir)
+        return user_data_dir

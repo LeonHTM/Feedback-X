@@ -9,22 +9,6 @@ import os
 
 class main():
 
-    def get_file_path(self, relative_path: str) -> str:
-        """
-        Returns the absolute path based on the script's location.
-        
-        Args:
-            relative_path (str): The relative path to the file.
-            
-        Returns:
-            str: The absolute path to the file.
-        """
-        script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
-        user_data_dir = os.path.join(script_dir, relative_path)
-        user_data_dir = os.path.abspath(user_data_dir)
-        return user_data_dir
-
-
     def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value) -> None:
         """
         Handles the cycle for duplicating feedback submissions across multiple accounts.
@@ -43,8 +27,8 @@ class main():
         print("Started Duplication Cycle" )
         
 
-        accounts_file_path = self.get_file_path("../accounts/accounts.txt")
-        content_file_path = self.get_file_path("../current_fdb/content.txt")
+        accounts_file_path = file_path("../accounts/accounts.txt")
+        content_file_path = file_path("../current_fdb/content.txt")
         
         account_list = accounts_read("icloudmail", start_value,iteration_value,accounts_file_path)
         password_list = accounts_read("password", start_value,iteration_value, accounts_file_path)
@@ -130,7 +114,7 @@ class main():
             None
         """
         
-        accounts_file_path = self.get_file_path("../accounts/accounts.txt")
+        accounts_file_path = file_path("../accounts/accounts.txt")
         print("Started Login Cycle")
         #Filling Variables
         account_list = accounts_read("icloudmail",start_value, iteration_value,accounts_file_path)
@@ -161,8 +145,8 @@ class main():
     
 
 main = main()
-main.duplication_cycle(start_value=1,iteration_value=10,submit_value="save",title_value="8957930458",path_value="Lock Screen,1,3",headless_value=True)
-#main.login_cycle(start_value=1,iteration_value=2,chill_value=1,headless_value=False)
+#main.duplication_cycle(start_value=1,iteration_value=10,submit_value="save",title_value="8957930458",path_value="Lock Screen,1,3",headless_value=True)
+main.login_cycle(start_value=1,iteration_value=2,chill_value=1,headless_value=True)
 
 
 
