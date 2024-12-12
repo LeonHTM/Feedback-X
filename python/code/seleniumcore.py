@@ -19,7 +19,7 @@ from selenium.webdriver.common.alert import *
 from option_lists import Area_Options
 from option_lists import Type_Options
 from chill import chill
-
+from files import file_path
 
 def switchtab() -> None:
     """
@@ -49,9 +49,7 @@ def startup(headless: bool) -> None:
     """
     global driver
     chrome_options = Options()
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    user_data_dir = os.path.join(script_dir, "../cookies")
-    user_data_dir = os.path.abspath(user_data_dir)
+    user_data_dir =file_path("../cookies")
     #print(user_data_dir)
     chrome_options.add_argument(f"user-data-dir={user_data_dir}")
     if headless == True:
