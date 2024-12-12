@@ -33,12 +33,12 @@ def switchtab() -> None:
 
 
 
-def startup(headless: str) -> None:
+def startup(headless: bool) -> None:
     """
     Initializes the Chrome browser with optional headless mode.
     
     Args:
-        headless (str): If "y", the browser will run in headless mode (without UI).
+        headless (boll): If True, the browser will run in headless mode (without UI).
     
     Returns:
         None
@@ -49,7 +49,7 @@ def startup(headless: str) -> None:
     global driver
     chrome_options = Options()
     chrome_options.add_argument("user-data-dir=python/cookies")
-    if headless == "y":
+    if headless == True:
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
         chrome_options.add_argument("--enable-javascript")
