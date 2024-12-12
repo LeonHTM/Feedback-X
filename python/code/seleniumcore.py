@@ -1,6 +1,7 @@
 #Normal Imports
 import time
 import datetime
+import os
 
 #Selenium imports
 from selenium import webdriver
@@ -48,7 +49,11 @@ def startup(headless: bool) -> None:
     """
     global driver
     chrome_options = Options()
-    chrome_options.add_argument("user-data-dir=python/cookies")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    user_data_dir = os.path.join(script_dir, "../cookies")
+    user_data_dir = os.path.abspath(user_data_dir)
+    #print(user_data_dir)
+    chrome_options.add_argument(f"user-data-dir={user_data_dir}")
     if headless == True:
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
@@ -126,8 +131,6 @@ def logout(delay: int) -> None:
         logout(1) will log out after a 1-second delay.
     """
     try: 
-        WebDriverWait(driver, 5).until(expected_conditions.title_contains("Feedback"))
-        #print("On FeedbackPage")
         driver.switch_to.default_content()
     except TimeoutException:
         print("Could not find Feedback in Name of Page")

@@ -2,12 +2,29 @@ from seleniumcore import *
 from files import *
 from error import ErrorListHandler
 from chill import chill
-import time
+import os
 
 
 
 
 class main():
+
+    def get_file_path(self, relative_path: str) -> str:
+        """
+        Returns the absolute path based on the script's location.
+        
+        Args:
+            relative_path (str): The relative path to the file.
+            
+        Returns:
+            str: The absolute path to the file.
+        """
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
+        user_data_dir = os.path.join(script_dir, relative_path)
+        user_data_dir = os.path.abspath(user_data_dir)
+        return user_data_dir
+
+
     def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value) -> None:
         """
         Handles the cycle for duplicating feedback submissions across multiple accounts.
@@ -25,13 +42,17 @@ class main():
         """
         print("Started Duplication Cycle" )
         
-        account_list = accounts_read("icloudmail", start_value,iteration_value,"python/accounts/accounts.txt")
-        password_list = accounts_read("password", start_value,iteration_value, "python/accounts/accounts.txt")
+
+        accounts_file_path = self.get_file_path("../accounts/accounts.txt")
+        content_file_path = self.get_file_path("../current_fdb/content.txt")
+        
+        account_list = accounts_read("icloudmail", start_value,iteration_value,accounts_file_path)
+        password_list = accounts_read("password", start_value,iteration_value, accounts_file_path)
         feedback_id_list = []
         error = ErrorListHandler(9,iteration_value)
         isinCycle = False
         try:
-            file_read("python/current_fdb/content.txt")
+            file_read(content_file_path)
             error.remove(0,10)
         except (FileNotFoundError, ValueError) as e:
             
@@ -45,7 +66,7 @@ class main():
                 except: 
                      continue
                 try:
-                    create_feedback(title_value, file_read("python/current_fdb/content.txt"))
+                    create_feedback(title_value, file_read(content_file_path))
                     error.remove(2,1)
                 except:
                         pass
@@ -62,7 +83,7 @@ class main():
                     
                 if index == (iteration_value -1) and (submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save"):
                     try:
-                        file_save(str(identify_feedback()),title_value,file_read("python/current_fdb/content.txt"), "y", iteration_value,feedback_id_list)
+                        file_save(str(identify_feedback()),title_value,file_read(content_file_path), "y", iteration_value,feedback_id_list)
                         error.remove(5,10)
                     except:
                          pass
@@ -109,11 +130,11 @@ class main():
             None
         """
         
-
+        accounts_file_path = self.get_file_path("../accounts/accounts.txt")
         print("Started Login Cycle")
         #Filling Variables
-        account_list = accounts_read("icloudmail",start_value, iteration_value,"python/accounts/accounts.txt")
-        password_list = accounts_read("password",start_value, iteration_value,"python/accounts/accounts.txt")
+        account_list = accounts_read("icloudmail",start_value, iteration_value,accounts_file_path)
+        password_list = accounts_read("password",start_value, iteration_value,accounts_file_path)
         isinCycle = False
         error = ErrorListHandler(2,iteration_value)
         startup(headless_value)
@@ -140,8 +161,10 @@ class main():
     
 
 main = main()
-#main.duplication_cycle(start_value=1,iteration_value=10,submit_value="save",title_value="8957930458",path_value="Lock Screen,1,3",headless_value=True)
-main.login_cycle(start_value=1,iteration_value=10,chill_value=1,headless_value=True)
+main.duplication_cycle(start_value=1,iteration_value=10,submit_value="save",title_value="8957930458",path_value="Lock Screen,1,3",headless_value=True)
+#main.login_cycle(start_value=1,iteration_value=2,chill_value=1,headless_value=False)
+
+
 
 
 
