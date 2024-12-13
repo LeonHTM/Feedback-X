@@ -15,11 +15,11 @@ python/code/__pycache__
 myenv/
 .DS_Store
 
-#Shit
-github-git-cheat-sheet.pdf
+#git
+git/*
+
 
 #Swift
-
 swift/Feedback X.xcodeproj/*
 !swift/Feedback X.xcodeproj/.gitkeep
 
