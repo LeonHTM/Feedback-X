@@ -7,7 +7,7 @@ from chill import chill
 
 
 
-class main():
+class cycles():
 
     def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value) -> None:
         """

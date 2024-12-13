@@ -11,7 +11,9 @@ import SwiftUI
 struct Feedback_XApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }.defaultSize(width:5000,height:2000)
+            CreateFeedback()
+                .frame(minWidth: 700, idealWidth: 925,  minHeight: 360-28, idealHeight:625)
+        }
+            
     }
 }
