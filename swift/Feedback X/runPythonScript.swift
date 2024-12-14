@@ -10,7 +10,7 @@ import Foundation
 var isRunning = false
 
 func runPythonScript() {
-    let pythonPath = "/Users/leon/Desktop/Feedback-X/myenv/bin/python3"
+    let pythonPath = "/Users/leon/Desktop/Feedback-X/feedbackenv/bin/python3"
     let scriptPath = "/Users/leon/Desktop/Feedback-X/python/code/main.py"
     
     // Set isRunning to true before starting the script

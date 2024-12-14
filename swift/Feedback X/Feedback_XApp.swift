@@ -11,9 +11,13 @@ import SwiftUI
 struct Feedback_XApp: App {
     var body: some Scene {
         WindowGroup {
-            CreateFeedback()
-                .frame(minWidth: 700, idealWidth: 925,  minHeight: 360-28, idealHeight:625)
+            HStack{
+                SidebarView().accentColor(.purple)
+                
+                    
+            }.frame(minWidth: 700, idealWidth: 925,  minHeight: 360, idealHeight:625)
         }
-            
     }
 }
+
+

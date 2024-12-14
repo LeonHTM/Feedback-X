@@ -2,7 +2,7 @@ import SwiftUI
 import Foundation
 
 
-struct CreateFeedback: View {
+struct CreateFeedbackView: View {
     var body: some View {
         VStack {
             Text("Run Pyhon Script")
@@ -15,20 +15,22 @@ struct CreateFeedback: View {
                     .padding()
                     
             }
-            .background(isRunning ? Color.gray : Color(red: 155/255,green: 51/255, blue: 162/255))
+            .background(isRunning ? Color.gray : Color.purple)
             .buttonStyle(PlainButtonStyle())
             .cornerRadius(10)
             .disabled(isRunning) // Disable the button when the script is running
             .padding()
-            Spacer()
-        }.padding(30)
-    }
+            Image(systemName:"exclamationmark.bubble")
+                .imageScale(.large)
+                
+            
+        }    }
 }
 
 
 
 #Preview {
-    CreateFeedback()
+    CreateFeedbackView()
 }
 
 
