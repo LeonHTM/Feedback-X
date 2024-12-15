@@ -9,40 +9,19 @@ struct SidebarView: View {
             List(selection: $selectedPage) {
                 Section(header: Text("Feedback X").font(.system(size: 11)).foregroundColor(.gray)) {
                     NavigationLink(value: "RecentActivity") {
-                        Label {
-                            Text("Recent Activity")
-                        } icon: {
-                            Image(systemName: "clock")
-                                .foregroundColor(.purple)
-                        }
+                        Label("Recent Activity",systemImage:"clock")
                     }
                     NavigationLink(value: "Accounts") {
-                        Label {
-                            Text("Accounts")
-                        } icon: {
-                            Image(systemName: "person")
-                                .foregroundColor(.purple)
-                        }
+                        Label("Accounts",systemImage:"person")
                     }
                 }
                 
                 Section(header: Text("Settings & About").font(.system(size: 11)).foregroundColor(.gray)) {
                     NavigationLink(value: "Settings") {
-                        Label {
-                            Text("Settings")
-                        } icon: {
-                            Image(systemName: "gear")
-                                .foregroundColor(.purple)
-                        }
+                        Label("Settings",systemImage:"gear")
                     }
                     NavigationLink(value: "About") {
-                        Label {
-                            Text("About")
-                        } icon: {
-                            Image(systemName: "clock")
-                                .foregroundColor(.purple)
-                        }
-                    }
+                        Label("About",systemImage:"person")}
                 }
             }            .frame(minWidth: 200)
             .listStyle(SidebarListStyle())

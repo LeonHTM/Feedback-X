@@ -11,7 +11,8 @@ struct SettingsView: View {
     var body: some View {
         VStack{
             Text("Settings")
-            NavigationLink("back",destination:SidebarView())
+           
+            
             
         }.padding(30)
     }
