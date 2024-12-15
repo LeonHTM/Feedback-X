@@ -3,6 +3,8 @@ import SwiftUI
 struct SidebarView: View {
     @State private var selectedPage: String? // Tracks the selected page
 
+    @State private var selectedPage: String? // Tracks the selected page
+
     var body: some View {
         NavigationSplitView {
             // Sidebar
