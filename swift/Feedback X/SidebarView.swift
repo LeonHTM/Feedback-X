@@ -1,9 +1,7 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @State private var selectedPage: String? // Tracks the selected page
-
-    @State private var selectedPage: String? // Tracks the selected page
+    @State private var selectedPage: String? = "RecentActivity" // Set the initial value to "RecentActivity"
 
     var body: some View {
         NavigationSplitView {
@@ -11,26 +9,28 @@ struct SidebarView: View {
             List(selection: $selectedPage) {
                 Section(header: Text("Feedback X").font(.system(size: 11)).foregroundColor(.gray)) {
                     NavigationLink(value: "RecentActivity") {
-                        Label("Recent Activity",systemImage:"clock")
+                        Label("Recent Activity", systemImage: "clock")
                     }
                     NavigationLink(value: "Accounts") {
-                        Label("Accounts",systemImage:"person")
+                        Label("Accounts", systemImage: "person")
                     }
                 }
-                
+
                 Section(header: Text("Settings & About").font(.system(size: 11)).foregroundColor(.gray)) {
                     NavigationLink(value: "Settings") {
-                        Label("Settings",systemImage:"gear")
+                        Label("Settings", systemImage: "gear")
                     }
                     NavigationLink(value: "About") {
-                        Label("About",systemImage:"person")}
+                        Label("About", systemImage: "person")
+                    }
                 }
-            }            .frame(minWidth: 200)
+            }
+            .frame(minWidth: 200)
             .listStyle(SidebarListStyle())
             .navigationTitle("Sidebar")
             .tint(.purple)
         } detail: {
-            // Detail view
+            // Display the appropriate view based on the selected page
             if let selectedPage = selectedPage {
                 switch selectedPage {
                 case "RecentActivity":
@@ -42,18 +42,15 @@ struct SidebarView: View {
                 case "About":
                     AboutView()
                 default:
-                    Text("Select a page") // Default fallback
+                    CreateFeedbackView() // Default fallback
                 }
             } else {
-                Text("Select a page") // Default message when no page is selected
+                CreateFeedbackView() // Default view when no page is selected
             }
         }
     }
 }
 
-
-
 #Preview {
-    SidebarView().tint(.purple)
+    SidebarView()
 }
-

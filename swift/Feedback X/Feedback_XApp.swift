@@ -12,7 +12,7 @@ struct Feedback_XApp: App {
     var body: some Scene {
         WindowGroup {
             HStack{
-                SidebarView().accentColor(.accentColor)
+                SidebarView()
                 
                     
             }.frame(minWidth: 700, idealWidth: 925,  minHeight: 360, idealHeight:625)
