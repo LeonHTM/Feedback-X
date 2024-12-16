@@ -1,15 +1,14 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @State private var selectedPage: String? = "RecentActivity" // Set the initial value to "RecentActivity"
-
+    @State private var selectedPage: String? = "RecentActivity"
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedPage) {
                 Section(header: Text("Feedback X")
                     .font(.system(size: 11))
                     .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity, alignment: .leading) // Ensure the header is left-aligned
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 ) {
                     NavigationLink(value: "RecentActivity") {
                         Label("Recent Activity", systemImage: "clock")
@@ -32,10 +31,8 @@ struct SidebarView: View {
                     }
                 }
             }
-            .frame(minWidth: 200)
             .listStyle(SidebarListStyle())
-            .navigationTitle("Sidebar")
-            .tint(.purple)
+            
         } detail: {
             // Display the appropriate view based on the selected page
             if let selectedPage = selectedPage {
@@ -54,7 +51,7 @@ struct SidebarView: View {
             }
         }
         .frame(alignment: .leading)
-        .padding(.leading, 10)
+
     }
 }
 

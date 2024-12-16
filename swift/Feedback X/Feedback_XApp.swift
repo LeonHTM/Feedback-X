@@ -8,19 +8,24 @@ import SwiftUI
 
 @main
 struct Feedback_XApp: App {
+    @AppStorage("AppLaunchCounter") public var AppLaunchCounter: Int = 0
+    
+    init() {
+        print("App has launched \(AppLaunchCounter) times")
+        
+    }
+    
     var body: some Scene {
         Window("",id:"FeedbackXMain") {
-            HStack() {
-                SidebarView()
-                Spacer()
-            }
-            .frame(minWidth: 700, idealWidth: 925, minHeight: 400, idealHeight: 625)
+            SidebarView()
+            
         }
         Settings{
             SettingsView()
         }
     }
 }
+
 
 
 
