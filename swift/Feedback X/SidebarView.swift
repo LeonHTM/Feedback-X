@@ -5,23 +5,30 @@ struct SidebarView: View {
 
     var body: some View {
         NavigationSplitView {
-            // Sidebar
             List(selection: $selectedPage) {
-                Section(header: Text("Feedback X").font(.system(size: 11)).foregroundColor(.gray)) {
+                Section(header: Text("Feedback X")
+                    .font(.system(size: 11))
+                    .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading) // Ensure the header is left-aligned
+                ) {
                     NavigationLink(value: "RecentActivity") {
                         Label("Recent Activity", systemImage: "clock")
+                            .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                     NavigationLink(value: "Accounts") {
                         Label("Accounts", systemImage: "person")
+                            .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                 }
 
-                Section(header: Text("Settings & About").font(.system(size: 11)).foregroundColor(.gray)) {
-                    NavigationLink(value: "Settings") {
-                        Label("Settings", systemImage: "gear")
-                    }
+                Section(header: Text("About")
+                    .font(.system(size: 11))
+                    .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading) // Ensure the header is left-aligned
+                ) {
                     NavigationLink(value: "About") {
-                        Label("About", systemImage: "person")
+                        Label("About", systemImage: "questionmark.circle")
+                            .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                 }
             }
@@ -37,8 +44,6 @@ struct SidebarView: View {
                     CreateFeedbackView()
                 case "Accounts":
                     AccountsView()
-                case "Settings":
-                    SettingsView()
                 case "About":
                     AboutView()
                 default:
@@ -48,9 +53,12 @@ struct SidebarView: View {
                 CreateFeedbackView() // Default view when no page is selected
             }
         }
+        .frame(alignment: .leading)
+        .padding(.leading, 10)
     }
 }
 
 #Preview {
     SidebarView()
 }
+

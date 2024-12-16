@@ -9,8 +9,11 @@ import SwiftUI
 
 struct AboutView: View {
     var body: some View {
+        
         VStack{
             Image("FeedbackX256.png")
+                
+                
             Text("This App was made by LeonHTM").fontWeight(.bold)
             
             VStack{
