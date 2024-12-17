@@ -41,20 +41,21 @@ def startup_rewrite(headless: bool) -> None:
     global driver
     user_data_dir = file_path("../cookies")
 
-    options = webdriver.ChromeOptions()
-    browser_executable_path = "/Users/leon/Applications/Google Chrome.app"
+    options = uc.ChromeOptions()
     options.add_argument(f"user-agent={UserAgent().random}")
     options.add_argument(f"user-data-dir={user_data_dir}")
     
     if headless:
         options.add_argument("--headless")
+        options.add_argument("--disable-gpu") 
+        options.add_argument("--no-sandbox") 
         options.add_argument("--disable-blink-features=AutomationControlled")
         options.add_argument("--enable-javascript")
         options.add_argument("--disable-features=EnableAccessibilityObjectModel")
         options.add_argument("--remote-debugging-port=9222") 
 
     # Initialize undetected_chromedriver
-    driver = uc.Chrome(options=options)
+    driver = uc.Chrome(use_subprocess=True,options=options)
 
 
 def login_rewrite(account: str, password: str, path_value: str) -> None:
