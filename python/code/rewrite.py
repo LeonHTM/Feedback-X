@@ -15,11 +15,12 @@ def rewrite(path_value: str, save_value:str):
     switchtab_rewrite()
     login_rewrite("ManweValar1379@icloud.com", "1Ringtorulethemall",path_value="https://chatgpt.com/")
     file_rewrite(content_file_path)
-    save_rewrite("python/saves/rewrite.txt")
-    chill(120)
+    save_rewrite(save_value)
+    chill(5)
+
 
     
 
 
 
-rewrite(path_value ="../current_fdb/content.txt", save_value = "yourmom")
+rewrite(path_value ="../current_fdb/content.txt", save_value = "python/saves/rewrite.txt")
