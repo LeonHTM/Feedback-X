@@ -132,24 +132,24 @@ def file_rewrite(content: str) -> None:
         inputElement = WebDriverWait(driver, 5).until(
             expected_conditions.presence_of_element_located((By.ID, "prompt-textarea")))
         
-        string = "This is a Feedback send to Apple about a Bug or Enhancement Request. Please rewrite the Content in the txt file. Do not add anything only rephrase. Do not change the meaning. Do only answer with the rephrased content dont give anything else back. Make it sound like another person wrote it. The text you made and the original one should say the same but on should not be able to find out they were made by the same person Do only give back the rewritten text, please add nothing to it that changes the meaning and do not say somehitng like here is the rewrite instead just give the rewrite."
+        string = "This is a Feedback send to Apple about a Bug or Enhancement Request. Please rewrite the Content in the txt file. Do not add anything only rephrase. Do not change the meaning. Do only answer with the rephrased content dont give anything else back. Make it sound like another person wrote it. The text you made and the original one should say the same but on should not be able to find out they were made by the same person Do only give back the rewritten text, please add nothing to it that changes the meaning and do not say things like: here is the rewrite instead just give the rewrite."
         inputElement.send_keys(string)
         
         Upload_Button = WebDriverWait(driver, 10).until(
             expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type='file']")))
         Upload_Button.send_keys(content)
-        chill(7)
+        chill(5)
         inputElement.send_keys(Keys.RETURN)
-        chill(10)
+        chill(7)
     except:
         print("Could not upload file or enter prompt")
     
     try:
         # Find all elements with text content
+        WebDriverWait(driver, 20).until(
+                expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".flex.items-center")))
+        
         Answer_Elements = driver.find_elements(By.XPATH, "//p | //li[not(contains(@data-testid, 'history-item'))]")
-
-        chill(5)
-
         # Iterate over the elements and extract text if present
         for element in Answer_Elements:
             if element.text.strip():  # Ensure only non-empty text is added

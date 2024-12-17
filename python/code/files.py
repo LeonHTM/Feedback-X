@@ -171,7 +171,7 @@ def file_path( relative_path: str) -> str:
         Returns:
             str: The absolute path to the file.
         """
-        script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
+        script_dir = os.path.dirname(os.path.abspath(__file__))  
         user_data_dir = os.path.join(script_dir, relative_path)
         user_data_dir = os.path.abspath(user_data_dir)
         return user_data_dir
