@@ -2,6 +2,8 @@
 import time
 import datetime
 import os
+import undetected_chromedriver as uc
+from fake_useragent import UserAgent
 
 #Selenium imports
 from selenium import webdriver
@@ -14,6 +16,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options 
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.alert import *
+
+
+
 
 #Import from other files
 from option_lists import Area_Options
@@ -59,8 +64,9 @@ def startup(headless: bool) -> None:
         chrome_options.add_argument("--disable-features=EnableAccessibilityObjectModel")
         chrome_options.add_argument("--remote-debugging-port=9222") 
     driver = webdriver.Chrome(options=chrome_options)
+
     
-def login(account: str, password: str,cycle_value: bool) -> None:
+def login(account: str, password: str,path_value:str) -> None:
 
     """
     Logs into the Apple Feedback Assistant website using the provided account and password.
@@ -68,6 +74,7 @@ def login(account: str, password: str,cycle_value: bool) -> None:
     Args:
         account (str): The user's account name (email).
         password (str): The user's account password.
+        path(str): chatGPT or Apple
     
     Returns:
         None
@@ -76,43 +83,45 @@ def login(account: str, password: str,cycle_value: bool) -> None:
         login("Testemail@icloud.com", "neverusepassword1234")
     """
     
-    driver.get("https://feedbackassistant.apple.com/")
+    if path_value == "https://feedbackassistant.apple.com/":
+        driver.get(path_value)
     
     
             
-    #iFrame Localisation
-    try:
-        iframe = WebDriverWait(driver, 5).until(
-        expected_conditions.presence_of_element_located((By.ID, "aid-auth-widget-iFrame")))
-        driver.switch_to.frame(iframe)
-        #print("Iframe localized and switched")
-    except TimeoutException:
-        print("Could not localize iframe")
-        
-    #Account
-    try:
-        account_box = WebDriverWait(driver, 30).until(
-        expected_conditions.presence_of_element_located((By.ID, "account_name_text_field"))
+        #iFrame Localisation
+        try:
+            iframe = WebDriverWait(driver, 5).until(
+            expected_conditions.presence_of_element_located((By.ID, "aid-auth-widget-iFrame")))
+            driver.switch_to.frame(iframe)
+            #print("Iframe localized and switched")
+        except TimeoutException:
+            print("Could not localize iframe")
+            
+        #Account
+        try:
+            account_box = WebDriverWait(driver, 30).until(
+            expected_conditions.presence_of_element_located((By.ID, "account_name_text_field"))
+            )
+            account_box.send_keys(account)
+            chill(2)
+            account_box.send_keys(Keys.RETURN)
+            chill(1.5)
+            #print("Entered Account Credentials")
+        except TimeoutException:
+            print("Could not Find Account Box")
+            
+        #Password
+        try:
+            password_box = WebDriverWait(driver,5).until(
+            expected_conditions.presence_of_element_located((By.ID, "password_text_field"))
         )
-        account_box.send_keys(account)
-        chill(2)
-        account_box.send_keys(Keys.RETURN)
-        chill(1.5)
-        #print("Entered Account Credentials")
-    except TimeoutException:
-        print("Could not Find Account Box")
-        
-    #Password
-    try:
-        password_box = WebDriverWait(driver,5).until(
-        expected_conditions.presence_of_element_located((By.ID, "password_text_field"))
-    )
-        password_box.send_keys(password)
-        time.sleep(1)
-        account_box.send_keys(Keys.RETURN)
-        #print("Entered Password")
-    except TimeoutException:
-        print("Could not Find Password Box")
+            password_box.send_keys(password)
+            time.sleep(1)
+            account_box.send_keys(Keys.RETURN)
+            #print("Entered Password")
+        except TimeoutException:
+            print("Could not Find Password Box")
+    else: Print("Error path value" + path_value)
         
 
 def logout(delay: int) -> None: 

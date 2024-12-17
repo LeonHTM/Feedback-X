@@ -1,4 +1,4 @@
-from seleniumcore import *
+from selenium_feedback import *
 from files import *
 from error import ErrorListHandler
 from chill import chill
@@ -45,7 +45,7 @@ class cycles():
         startup(headless_value)
         for index in range(0, iteration_value):
                 try: 
-                    login(account_list[index], password_list[index], cycle_value = isinCycle)
+                    login(account_list[index], password_list[index], path_value = "https://feedbackassistant.apple.com/")
                     error.remove(1,1)
                 except: 
                      continue
@@ -124,7 +124,7 @@ class cycles():
         startup(headless_value)
         for index in range(0, iteration_value):
                 try: 
-                    login(account_list[index], password_list[index],cycle_value=isinCycle)
+                    login(account_list[index], password_list[index],path_value="https://feedbackassistant.apple.com/")
                     error.remove(0,1)
                 except:
                      continue
