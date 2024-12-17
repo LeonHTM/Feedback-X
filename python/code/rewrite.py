@@ -11,12 +11,12 @@ def rewrite(path_value: str, save_value:str):
 
     """
     content_file_path = file_path(path_value)
-    startup_rewrite(True)
+    startup_rewrite(False)
     switchtab_rewrite()
     login_rewrite("ManweValar1379@icloud.com", "1Ringtorulethemall",path_value="https://chatgpt.com/")
     file_rewrite(content_file_path)
     save_rewrite("python/saves/rewrite.txt")
-    chill(60)
+    chill(120)
 
     
 

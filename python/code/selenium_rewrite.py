@@ -61,6 +61,10 @@ def startup_rewrite(headless: bool) -> None:
     options.add_argument(f"user-data-dir={user_data_dir}")
     if headless == True:
         options.add_argument("--headless")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--enable-javascript")
+        options.add_argument("--disable-features=EnableAccessibilityObjectModel")
+        options.add_argument("--remote-debugging-port=9222") 
     #options.add_experimental_option("detach", True)
     #options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
@@ -163,18 +167,24 @@ def file_rewrite(content: str) -> None:
         print("Could not upload file or enter Prompt")
     
     try:
-        Answer_Elements = driver.find_elements(By.TAG_NAME, "p")
-        Answer_Elements_li = driver.find_elements(By.TAG_NAME, "li")
-        chill(5)
-        for element in Answer_Elements_li:
-            result_list_rewrite.append(element.text)
-        for element in Answer_Elements:
-            result_list_rewrite.append(element.text)
         
-            
+    # Find all elements with text content using wildcard (*)
+        Answer_Elements = driver.find_elements(By.XPATH, "//p | //li[not(contains(@data-testid, 'history-item'))]")
 
-    except:
-        print("Could not get ChatGPT Answer")
+    
+    # Pause for any potential loading time
+        chill(5)
+    
+    # Iterate over the elements and extract text if present
+        for element in Answer_Elements:
+            if element.text.strip():  # Ensure only non-empty text is added
+                result_list_rewrite.append(element.text)
+            
+    except Exception as e:
+        print(f"Could not extract text. Error: {e}")
+        
+    
+
 
 def save_rewrite(output_path):
     with open(output_path, "w") as file:
