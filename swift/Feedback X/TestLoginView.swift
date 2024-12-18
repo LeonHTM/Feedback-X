@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct TestCycleView: View {
+struct TestLoginView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Test Login Cycle here").padding(40)
     }
 }
 
 #Preview {
-    TestCycleView()
+    TestLoginView()
 }

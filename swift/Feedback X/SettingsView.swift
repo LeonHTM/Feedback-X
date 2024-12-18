@@ -5,6 +5,8 @@ struct SettingsView: View {
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
+    @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
+    @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
 
     var body: some View {
         TabView{
@@ -78,6 +80,11 @@ struct SettingsView: View {
                         title: Text(alertTitle),
                         message: Text(alertMessage),
                         primaryButton: .destructive(Text("Confirm")) {
+                            if alertTitle == "Reset Warnings"{
+                                
+                                appLaunchCounter = 0
+                                hasShownAlert = false
+                            }
                             // Handle confirmation action here
                             print("\(alertTitle) confirmed.")
                         },
