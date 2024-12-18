@@ -20,12 +20,12 @@ struct CreateFeedbackView: View {
                 }
 
             Button(action: {
-                runPythonScript()
+                ///runPythonScript(scriptPath: "/Users/leon/Desktop/Feedback-X/python/main.py",completion:True)
             }) {
                 Text(isRunning ? "Running..." : "Run Python Script")
                     .padding()
             }
-            .background(isRunning ? Color.gray : Color.purple)
+            .background(isRunning ? Color.gray : Color.accentColor)
             .buttonStyle(PlainButtonStyle())
             .cornerRadius(10)
             .disabled(isRunning)
