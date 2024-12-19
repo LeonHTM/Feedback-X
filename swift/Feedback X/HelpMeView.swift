@@ -1,5 +1,5 @@
 //
-//  fuckyou.swift
+//  HelpMeView.swift
 //  Feedback X
 //
 //  Created by Leon  on 19.12.2024.
@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct fuckyou: View {
+struct HelpMeView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    fuckyou()
+    HelpMeView()
 }
