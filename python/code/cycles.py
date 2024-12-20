@@ -67,7 +67,7 @@ class cycles():
                     
                 if index == (iteration_value -1) and (submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save"):
                     try:
-                        file_save(str(identify_feedback()),title_value,file_read(content_file_path), "y", iteration_value,feedback_id_list)
+                        file_save(name =str(identify_feedback()),title = title_value, content = file_read(content_file_path), addon = True,iteration = iteration_value, feedback_id = feedback_id_list)
                         error.remove(5,10)
                     except:
                          pass

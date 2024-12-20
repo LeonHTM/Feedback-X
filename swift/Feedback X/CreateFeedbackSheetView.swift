@@ -9,12 +9,11 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct FuckYouView: View {
+struct CreateFeedbackSheetView: View {
     @State private var feedbackTitle: String = ""
     @State private var feedbackPath: String = ""
     @State private var feedbackDescription: String = ""
     @State private var selectedOption = "Option 1"
-    @State private var showSheet = false
     @State private var showFileImporter = false
     @State private var selectedFiles: [String] = []
     @State private var showAlert = false
@@ -22,7 +21,10 @@ struct FuckYouView: View {
     private var isSubmitEnabled: Bool {
             return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !selectedOption.isEmpty
         }
-    
+    @State private var showCloseAlert = false
+    @State public var showHelpSheet = false
+    @Binding var showSheet: Bool
+   
     
     
 
@@ -157,36 +159,62 @@ struct FuckYouView: View {
         } message: {
             Text(errorMessage)
         }
+        Divider()
         HStack{
             Button(action: {
-                showSheet = false
+                showHelpSheet = true
+                
             }) {
                 Image(systemName: "questionmark.circle.fill")
                     .font(.system(.title2))
+                    .foregroundColor(.gray)
+                    
                     
             }
             .buttonStyle(PlainButtonStyle())
             .padding()
+            .sheet(isPresented: $showHelpSheet) {
+                HelpMeView()
+                    .frame(minWidth: 1100, minHeight: 750) // Add minimum width and height here
+            }
+
+    
             Spacer()
             if isSubmitEnabled == false{
-                Text("You Havent filed every Field yet")}
+                Text("You Haven't filled every Field yet")}
+            Button(action: {
+                showSheet = false
+            }) {
+                Text("Close")
+                    .padding(5) // Add padding around the text
+            }
+            
+            
+            
+            
+            
             Button(action: {
                 showSheet = false
             }) {
                 Text("Submit")
                     .padding(5) // Add padding around the text
             }
+            .disabled(!isSubmitEnabled)
+          
+            .background(isSubmitEnabled ? Color.accentColor: Color.gray)
+            .foregroundColor(.white)
+            .cornerRadius(5)
+            
+            .padding([.trailing,])
         }
-        .disabled(!isSubmitEnabled)
-
-        .opacity(isSubmitEnabled ? 1.0 : 0.5)
-        .padding([.top],5)
-        .padding([.leading,.trailing,.bottom],10)
+        
+        
         
     }
+       
 }
 
 #Preview {
-    FuckYouView()
+    CreateFeedbackSheetView(showSheet: .constant(true))
 }
 

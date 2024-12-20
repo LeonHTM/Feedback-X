@@ -2,7 +2,7 @@ import datetime
 import os
 
 
-def file_save(name: str,title: str, content: str, addon: str, iteration: str,feedback_id_list : list) -> None:
+def file_save(name: str,title: str, content: str, addon: bool, iteration: str,feedback_id: list) -> None:
     """
     Saves content to a file with optional metadata and feedback IDs.
 
@@ -10,9 +10,9 @@ def file_save(name: str,title: str, content: str, addon: str, iteration: str,fee
         name (str): Name of the file to save. Can be given with or without a suffix.
         title(str): Title of Content to save
         content (str): Content to write to the file.
-        addon (str): If equal to "y", appends the current date and time at the beginning of the file.
+        addon (bool): If equal to "y", appends the current date and time at the beginning of the file.
         iteration (str): The number of iterations or accounts the action has been performed on.
-        feedback_id_list (list): A list of feedback IDs to be appended to the file.
+        feedback_id(list): A list of feedback IDs to be appended to the file.
 
     Returns:
         None
@@ -26,19 +26,18 @@ def file_save(name: str,title: str, content: str, addon: str, iteration: str,fee
     if name[-4:] != ".txt":
         name +=  ".txt"
     name = "python/saves/" + name
-    if addon == "y":
-        current_stuff = datetime.datetime.now()
-        current_stuff = current_stuff.strftime("%Y-%m-%d %H:%M")
+    if addon == True:
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")  # Format: YYYY-MM-DD
+        current_time = datetime.datetime.now().strftime("%H:%M") 
         
        
     try:
         file = open(name,"x")
-        #print("Created File:" + name)
-        file.write(current_stuff + "\n" + str(iteration)  +  "\n")
-        for element in feedback_id_list:
+        file.write(title + "\n")
+        file.write(current_date + "\n" + current_time + "\n" + str(iteration)  +  "\n")
+        for element in feedback_id:
             file.write(element + ",")
         file.write("\n")
-        file.write(title + "\n")
         file.write("Content_Start" + "\n")
         file.write(content)
         file.write("\n" + "Content_Finish")
