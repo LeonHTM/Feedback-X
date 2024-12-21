@@ -1,3 +1,11 @@
+//
+//  CreateFeedbackView.swift
+//  Feedback X
+//
+//  Created by LeonHTM on 11.12.2024.
+//  Copyright © 2024 LeonHTM. All rights reserved.
+
+
 import SwiftUI
 
 struct CreateFeedbackView: View {

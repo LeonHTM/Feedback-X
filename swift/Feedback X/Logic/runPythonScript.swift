@@ -1,3 +1,13 @@
+//
+//  runPythonScript.swift
+//  Feedback X
+//
+//  Created by LeonHTM on 13.12.2024.
+//  Copyright © 2024 LeonHTM. All rights reserved.
+//
+
+
+
 import Foundation
 
 var isRunning = false

@@ -1,5 +1,5 @@
 //
-//  FuckYouView.swift
+//  CreateFeedbackSheetView.swift
 //  Feedback X
 //
 //  Created by Leon  on 19.12.2024.

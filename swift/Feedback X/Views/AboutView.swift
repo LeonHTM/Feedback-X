@@ -1,9 +1,10 @@
 //
-//  AboutView.swift
+//  aboutView.swift
 //  Feedback X
 //
-//  Created by Leon  on 14.12.2024.
-//
+//  Created by LeonHTM on 14.12.2024.
+//  Copyright © 2024 LeonHTM. All rights reserved.
+
 
 import SwiftUI
 

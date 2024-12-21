@@ -1,3 +1,12 @@
+//
+//  SidebarView.swift
+//  Feedback X
+//
+//  Created by LeonHTM on 15.12.2024.
+//  Copyright © 2024 LeonHTM. All rights reserved.
+//
+
+
 import SwiftUI
 
 struct SidebarView: View {
@@ -65,8 +74,6 @@ struct SidebarView: View {
                     AccountsView()
                 case "About":
                     AboutView()
-                case "FileFeedback":
-                    FileFeedbackView()
                 case "RewriteCycle":
                     TestRewriteView()
                 case "LoginCycle":
