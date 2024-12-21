@@ -18,7 +18,7 @@ struct Feedback_XApp: App {
     
     var body: some Scene {
         Window("", id: "FeedbackXMain") {
-            SidebarView()
+            RecentActivityView()
         }
         Settings {
             SettingsView()

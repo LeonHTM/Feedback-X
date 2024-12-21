@@ -84,22 +84,88 @@ struct DetailActivityView: View {
                             .font(.title)
                             .fontWeight(.bold)
                         Text("FB\(file.name.prefix(file.title.count - 4))")
-                            .foregroundColor(.secondary)
-                        HStack{
-                            Text("Iterations:")
-                                .foregroundColor(.secondary)
-                            
+                            .foregroundStyle(.secondary)
+                        VStack(alignment:.leading){
+                            HStack{
+                                Text("Iterations:")
+                                    .foregroundStyle(.secondary)
+                                    .fontWeight(.bold)
+                                    .padding([.trailing],-5)
+                                Text(file.iteration)
+                                
+                            }
+                            HStack{
+                                Text("FB on all Accounts:")
+                                    .foregroundStyle(.secondary)
+                                    .fontWeight(.bold)
+                                    .padding([.trailing],-5)
+                                Text("Unknown")
+                                
+                            }
+                        }
+                        
+                        Divider()
+                        Text("Basic Information")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
+                        VStack (alignment: .leading){
+                            Text("Please provide a descriptive title for you feedback")
+                                .fontWeight(.bold)
+                            Text(file.title)
+                        }
+                        VStack (alignment: .leading){
+                            Text("What area are you seeing an issue with?")
+                                .fontWeight(.bold)
+                            Text("Unknown")
+                        }
+                        VStack (alignment: .leading){
+                            Text("What type of Feedback are you reporting?")
+                                .fontWeight(.bold)
+                            Text("Unknown")
                         }
                         Divider()
+                        Text("Details")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
                         
+                        VStack (alignment: .leading){
+                            Text("What is the path to your Issue?")
+                                .fontWeight(.bold)
+                            Text("Unknown")
+                        }
+                        VStack (alignment: .leading){
+                            Text("What time was it when this last occured?")
+                                .fontWeight(.bold)
+                            HStack{
+                                Text(file.date).padding([.trailing],-5)
+                                Text(file.time)
+                            }
+                        }
+                        Divider()
+                        Text("Description")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
                             
-                            
-                        Text("Content: \(file.content)")
-                            
-                        Text("Date: \(file.date)")
-                            
-                        Text("Time: \(file.time)")
-                            
+                        VStack (alignment: .leading){
+                            Text("Please describe your Issue and what on can take to reproduce it:")
+                                .fontWeight(.bold)
+                                 Text(file.content)
+                                
+                        }
+                        Divider()
+                        Text("Files")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
+                        
+                        VStack (alignment: .leading){
+                            HStack{
+                                Image(systemName:"document")
+                                Text("Unknown")
+                            }
+                        }
+                        
+                        
+                        
                     }
                     .padding()
                     .padding(.bottom, 10)

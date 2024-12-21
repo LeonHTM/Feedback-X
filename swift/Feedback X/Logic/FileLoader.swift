@@ -49,7 +49,7 @@ struct FileLoader {
         let date = String(lines[1])
         let time = String(lines[2])
         let iteration = String(lines[3])
-        let fdblist = String(lines[4])
+        let fdb = String(lines[4])
         
         guard let contentStartIndex = lines.firstIndex(of: "Content_Start"),
               let contentFinishIndex = lines.firstIndex(of: "Content_Finish"),
@@ -61,7 +61,7 @@ struct FileLoader {
         let contentLines = lines[(contentStartIndex + 1)..<contentFinishIndex]
         let content = contentLines.joined(separator: "\n")
         
-        print("Parsed file: \(filename), title: \(title), date: \(date), time: \(time)")
+        print("Parsed file: \(filename), title: \(title), date: \(date), time: \(time), itertion \(iteration), fdb \(fdb).")
         
         return (name: filename, title: title, content: content, date: date, time: time,iteration: iteration)
     }
