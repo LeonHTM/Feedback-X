@@ -40,9 +40,11 @@ struct CreateFeedbackView: View {
             .padding(5)
             .sheet(isPresented: $showSheet) {
                 CreateFeedbackSheetView(showSheet : $showSheet)
-                    .frame(minWidth: 1100, minHeight: 750) // Add minimum width and height here
+                    
             }
         }
+        .frame(minWidth: 500,maxWidth:700)
+        .frame(maxHeight: .infinity)
         .alert("Legal Notice", isPresented: $showAlert) {
             Button("Quit Feedback X", role: .cancel) {
                 showAlert = false

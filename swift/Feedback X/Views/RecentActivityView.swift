@@ -26,9 +26,9 @@ struct RecentActivityView: View {
                     .buttonStyle(.plain)
                     .padding(.trailing, 10)
             }
-            Divider()
+            //Divider()
             ScrollView {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing:0) {
                     if fileData.isEmpty {
                         Text("No files found or folder is empty.")
                             .foregroundColor(.gray)
@@ -42,32 +42,40 @@ struct RecentActivityView: View {
                                     HStack {
                                         Text(file.title.isEmpty ? "Untitled" : file.title)
                                             .font(.headline)
+                                            .lineLimit(1)
+                                        
                                         Spacer()
                                         Text(file.date.contains(":") ? String(file.date.dropLast(6)) : file.date)
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
                                     }
-                                    Text(file.name.prefix(file.name.count - 3))
+                                    Text("FB\(file.name.prefix(file.name.count - 4))")
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
+                                        .lineLimit(1)
                                 }
                                 .cornerRadius(8)
                             }
+                            .padding([.leading, .trailing], 20)
+                            .padding(.vertical,5)
                             .buttonStyle(PlainButtonStyle())
-                            .padding(.bottom, 5)
+                            .background(selectedFile?.name == file.name ? Color.accentColor: Color.clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            
                             
                             if index < fileData.count - 1 {
                                 Divider()
+                                    
                             }
                         }
                     }
-                }
-                .padding([.leading, .trailing], 25)
+                }.padding([.leading, .trailing],5)
+
                 .onAppear {
                     fileData = FileLoader.loadFolderFiles(from: folderURL, fileLimit: nil)
                 }
             }
-        }.frame(width:300)
+        }//.frame(width:300)
     }
 }
 
@@ -202,7 +210,7 @@ struct DetailActivityView: View {
                 .padding(.bottom, 10)
             }
         }
-        .frame(minWidth:500,maxWidth:1000)
+        //.frame(minWidth:500,maxWidth:1000)
         .onAppear {
             filesList = stringToList(inputString: fileToShow.files)
             fdbList = stringToList(inputString: fileToShow.fdb)
@@ -210,24 +218,27 @@ struct DetailActivityView: View {
     }
 }
 
+
 struct CombinedView: View {
     @State private var selectedFile: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)? = nil
-    
+
     var body: some View {
-        HStack{
+        HSplitView {
             RecentActivityView(selectedFile: $selectedFile)
-            Divider()
-                .padding(.leading,-8)
+                .frame(minWidth: 250, maxWidth: .infinity) // Set fixed or dynamic width for the first pane
+            
             if let file = selectedFile {
                 DetailActivityView(fileToShow: file)
+                    .frame(minWidth: 500, maxWidth: 1000) // Fill remaining space when a file is selected
             } else {
                 CreateFeedbackView()
-                    .frame(minWidth:500,maxWidth:1000)
+                    .frame(minWidth: 500, maxWidth: 1000) // Fill remaining space when no file is selected
             }
-            Spacer()
         }
+        Spacer()
     }
 }
+
 
 #Preview {
     CombinedView()
