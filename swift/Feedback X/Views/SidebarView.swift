@@ -69,7 +69,7 @@ struct SidebarView: View {
             if let selectedPage = selectedPage {
                 switch selectedPage {
                 case "RecentActivity":
-                    CreateFeedbackView()
+                    CombinedView()
                 case "Accounts":
                     AccountsView()
                 case "About":
@@ -82,7 +82,7 @@ struct SidebarView: View {
                     CreateFeedbackView() // Default fallback
                 }
             } else {
-                CreateFeedbackView() // Default view when no page is selected
+                CombinedView() // Default view when no page is selected
             }
         }
         .frame(alignment: .leading)
