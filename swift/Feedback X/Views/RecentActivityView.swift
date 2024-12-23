@@ -54,13 +54,15 @@ struct RecentActivityView: View {
                                         .foregroundColor(.secondary)
                                         .lineLimit(1)
                                 }
-                                .cornerRadius(8)
+                                .padding([.leading, .trailing], 20)
+                                .padding(.vertical, 5)
+                                .background(selectedFile?.name == file.name ? Color.accentColor : Color.clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .contentShape(RoundedRectangle(cornerRadius: 8))
                             }
-                            .padding([.leading, .trailing], 20)
-                            .padding(.vertical,5)
                             .buttonStyle(PlainButtonStyle())
-                            .background(selectedFile?.name == file.name ? Color.accentColor: Color.clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                            
                             
                             
                             if index < fileData.count - 1 {
@@ -92,7 +94,7 @@ struct DetailActivityView: View {
                     Text(fileToShow.title)
                         .font(.title)
                         .fontWeight(.bold)
-                    Text("FB\(fileToShow.name.prefix(fileToShow.name.count - 3))")
+                    Text("FB\(fileToShow.name.prefix(fileToShow.name.count - 4))")
                         .foregroundStyle(.secondary)
                     
                     VStack(alignment: .leading) {

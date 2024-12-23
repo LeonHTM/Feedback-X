@@ -16,7 +16,7 @@ struct FileLoader {
                 .filter { $0.pathExtension.lowercased() == "txt" && $0.lastPathComponent != "rewrite.txt" }
                 .sorted { $0.lastPathComponent.localizedCompare($1.lastPathComponent) == .orderedDescending }
 
-            print("Found \(txtFiles.count) valid text files.")
+            //print("Found \(txtFiles.count) valid text files.")
             
             // Apply the limit if specified
             let limitedFiles = fileLimit != nil ? Array(txtFiles.prefix(fileLimit!)) : txtFiles
@@ -38,7 +38,7 @@ struct FileLoader {
     
     static func splitFile(content: String, filename: String) -> (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)? {
         let lines = content.split(separator: "\n", omittingEmptySubsequences: false)
-        print("File \(filename) has \(lines.count) lines.")
+        //print("File \(filename) has \(lines.count) lines.")
         
         //guard lines.count >= 7 else {
         //    print("File \(filename) is too short. Skipping.")
@@ -63,7 +63,7 @@ struct FileLoader {
         let contentLines = lines[(contentStartIndex + 1)..<contentFinishIndex]
         let content = contentLines.joined(separator: "\n")
         
-        print("Parsed file: \(filename), title: \(title), date: \(date), time: \(time), itertion \(iteration), fdb \(fdb).")
+        //print("Parsed file: \(filename), title: \(title), date: \(date), time: \(time), itertion \(iteration), fdb \(fdb).")
         
         return (name: filename, title: title, content: content, date: date, time: time,iteration: iteration,path: path,fdb: fdb, files: files)
     }

@@ -63,6 +63,7 @@ struct SidebarView: View {
                 
             }
             .listStyle(SidebarListStyle())
+            .frame(minWidth:175)
             
         } detail: {
             // Display the appropriate view based on the selected page
@@ -86,6 +87,13 @@ struct SidebarView: View {
             }
         }
         .frame(alignment: .leading)
+        .toolbar{
+            ToolbarItem() {
+                Button(action: {}){
+                    Text("hloo")
+                }
+            }
+        }
 
     }
 }

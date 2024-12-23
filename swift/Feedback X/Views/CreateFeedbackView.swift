@@ -19,9 +19,9 @@ struct CreateFeedbackView: View {
 
     var body: some View {
         VStack {
-            Text("No recent feedback selected")
-                .font(.headline)
-                .fontWeight(.bold)
+            Text("No Feedback Selected")
+                .font(.title2)
+                .foregroundStyle(Color.secondary)
                 .onAppear {
                     // Trigger alert only if appLaunchCounter is 1 and it hasn't been shown yet
                     if appLaunchCounter == 1 && !hasShownAlert {
@@ -48,7 +48,8 @@ struct CreateFeedbackView: View {
         .alert("Legal Notice", isPresented: $showAlert) {
             Button("Quit Feedback X", role: .cancel) {
                 showAlert = false
-                appLaunchCounter = 0 // Reset counter or handle quitting
+                appLaunchCounter = 0
+                hasShownAlert = false
                 exit(0)
             }
             Button("Accept") {}
