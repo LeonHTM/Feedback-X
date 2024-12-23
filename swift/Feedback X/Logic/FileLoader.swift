@@ -9,7 +9,7 @@
 import Foundation
 
 struct FileLoader {
-    static func loadFolderFiles(from folderURL: URL, fileLimit: Int? = nil) -> [(name: String, title: String, content: String, date: String, time: String, iteration: String)] {
+    static func loadFolderFiles(from folderURL: URL, fileLimit: Int? = nil) -> [(name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)] {
         do {
             let fileURLs = try FileManager.default.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
             let txtFiles = fileURLs
@@ -36,20 +36,22 @@ struct FileLoader {
         }
     }
     
-    static func splitFile(content: String, filename: String) -> (name: String, title: String, content: String, date: String, time: String, iteration: String)? {
+    static func splitFile(content: String, filename: String) -> (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)? {
         let lines = content.split(separator: "\n", omittingEmptySubsequences: false)
         print("File \(filename) has \(lines.count) lines.")
         
-        guard lines.count >= 7 else {
-            print("File \(filename) is too short. Skipping.")
-            return nil
-        }
+        //guard lines.count >= 7 else {
+        //    print("File \(filename) is too short. Skipping.")
+        //    return nil
+        //}
         
         let title = String(lines[0])
         let date = String(lines[1])
         let time = String(lines[2])
         let iteration = String(lines[3])
         let fdb = String(lines[4])
+        let path = String(lines[5])
+        let files = String(lines[6])
         
         guard let contentStartIndex = lines.firstIndex(of: "Content_Start"),
               let contentFinishIndex = lines.firstIndex(of: "Content_Finish"),
@@ -63,7 +65,7 @@ struct FileLoader {
         
         print("Parsed file: \(filename), title: \(title), date: \(date), time: \(time), itertion \(iteration), fdb \(fdb).")
         
-        return (name: filename, title: title, content: content, date: date, time: time,iteration: iteration)
+        return (name: filename, title: title, content: content, date: date, time: time,iteration: iteration,path: path,fdb: fdb, files: files)
     }
 }
 

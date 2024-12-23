@@ -9,7 +9,7 @@ from chill import chill
 
 class cycles():
 
-    def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value) -> None:
+    def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value, upload_value: list[str]) -> None:
         """
         Handles the cycle for duplicating feedback submissions across multiple accounts.
 
@@ -17,9 +17,10 @@ class cycles():
             start_value (int): Account to start (index for account list).
             iteration_value (int): How many accounts to process.
             submit_value (str): Action for submitting feedback. Can be "submit", "Save", or "Delete".
-            title_value(str) title of Feedback
-            path_value(str) path of Feedback
-            headless_value(str) headless 
+            title_value(str): title of Feedback
+            path_value(str): path of Feedback
+            headless_value(str): headless 
+            upload_value(list[string]): list containing string of files to upload
 
         Returns:
             None
@@ -67,13 +68,14 @@ class cycles():
                     
                 if index == (iteration_value -1) and (submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save"):
                     try:
-                        file_save(name =str(identify_feedback()),title = title_value, content = file_read(content_file_path), addon = True,iteration = iteration_value, feedback_id = feedback_id_list)
+                        file_save(name =str(identify_feedback()),title = title_value, content = file_read(content_file_path), addon = True,iteration = iteration_value, feedback_id = feedback_id_list, path = path_value, upload = upload_value)
                         error.remove(5,10)
                     except:
                          pass
                         #file_clear("current_fdb/content.txt")
                 try:
-                    upload_feedback("/Users/leon/Desktop/Feedback-X/python/current_fdb/Video_01.mov,/Users/leon/Desktop/Feedback-X/python/current_fdb/Image_01.png")
+                    for element in upload_value:
+                        upload_feedback(element)
                     error.remove(6,1)
                 except:
                      pass

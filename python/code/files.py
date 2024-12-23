@@ -2,7 +2,7 @@ import datetime
 import os
 
 
-def file_save(name: str,title: str, content: str, addon: bool, iteration: str,feedback_id: list) -> None:
+def file_save(name: str,title: str, content: str, addon: bool, iteration: str,feedback_id: list,path : str, upload : list[str]) -> None:
     """
     Saves content to a file with optional metadata and feedback IDs.
 
@@ -10,15 +10,17 @@ def file_save(name: str,title: str, content: str, addon: bool, iteration: str,fe
         name (str): Name of the file to save. Can be given with or without a suffix.
         title(str): Title of Content to save
         content (str): Content to write to the file.
-        addon (bool): If equal to "y", appends the current date and time at the beginning of the file.
+        addon (bool): If equal to true, appends the current date and time at the beginning of the file.
         iteration (str): The number of iterations or accounts the action has been performed on.
         feedback_id(list): A list of feedback IDs to be appended to the file.
+        upload(list[str]): A list containg the strings of uploads
 
     Returns:
         None
 
     Example:
-        file_save(str(identify_feedback()), file_read("current_fdb/content.txt"), "y", iteration_value, feedback_id_list)
+        THIS EXAMPLE WILL HAVE TO BE REWRITTEN ahha
+        file_save(str(identify_feedback()), file_read("current_fdb/content.txt"), True, iteration_value, feedback_id_list)
 
     Raises:
         OSError: If there is an issue creating or writing to the file.
@@ -36,6 +38,10 @@ def file_save(name: str,title: str, content: str, addon: bool, iteration: str,fe
         file.write(title + "\n")
         file.write(current_date + "\n" + current_time + "\n" + str(iteration)  +  "\n")
         for element in feedback_id:
+            file.write(element + ",")
+        file.write("\n")
+        file.write(path+ "\n")
+        for element in upload:
             file.write(element + ",")
         file.write("\n")
         file.write("Content_Start" + "\n")
