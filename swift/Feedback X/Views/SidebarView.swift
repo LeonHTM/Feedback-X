@@ -10,7 +10,8 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @State private var selectedPage: String? = "RecentActivity"
+    @State private var selectedPage: String? = "Recent Activity"
+    @State private var showSheet =  false
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedPage) {
@@ -19,12 +20,12 @@ struct SidebarView: View {
                     .foregroundColor(.gray)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 ) {
-                    NavigationLink(value: "RecentActivity") {
+                    NavigationLink(value: "Recent Activity") {
                         Label("Recent Activity", systemImage: "clock")
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                     
-                    NavigationLink(value: "FileFeedback") {
+                    NavigationLink(value: "File Feedback") {
                         Label("File Feedback", systemImage: "exclamationmark.bubble")
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
@@ -40,11 +41,11 @@ struct SidebarView: View {
                     .foregroundColor(.gray)
                     .frame(maxWidth: .infinity, alignment: .leading) // Ensure the header is left-aligned
                 ) {
-                    NavigationLink(value: "LoginCycle") {
+                    NavigationLink(value: "Login Cycle") {
                         Label("Test Feedback X", systemImage: "bubble.left.and.exclamationmark.bubble.right")
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
-                    NavigationLink(value: "RewriteCycle") {
+                    NavigationLink(value: "Rewrite Cycle") {
                         Label("Test Rewriting", systemImage: "document.on.document")
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
@@ -69,29 +70,51 @@ struct SidebarView: View {
             // Display the appropriate view based on the selected page
             if let selectedPage = selectedPage {
                 switch selectedPage {
-                case "RecentActivity":
+                case "Recent Activity":
                     CombinedView()
                 case "Accounts":
                     AccountsView()
                 case "About":
                     AboutView()
-                case "RewriteCycle":
+                case "Rewrite Cycle":
                     TestRewriteView()
-                case "LoginCycle":
+                case "Login Cycle":
                     TestLoginView()
                 default:
-                    CreateFeedbackView() // Default fallback
+                    CombinedView() // Default fallback
                 }
             } else {
                 CombinedView() // Default view when no page is selected
             }
         }
         .frame(alignment: .leading)
-        .toolbar{
-            ToolbarItem() {
-                Button(action: {}){
-                    Text("hloo")
-                }
+        .toolbar {
+            ToolbarItem(placement: .navigation) {
+                    Text(selectedPage ?? "")
+                        .font(.title3)
+                        .bold()
+            }
+                
+                
+            ToolbarItem(placement: .automatic) {
+                    
+                    Button(action:{
+                        showSheet = true
+                        
+                    }){
+                        HStack{
+                            Text("New Feedback")
+                            Image(systemName: "bubble.and.pencil")
+                        }
+                    }
+                    .sheet(isPresented: $showSheet) {
+                        CreateFeedbackSheetView(showSheet : $showSheet)
+                        
+                    }
+                
+                    
+                    
+                
             }
         }
 

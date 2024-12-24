@@ -13,13 +13,15 @@ struct CreateFeedbackSheetView: View {
     @State private var feedbackTitle: String = ""
     @State private var feedbackPath: String = ""
     @State private var feedbackDescription: String = ""
-    @State private var selectedOption = "Option 1"
+    @State private var selectedOption1 = ""
+    @State private var selectedOption2 = ""
     @State private var showFileImporter = false
     @State private var selectedFiles: [String] = []
     @State private var showAlert = false
     @State private var errorMessage: String = ""
+    @State private var shouldRewrite: Bool = false
     private var isSubmitEnabled: Bool {
-            return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !selectedOption.isEmpty
+            return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !selectedOption1.isEmpty && !selectedOption2.isEmpty
         }
     @State private var showCloseAlert = false
     @State public var showHelpSheet = false
@@ -35,25 +37,42 @@ struct CreateFeedbackSheetView: View {
                 Text("Basic Information")
                     .font(.title)
                     .fontWeight(.bold)
-
+                
                 Text("Please provide a descriptive title for your feedback")
                 TextField("", text: $feedbackTitle)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 Text("Example: Unable to make phone calls from lock screen in iOS 18.2 (22C152)")
-                                            .foregroundColor(.gray)
-                                            .font(.system(size: 12))
+                    .foregroundColor(.gray)
+                    .font(.system(size: 12))
                 Text("Which area are you seeing an Issue with?")
-                Picker("", selection: $selectedOption) {
-                    Text("Chocolate").tag("Chocolate1")
-                    Text("Vanila").tag("Vanila1")
-                    Text("Strawberry").tag("Strawberry1")
-                }.labelsHidden()
+                
+                ZStack(alignment:.leading){
+                    if selectedOption1 == ""{
+                        Text("Please select the problem area").padding(.leading, 7)
+                            .foregroundStyle(.secondary)
+                            .opacity(0.5)
+                    }
+                    Picker("", selection: $selectedOption1) {
+                        Text("Chocolate").tag("Chocolate1")
+                        Text("Vanila").tag("Vanila1")
+                        Text("Strawberry").tag("Strawberry1")
+                    }.labelsHidden()
+                }
+                
                 Text("What type of feedback are you reporting?")
-                Picker("", selection: $selectedOption) {
-                    Text("Chocolate").tag("Chocolate")
-                    Text("Vanila").tag("Vanila")
-                    Text("Strawberry").tag("Strawberry")
-                }.labelsHidden()
+                ZStack(alignment:.leading){
+                    if selectedOption2 == ""{
+                        Text("Please select the type of feedback").padding(.leading, 7)
+                            .foregroundStyle(.secondary)
+                            .opacity(0.5)
+                    }
+                    Picker("", selection: $selectedOption2) {
+                        Text("Chocolate").tag("Chocolate")
+                        Text("Vanila").tag("Vanila")
+                        Text("Strawberry").tag("Strawberry")
+                    }.labelsHidden()
+                }
+            
                 Text("What is your feedback path?")
                 TextField("", text: $feedbackPath)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -67,10 +86,14 @@ struct CreateFeedbackSheetView: View {
                 Text("Description")
                     .font(.title)
                     .fontWeight(.bold)
+                Text("Please describe the issue and what steps one can take to reproduce it:")
 
                 TextEditor(text: $feedbackDescription)
                     .frame(height: 100)
                     .border(Color.gray, width: 1)
+                Text("You should include:\n - A clear description of the Problem \n - Steps to reproduce \n - What Results you expect \n - What results you actually saw")
+                                            .foregroundColor(.gray)
+                                            .font(.system(size: 12))
 
                 // Attachments Section
                 HStack {
@@ -148,7 +171,37 @@ struct CreateFeedbackSheetView: View {
                     .padding(10)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
+                }else{
+                    HStack{
+                        Image(systemName: "face.smiling")
+                        Text("No Attachments chosen")
+                        Spacer()
+                    }
+                        .padding(10)
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(10)
                 }
+                Text("Automation")
+                    .font(.title)
+                    .fontWeight(.bold)
+                Text("How many times is the Feedback supposed be duplicated?")
+                Slider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
+                Text("This option is only available after having added at least two Apple Accounts (former Apple IDs) in Accounts")
+                                            .foregroundColor(.gray)
+                                            .font(.system(size: 12))
+                                            .padding(.top,-10)
+                Toggle(isOn: $shouldRewrite) {
+                    Text("Rewrite Details with AI on every iteration")
+                    
+                }
+                Text("This option is only available after having set up rewrite in Settings")
+                                            .foregroundColor(.gray)
+                                            .font(.system(size: 12))
+                                            .padding(.top,-10)
+                
+                
+                
+                
                 
             }
             .padding(.horizontal, 20)
@@ -206,7 +259,7 @@ struct CreateFeedbackSheetView: View {
             .cornerRadius(5)
             
             .padding([.trailing,])
-        }
+        }.frame(width:1000)
         
         
         

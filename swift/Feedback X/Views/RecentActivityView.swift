@@ -15,7 +15,7 @@ struct RecentActivityView: View {
     
     var body: some View {
         VStack {
-            HStack {
+           /* HStack {
                 Text("Recent Activity")
                     .font(.headline)
                     .padding([.leading], 10)
@@ -25,7 +25,7 @@ struct RecentActivityView: View {
                 { Image(systemName: "line.3.horizontal.decrease.circle") }
                     .buttonStyle(.plain)
                     .padding(.trailing, 10)
-            }
+            }*/
             //Divider()
             ScrollView {
                 VStack(alignment: .leading, spacing:0) {
@@ -227,14 +227,14 @@ struct CombinedView: View {
     var body: some View {
         HSplitView {
             RecentActivityView(selectedFile: $selectedFile)
-                .frame(minWidth: 250, maxWidth: .infinity) // Set fixed or dynamic width for the first pane
-            
+                .frame(minWidth: 250, maxWidth: .infinity)
+                
             if let file = selectedFile {
                 DetailActivityView(fileToShow: file)
-                    .frame(minWidth: 500, maxWidth: 1000) // Fill remaining space when a file is selected
+                    .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when a file is selected
             } else {
                 CreateFeedbackView()
-                    .frame(minWidth: 500, maxWidth: 1000) // Fill remaining space when no file is selected
+                    .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when no file is selected
             }
         }
         Spacer()
