@@ -73,7 +73,7 @@ struct SidebarView: View {
                 case "Recent Activity":
                     CombinedView()
                 case "Accounts":
-                    RecentAccountsView()
+                    CombinedAccountView()
                 case "About":
                     AboutView()
                 case "Rewrite Cycle":

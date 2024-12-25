@@ -12,7 +12,7 @@ import SwiftUI
 struct RecentAccountsView: View {
     let folderPath = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.txt"
     @State private var accountData: [(relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)] = []
-    @State var selectedAccount: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)?
+    @Binding var selectedAccount: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)?
     
     
     var body: some View {
@@ -38,11 +38,20 @@ struct RecentAccountsView: View {
                                         Text(account.country)
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
+                                        
                                     }
-                                    Text(account.password)
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                        .lineLimit(1)
+                                    if account.cookies == "y"{
+                                        Text("Cookies: ✅")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                            .lineLimit(1)
+                                    }else{
+                                        Text("Cookies: ❌")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                            .lineLimit(1)
+                                        
+                                    }
                                 }
                                 .padding([.leading, .trailing], 20)
                                 .padding(.vertical, 5)
@@ -70,168 +79,162 @@ struct RecentAccountsView: View {
         }//.frame(width:300)
     }
 }
-/*struct DetailActivityView: View {
-    let fileToShow: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)
-    @State private var filesList: [String] = []
-    @State private var fdbList: [String] = []
-    @State private var hoveredFile: String? = nil
-    
+struct DetailAccountsView: View {
+    let accountToShow: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)
+    @State private var hoveredPassword: Bool = false
+
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(fileToShow.title)
-                        .font(.title)
-                        .fontWeight(.bold)
-                    Text("FB\(fileToShow.name.prefix(fileToShow.name.count - 4))")
-                        .foregroundStyle(.secondary)
-                    
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Iterations:")
-                                .foregroundStyle(.secondary)
-                                .fontWeight(.bold)
-                            Text(fileToShow.iteration).padding(-5)
-                        }
-                        HStack {
-                            Text("FB on all Account:")
-                                .foregroundStyle(.secondary)
-                                .fontWeight(.bold)
-                            ForEach(fdbList, id: \.self) { fdb in
-                                Text("FB\(fdb)")
-                                    .padding(.leading, -5)
-                                if fdb != fdbList.last {
-                                    Text(",")
-                                        .padding(-5)
+            HStack {
+                Spacer()
+                VStack(alignment: .leading) {
+                    VStack {
+                        VStack(alignment: .leading, spacing: 20) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    Button(action:{hoveredPassword.toggle()}){
+                                        Image(systemName: hoveredPassword ? "lock.open.fill":"lock.fill")
+                                            .font(.system(size: 40))
+                                            .frame(width: 70, height: 70)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 15)
+                                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                                    .fill(Color.accentColor)
+                                            )
+                                    }.buttonStyle(PlainButtonStyle())
+                                    VStack(alignment: .leading) {
+                                        Text(accountToShow.icloudmail)
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                        Text("Added: 01.01.2025")
+                                            .foregroundStyle(.secondary)
+                                            .padding(.vertical, -10)
+                                    }
+                                }
+
+                                Divider()
+                                HStack {
+                                    Text("User Name")
+                                    Spacer()
+                                    Text(accountToShow.icloudmail)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Divider()
+                                HStack {
+                                    Text("Password")
+                                    Spacer()
+                                    Text(hoveredPassword ? accountToShow.password : String(repeating: "•", count: accountToShow.password.count))
+                                        .foregroundStyle(.secondary)
+                                        .font(.system(.body, design: .monospaced))
+                                        .onHover { hovering in
+                                            hoveredPassword = hovering
+                                        }
+                                }
+                                Divider()
+                                HStack {
+                                    Text("Country")
+                                    Spacer()
+                                    Text(accountToShow.country)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Divider()
+                                HStack {
+                                    Text("Cookies")
+                                    Spacer()
+                                    if accountToShow.cookies == "y" {
+                                        Text("✅")
+                                    } else {
+                                        Text("❌")
+                                    }
+                                }
+                                Divider()
+                                HStack {
+                                    Text("Apple Developer Account")
+                                    Spacer()
+                                    if accountToShow.appledev == "y" {
+                                        Text("✅")
+                                    } else {
+                                        Text("❌")
+                                    }
+                                }
+                                Divider()
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("Notes")
+                                        Spacer()
+                                    }
+                                    Text("notes 8979p747p93749p57p39475p9372p9759p3874589p732979834725p9237p597389475p932847589p27983275p47p39824759p325p98327495p3729p")
+                                        .foregroundStyle(.secondary)
                                 }
                             }
+                            .padding()
                         }
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                .fill(Color.gray.opacity(0.1))
+                        )
+                        .padding(10)
                     }
-                    
-                    Divider()
-                    Text("Basic Information")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                    
-                    VStack (alignment: .leading) {
-                        Text("Please provide a descriptive title for your feedback")
-                            .fontWeight(.bold)
-                        Text(fileToShow.title)
-                    }
-                    VStack (alignment: .leading) {
-                        Text("What area are you seeing an issue with?")
-                            .fontWeight(.bold)
-                        Text(fileToShow.path.prefix(while: { $0 != "," }))
-                    }
-                    VStack (alignment: .leading) {
-                        Text("What type of Feedback are you reporting?")
-                            .fontWeight(.bold)
-                        if fileToShow.path.split(separator: ",").dropFirst().first == "1" {
-                            Text("Incorrect/Unexpected Behavior")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "2" {
-                            Text("Application Crash")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "3" {
-                            Text("Application Slow/Unresponsive")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "4" {
-                            Text("Battery Life")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "5" {
-                            Text("Suggestion")
-                        }
-                    }
-                    Divider()
-                    Text("Details")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                    
-                    VStack (alignment: .leading) {
-                        Text("What is the path to your Issue?")
-                            .fontWeight(.bold)
-                        Text(fileToShow.path.split(separator: ",").dropFirst(2).joined(separator: ","))
-                    }
-                    VStack (alignment: .leading) {
-                        Text("What time was it when this last occurred?")
-                            .fontWeight(.bold)
+
+                    Text("Security")
+                        .fontWeight(.bold)
+                        .padding(.leading, 15)
+                        .padding(.vertical, 10)
+                        .padding(.bottom, -10)
+
+                    VStack(alignment: .center, spacing: 10) {
                         HStack {
-                            Text(fileToShow.date).padding([.trailing], -5)
-                            Text(fileToShow.time)
+                            Spacer()
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .font(.system(size: 25)) // Set the size to 30
+                                .foregroundColor(.yellow) // Set the color to yellow
+                            Spacer()
                         }
+                        Text("Passwords are stored in plain text.")
+                            .font(.title3)
+                        Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files. So, please don’t enter your main Apple account. Instead, create separate Apple accounts specifically for duplicating feedbacks. I’ll consider encrypting sensitive data in future versions of this application.")
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
                     }
-                    Divider()
-                    Text("Description")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                    
-                    VStack (alignment: .leading) {
-                        Text("Please describe your Issue and what one can take to reproduce it:")
-                            .fontWeight(.bold)
-                        Text(fileToShow.content)
-                    }
-                    
-                    Divider()
-                    Text("Files")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                    
-                    // Files section with ForEach implementation
-                    VStack(alignment: .leading) {
-                        ForEach(filesList, id: \.self) { fileName in
-                            HStack {
-                                Image(systemName: "document")  // Document icon
-                                Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
-                                    .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
-                                    //.foregroundColor(hoveredFile == fileName ? .accentColor : .primary)
-                                    .onHover {hovering in
-                                        if hovering {
-                                            hoveredFile = fileName
-                                        }else{
-                                            hoveredFile = nil
-                                        }
-                                        
-                                        
-                                        
-                                    }
-                            }
-                            
-                        }
-                    }
-                                            
-                    
+                    .padding(10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                            .fill(Color.gray.opacity(0.1))
+                    )
+                    .padding(.horizontal, 10)
                 }
-                .padding()
-                .padding(.bottom, 10)
+                Spacer()
             }
-        }
-        //.frame(minWidth:500,maxWidth:1000)
-        .onAppear {
-            filesList = stringToList(inputString: fileToShow.files)
-            fdbList = stringToList(inputString: fileToShow.fdb)
         }
     }
 }
 
 
-struct CombinedView: View {
-    @State private var selectedFile: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)? = nil
+
+struct CombinedAccountView: View {
+    @State private var selectedAccount: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)? = nil
 
     var body: some View {
         HSplitView {
-            RecentActivityView(selectedFile: $selectedFile)
+            RecentAccountsView(selectedAccount: $selectedAccount)
                 .frame(minWidth: 250, maxWidth: .infinity)
                 
-            if let file = selectedFile {
-                DetailActivityView(fileToShow: file)
+            if let account = selectedAccount {
+                DetailAccountsView(accountToShow: account)
                     .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when a file is selected
             } else {
-                CreateFeedbackView()
-                    .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when no file is selected
+                Text("Add Account")
+                    .frame(minWidth: 500, maxWidth: 1250,maxHeight:.infinity) // Fill remaining space when no file is selected
             }
         }
         Spacer()
     }
 }
-*/
+
 
 
 #Preview{
-    RecentAccountsView()
+    CombinedAccountView()
 }

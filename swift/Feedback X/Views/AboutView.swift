@@ -32,8 +32,11 @@ struct AboutView: View {
                     
                     Text("This project is open source and fully accessible on its GitHub repository. As this is my first project, the code may not be fully optimized. Contributions are welcome — feel free to submit a pull request to help improve the project.")
                         .padding(10)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
+                        .background(
+                                RoundedRectangle(cornerRadius: 7)
+                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                    .fill(Color.gray.opacity(0.1))
+                            )
                     
                     // Centering the GitHub link
                     HStack {
@@ -43,8 +46,11 @@ struct AboutView: View {
                             .font(.headline)
                             .foregroundColor(.blue)
                             .padding(10)
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(10)
+                            .background(
+                                    RoundedRectangle(cornerRadius: 7)
+                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                        .fill(Color.gray.opacity(0.1))
+                                )
                         Spacer()
                     }
                     
@@ -56,8 +62,11 @@ struct AboutView: View {
                     Text("I have used the following Libraries to make this Project possible: \n - SwiftUI \n - Selenium \n - Undetected-chromedriver \n - Fake-useragent")
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
+                        .background(
+                                RoundedRectangle(cornerRadius: 7)
+                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                    .fill(Color.gray.opacity(0.1))
+                            )
                 }
                 .padding(.horizontal)
                 
@@ -73,8 +82,12 @@ struct AboutView: View {
                     .font(.body)
                     .lineSpacing(5)
                     .padding(10)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(10)
+                    .background(
+                            RoundedRectangle(cornerRadius: 7)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                .fill(Color.gray.opacity(0.1))
+                           
+                        )
                 }
                 .padding(.horizontal)
             }
