@@ -15,6 +15,7 @@ struct SettingsView: View {
     @State private var alertMessage: String = ""
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
+    @AppStorage("rotationAngle") var rotationAngle: Double = 0
 
     var body: some View {
         TabView{
@@ -92,6 +93,8 @@ struct SettingsView: View {
                                 
                                 appLaunchCounter = 0
                                 hasShownAlert = false
+                                rotationAngle = 0
+                        
                             }
                             // Handle confirmation action here
                             print("\(alertTitle) confirmed.")

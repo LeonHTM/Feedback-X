@@ -9,15 +9,31 @@
 import SwiftUI
 
 struct AboutView: View {
+    
+    @State private var clickCount: Int = 0
+    @AppStorage("rotationAngle") private var rotationAngle: Double = 0
+    
+    
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
-                Image("FeedbackX256.png")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100) // Reduced size
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
+                Button(action: {
+                    clickCount += 1
+                    if clickCount == 10 {
+                        rotationAngle += Double.random(in: -360...360)
+                        clickCount = 0
+                    }
+                }) {
+                    Image("FeedbackX256.png")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100) // Reduced size
+                        .clipShape(Circle())
+                        .shadow(radius: 5)
+                        .rotationEffect(.degrees(rotationAngle))
+                        .animation(.easeInOut(duration: 1), value: rotationAngle)
+                }.buttonStyle(PlainButtonStyle())
                 
                 Text("This App was made by LeonHTM")
                     .font(.title2)
@@ -30,7 +46,10 @@ struct AboutView: View {
                         .font(.headline)
                         .fontWeight(.bold)
                     
-                    Text("This project is open source and fully accessible on its GitHub repository. As this is my first project, the code may not be fully optimized. Contributions are welcome — feel free to submit a pull request to help improve the project.")
+                    HStack{
+                        Text("This project is open source and fully accessible on its GitHub repository. As this is my first project, the code may not be fully optimized. Contributions are welcome — feel free to submit a pull request to help improve the project.")
+                        Spacer()
+                    }
                         .padding(10)
                         .background(
                                 RoundedRectangle(cornerRadius: 7)
