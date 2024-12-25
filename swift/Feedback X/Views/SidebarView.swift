@@ -25,10 +25,10 @@ struct SidebarView: View {
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                     
-                    NavigationLink(value: "File Feedback") {
+                    /*NavigationLink(value: "File Feedback") {
                         Label("File Feedback", systemImage: "exclamationmark.bubble")
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
-                    }
+                    }*/
                     NavigationLink(value: "Accounts") {
                         Label("Accounts", systemImage: "person")
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
@@ -73,7 +73,7 @@ struct SidebarView: View {
                 case "Recent Activity":
                     CombinedView()
                 case "Accounts":
-                    AccountsView()
+                    RecentAccountsView()
                 case "About":
                     AboutView()
                 case "Rewrite Cycle":
@@ -81,10 +81,10 @@ struct SidebarView: View {
                 case "Login Cycle":
                     TestLoginView()
                 default:
-                    CombinedView() // Default fallback
+                    CombinedView() 
                 }
             } else {
-                CombinedView() // Default view when no page is selected
+                CombinedView()
             }
         }
         .frame(alignment: .leading)

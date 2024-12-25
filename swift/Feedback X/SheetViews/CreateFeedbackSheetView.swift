@@ -19,7 +19,12 @@ struct CreateFeedbackSheetView: View {
     @State private var selectedFiles: [String] = []
     @State private var showAlert = false
     @State private var errorMessage: String = ""
+    
     @State private var shouldRewrite: Bool = false
+    @State private var headless: Bool = false
+    @State private var iterationValue: Int = 2
+    
+    
     private var isSubmitEnabled: Bool {
             return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !selectedOption1.isEmpty && !selectedOption2.isEmpty
         }
@@ -184,8 +189,18 @@ struct CreateFeedbackSheetView: View {
                 Text("Automation")
                     .font(.title)
                     .fontWeight(.bold)
-                Text("How many times is the Feedback supposed be duplicated?")
-                Slider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
+                Text("How many times is the Feedback supposed be sent?")
+                Text("Feedback will be sent \(iterationValue) times" ).padding(.vertical,-10)
+                Slider(
+                                value: Binding(
+                                    get: { Double(iterationValue) },
+                                    set: { iterationValue = Int($0) }
+                                ),
+                                in: 2...10, // Range of the slider
+                                step: 1 // Step size
+                            )
+                
+                            
                 Text("This option is only available after having added at least two Apple Accounts (former Apple IDs) in Accounts")
                                             .foregroundColor(.gray)
                                             .font(.system(size: 12))
@@ -195,6 +210,14 @@ struct CreateFeedbackSheetView: View {
                     
                 }
                 Text("This option is only available after having set up rewrite in Settings")
+                                            .foregroundColor(.gray)
+                                            .font(.system(size: 12))
+                                            .padding(.top,-10)
+                Toggle(isOn: $headless) {
+                    Text("Show Browser Window that automates Feedback")
+                    
+                }
+                Text("You will be able to interact with the Window therefore could potentially interfere with the automation")
                                             .foregroundColor(.gray)
                                             .font(.system(size: 12))
                                             .padding(.top,-10)

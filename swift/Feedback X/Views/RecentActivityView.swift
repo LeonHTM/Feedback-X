@@ -102,7 +102,7 @@ struct DetailActivityView: View {
                             Text("Iterations:")
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
-                            Text(fileToShow.iteration)
+                            Text(fileToShow.iteration).padding(-5)
                         }
                         HStack {
                             Text("FB on all Account:")
