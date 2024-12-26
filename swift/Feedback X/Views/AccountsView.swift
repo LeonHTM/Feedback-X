@@ -88,7 +88,11 @@ struct DetailAccountsView: View {
     @State private var editingMode:Bool = false
     @State private var editingButtonDisable:Bool = false
     
-    @State private var icloudmailSave: String = "Wallah billah"
+    @State private var icloudmailSave: String = ""
+    @State private var passwordSave: String = ""
+    @State private var countrySave: String = ""
+    @State private var cookiesSave: String = ""
+    @State private var appledevSave: String = ""
     
 
     var body: some View {
@@ -102,7 +106,11 @@ struct DetailAccountsView: View {
                                 ZStack{
                                     VStack(alignment: .leading, spacing: 10) {
                                         HStack {
-                                            Button(action:{hoveredPassword.toggle()}){
+                                            Button(action:{
+                                                if editingMode == false{
+                                                    hoveredPassword.toggle()
+                                                }
+                                            }){
                                                 ZStack{
                                                     Image(systemName: hoveredPassword ? "lock.open.fill":"lock.fill")
                                                         .font(.system(size: 40))
@@ -148,6 +156,7 @@ struct DetailAccountsView: View {
                                                         .textFieldStyle(PlainTextFieldStyle())
                                                         .multilineTextAlignment(.trailing)
                                                         .autocorrectionDisabled(true)
+                                                        .onAppear{icloudmailSave = accountToShow.icloudmail}
                                                         
                                                 }
                                                 
@@ -160,38 +169,91 @@ struct DetailAccountsView: View {
                                         HStack {
                                             Text("Password")
                                             Spacer()
-                                            Text(hoveredPassword ? accountToShow.password : String(repeating: "•", count: accountToShow.password.count))
-                                                .foregroundStyle(.secondary)
-                                                .font(.system(.body, design: .monospaced))
-                                                .onHover { hovering in
-                                                    hoveredPassword = hovering
-                                                }
+                                            if editingMode == true{
+                                                
+                                                TextField("",text: $passwordSave)
+                                                    .foregroundStyle(.primary)
+                                                    .textFieldStyle(PlainTextFieldStyle())
+                                                    .multilineTextAlignment(.trailing)
+                                                    .autocorrectionDisabled(true)
+                                                    .font(.system(.body, design: .monospaced))
+                                                    .onAppear{passwordSave = accountToShow.password}
+                                                
+                                                
+                                            }else{
+                                                Text(hoveredPassword ? accountToShow.password : String(repeating: "•", count: accountToShow.password.count))
+                                                    .foregroundStyle(.secondary)
+                                                    .font(.system(.body, design: .monospaced))
+                                                    .onHover { hovering in
+                                                        hoveredPassword = hovering
+                                                    }
+                                            }
                                         }
                                         Divider()
                                         HStack {
                                             Text("Country")
                                             Spacer()
-                                            Text(accountToShow.country)
-                                                .foregroundStyle(.secondary)
+                                            if editingMode == true{
+                                                Picker("",selection: $countrySave) {
+                                                    ForEach(CountryList.countriesAndTerritories, id: \.self) { country in
+                                                                                Text(country)
+                                                                            }
+                                                }
+                                                .onAppear{countrySave = accountToShow.country}
+                                                .frame(width:150)
+                                                
+                                                
+                                            }else{
+                                                Text(accountToShow.country)
+                                                    .foregroundStyle(.secondary)
+                                            }
                                         }
                                         Divider()
                                         HStack {
                                             Text("Cookies")
                                             Spacer()
-                                            if accountToShow.cookies == "y" {
-                                                Text("✅")
-                                            } else {
-                                                Text("❌")
+                                            if editingMode == true{
+                                                
+                                                Picker("",selection: $cookiesSave) {
+                                                    Text("Set up").tag("y")
+                                                    Text("Not set up").tag("n")
+                                                }
+                                                .onAppear{cookiesSave = accountToShow.cookies}
+                                                .frame(width:150)
+                                                
+                                                
+                                            }else{
+                                                
+                                                if accountToShow.cookies == "y" {
+                                                    Text("✅")
+                                                } else {
+                                                    Text("❌")
+                                                }
                                             }
                                         }
                                         Divider()
                                         HStack {
                                             Text("Apple Developer Account")
                                             Spacer()
-                                            if accountToShow.appledev == "y" {
-                                                Text("✅")
-                                            } else {
-                                                Text("❌")
+                                            if editingMode == true{
+                                            
+                                                    Picker("",selection: $appledevSave) {
+                                                        Text("Accepted").tag("y")
+                                                        Text("Not Accepted").tag("n")
+                                                    }
+                                                    .onAppear{appledevSave = accountToShow.appledev}
+                                                    .frame(width:150)
+                                                    
+                                                    
+                                                    
+                                                
+                                                
+                                            }else{
+                                                if accountToShow.appledev == "y" {
+                                                    Text("✅")
+                                                } else {
+                                                    Text("❌")
+                                                }
                                             }
                                         }
                                         Divider()
@@ -209,6 +271,9 @@ struct DetailAccountsView: View {
                                     Button(action: {
                                         editingMode.toggle()
                                         editingButtonDisable = true
+                                        if editingMode == false{
+                                            print("hi guys this is da new password UWU \(icloudmailSave)")
+                                        }
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                             editingButtonDisable = false
                                         }
@@ -333,7 +398,7 @@ struct CombinedAccountView: View {
 
 
 #Preview{
-    DetailAccountsView(accountToShow: (relay:"stfu",account:"stfu",password:"stfu",country:"stfu",icloudmail:"stfu",appledev:"stfu",cookies:"stfu",index:0))
+    DetailAccountsView(accountToShow: (relay:"stfu",account:"i like cok",password:"password123",country:"stfuLand",icloudmail:"stfu@icloud.com",appledev:"n",cookies:"n",index:0))
 }
  
 /*
