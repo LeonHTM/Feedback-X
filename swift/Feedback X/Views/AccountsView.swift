@@ -82,7 +82,7 @@ struct RecentAccountsView: View {
     }
 }
 struct DetailAccountsView: View {
-    var accountToShow: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String,index: Int)
+    @Binding var accountToShow: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String,index: Int)
     @State private var hoveredPassword: Bool = false
     @State private var showDeleteAlert: Bool = false
     @State private var editingMode:Bool = false
@@ -282,15 +282,11 @@ struct DetailAccountsView: View {
                                             viewSaveList = AccountLoader.loadAccounts(from: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.txt")
                                             viewSave = viewSaveList[indexSave]
                                             
-                                            /*DetailAccountsView(accountToShow:(relay: viewSave.relay, account: viewSave.account, password: viewSave.password, country: viewSave.country, icloudmail: viewSave.icloudmail, appledev: viewSave.appledev, cookies: viewSave.cookies, index: indexSave))*/
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            print("hi guys this is da new password UWU \(icloudmailSave)")
+                                            accountToShow.icloudmail = viewSave.icloudmail
+                                            accountToShow.password = viewSave.password
+                                            accountToShow.country = viewSave.country
+                                            accountToShow.cookies = viewSave.cookies
+                                            accountToShow.appledev = viewSave.appledev
                                         }
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                             editingButtonDisable = false
@@ -400,9 +396,27 @@ struct CombinedAccountView: View {
             RecentAccountsView(selectedAccount: $selectedAccount, selectedIndex: $selectedIndex)
                 .frame(minWidth: 250, maxWidth: .infinity)
 
-            if let account = selectedAccount, let index = selectedIndex {
-                DetailAccountsView(accountToShow: (relay: account.relay, account: account.account, password: account.password, country: account.country, icloudmail: account.icloudmail, appledev: account.appledev, cookies: account.cookies, index: index))
-                    .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when a file is selected
+            if let index = selectedIndex {
+                DetailAccountsView(accountToShow: Binding(
+                    get: {
+                        guard let account = selectedAccount else {
+                            return (relay: "", account: "", password: "", country: "", icloudmail: "", appledev: "", cookies: "", index: -1)
+                        }
+                        return (relay: account.relay, account: account.account, password: account.password, country: account.country, icloudmail: account.icloudmail, appledev: account.appledev, cookies: account.cookies, index: index)
+                    },
+                    set: { newValue in
+                        selectedAccount = (
+                            relay: newValue.relay,
+                            account: newValue.account,
+                            password: newValue.password,
+                            country: newValue.country,
+                            icloudmail: newValue.icloudmail,
+                            appledev: newValue.appledev,
+                            cookies: newValue.cookies
+                        )
+                    }
+                ))
+                .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when a file is selected
             } else {
                 CreateAccountView()
                     .frame(minWidth: 500, maxWidth: 1250, maxHeight: .infinity) // Fill remaining space when no file is selected
@@ -411,6 +425,7 @@ struct CombinedAccountView: View {
         Spacer()
     }
 }
+
 
 
 
