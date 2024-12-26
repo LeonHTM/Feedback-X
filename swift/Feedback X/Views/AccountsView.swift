@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct RecentAccountsView: View {
-    let folderPath = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.txt"
+    let folderPath = "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.txt"
     @State private var accountData: [(relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)] = []
     @Binding var selectedAccount: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)?
     @Binding var selectedIndex: Int?
@@ -82,7 +82,7 @@ struct RecentAccountsView: View {
     }
 }
 struct DetailAccountsView: View {
-    let accountToShow: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String,index: Int)
+    var accountToShow: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String,index: Int)
     @State private var hoveredPassword: Bool = false
     @State private var showDeleteAlert: Bool = false
     @State private var editingMode:Bool = false
@@ -90,9 +90,12 @@ struct DetailAccountsView: View {
     
     @State private var icloudmailSave: String = ""
     @State private var passwordSave: String = ""
-    @State private var countrySave: String = ""
-    @State private var cookiesSave: String = ""
-    @State private var appledevSave: String = ""
+    @State private var countrySave: String = "DrakyLand"
+    @State private var cookiesSave: String = "n"
+    @State private var appledevSave: String = "n"
+    @State private var viewSaveList:[(relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)] = []
+    @State private var viewSave:(relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String) = (relay: "", account:"", password: "", country: "", icloudmail: "", appledev: "", cookies: "")
+    @State private var indexSave:Int = 1000
     
 
     var body: some View {
@@ -272,6 +275,21 @@ struct DetailAccountsView: View {
                                         editingMode.toggle()
                                         editingButtonDisable = true
                                         if editingMode == false{
+                                            indexSave = accountToShow.index
+                                            
+                                            AccountLoader.editAccounts(path: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.txt", relay: accountToShow.relay, account: accountToShow.account, password: passwordSave, country: countrySave, icloudmail: icloudmailSave, appledev: appledevSave, cookies: cookiesSave, index: accountToShow.index)
+                                            
+                                            viewSaveList = AccountLoader.loadAccounts(from: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.txt")
+                                            viewSave = viewSaveList[indexSave]
+                                            
+                                            /*DetailAccountsView(accountToShow:(relay: viewSave.relay, account: viewSave.account, password: viewSave.password, country: viewSave.country, icloudmail: viewSave.icloudmail, appledev: viewSave.appledev, cookies: viewSave.cookies, index: indexSave))*/
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
                                             print("hi guys this is da new password UWU \(icloudmailSave)")
                                         }
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -396,13 +414,13 @@ struct CombinedAccountView: View {
 
 
 
-
+/*
 #Preview{
     DetailAccountsView(accountToShow: (relay:"stfu",account:"i like cok",password:"password123",country:"stfuLand",icloudmail:"stfu@icloud.com",appledev:"n",cookies:"n",index:0))
-}
+}*/
  
-/*
+
 #Preview{
     CombinedAccountView()
 }
- */
+ 
