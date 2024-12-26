@@ -88,7 +88,7 @@ struct DetailAccountsView: View {
     @State private var editingMode:Bool = false
     @State private var editingButtonDisable:Bool = false
     
-    @State private var icloudmailSave: String = ""
+    @State private var icloudmailSave: String = "Wallah billah"
     
 
     var body: some View {
@@ -141,8 +141,15 @@ struct DetailAccountsView: View {
                                             Text("User Name")
                                             Spacer()
                                             if editingMode == true{
-                                                TextField(accountToShow.icloudmail, text: $icloudmailSave)
-                                                                .textFieldStyle(PlainTextFieldStyle())
+                                                HStack{
+                                                    Spacer()
+                                                    TextField("",text: $icloudmailSave)
+                                                        .foregroundStyle(.primary)
+                                                        .textFieldStyle(PlainTextFieldStyle())
+                                                        .multilineTextAlignment(.trailing)
+                                                        .autocorrectionDisabled(true)
+                                                        
+                                                }
                                                 
                                             }else{
                                                 Text(accountToShow.icloudmail)
