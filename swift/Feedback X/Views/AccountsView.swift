@@ -6,26 +6,25 @@
 //  Copyright © 2024 LeonHTM. All rights reserved.
 //
 
-
 import SwiftUI
 
 struct RecentAccountsView: View {
-    let folderPath = "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.txt"
-    @State private var accountData: [(relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)] = []
-    @Binding var selectedAccount: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)?
+    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.json")
+    
+    @EnvironmentObject var accountLoader: AccountLoader
+    @Binding var selectedAccount: Account?
     @Binding var selectedIndex: Int?
-    
-    
+
     var body: some View {
         VStack {
             ScrollView {
-                VStack(alignment: .leading, spacing:0) {
-                    if accountData.isEmpty {
+                VStack(alignment: .leading, spacing: 0) {
+                    if accountLoader.accounts.isEmpty {
                         Text("No files found or folder is empty.")
                             .foregroundColor(.gray)
                     } else {
-                        ForEach(accountData.indices, id: \.self) { index in
-                            let account = accountData[index]
+                        ForEach(accountLoader.accounts.indices, id: \.self) { index in
+                            let account = accountLoader.accounts[index]
                             Button(action: {
                                 selectedAccount = account
                                 selectedIndex = index
@@ -35,407 +34,392 @@ struct RecentAccountsView: View {
                                         Text(account.icloudmail.isEmpty ? "Untitled" : account.icloudmail)
                                             .font(.headline)
                                             .lineLimit(1)
-                                        
+
                                         Spacer()
                                         Text(account.country)
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
-                                        
                                     }
-                                    if account.cookies == "y"{
+                                    if account.cookies == "y" {
                                         Text("Cookies: ✅")
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
                                             .lineLimit(1)
-                                    }else{
+                                    } else {
                                         Text("Cookies: ❌")
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
                                             .lineLimit(1)
-                                        
                                     }
                                 }
                                 .padding([.leading, .trailing], 20)
                                 .padding(.vertical, 5)
-                                .background(selectedAccount?.icloudmail == account.icloudmail ? Color.accentColor : Color.clear)
+                                .background(selectedAccount?.id == account.id ? Color.accentColor : Color.clear)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .contentShape(RoundedRectangle(cornerRadius: 8))
                             }
                             .buttonStyle(PlainButtonStyle())
 
-                            
-                            
-                            
-                            if index < accountData.count - 1 {
+                            if index < accountLoader.accounts.count - 1 {
                                 Divider()
-                                    
                             }
                         }
                     }
-                }.padding([.leading, .trailing],5)
-
-                .onAppear {
-                    accountData = AccountLoader.loadAccounts(from: folderPath)
                 }
+                .padding([.leading, .trailing], 5)
             }
-        }//.frame(width:300)
-    }
-}
-struct DetailAccountsView: View {
-    @Binding var accountToShow: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String,index: Int)
-    @State private var hoveredPassword: Bool = false
-    @State private var showDeleteAlert: Bool = false
-    @State private var editingMode:Bool = false
-    @State private var editingButtonDisable:Bool = false
-    
-    @State private var icloudmailSave: String = ""
-    @State private var passwordSave: String = ""
-    @State private var countrySave: String = "DrakyLand"
-    @State private var cookiesSave: String = "n"
-    @State private var appledevSave: String = "n"
-    @State private var viewSaveList:[(relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)] = []
-    @State private var viewSave:(relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String) = (relay: "", account:"", password: "", country: "", icloudmail: "", appledev: "", cookies: "")
-    @State private var indexSave:Int = 1000
-    
-
-    var body: some View {
-        GeometryReader { geometry in
-            ScrollView {
-                HStack {
-                    Spacer()
-                    VStack(alignment: .leading) {
-                        VStack {
-                            VStack(alignment: .leading, spacing: 20) {
-                                ZStack{
-                                    VStack(alignment: .leading, spacing: 10) {
-                                        HStack {
-                                            Button(action:{
-                                                if editingMode == false{
-                                                    hoveredPassword.toggle()
-                                                }
-                                            }){
-                                                ZStack{
-                                                    Image(systemName: hoveredPassword ? "lock.open.fill":"lock.fill")
-                                                        .font(.system(size: 40))
-                                                        .frame(width: 70, height: 70)
-                                                        .background(
-                                                            RoundedRectangle(cornerRadius: 15)
-                                                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                                                .fill(Color.accentColor)
-                                                        )
-                                                    
-                                                    Text("\(accountToShow.index + 1)")
-                                                        .padding(10)
-                                                        .background(
-                                                            Circle()
-                                                                .stroke(Color.black.opacity(0.2), lineWidth: 1)
-                                                                .fill(Color.gray)
-                                                            
-                                                        ).offset(x:30,y:30)
-                                                    
-                                                    
-                                                }
-                                            }.buttonStyle(PlainButtonStyle())
-                                            VStack(alignment: .leading) {
-                                                Text(accountToShow.icloudmail)
-                                                    .font(.title)
-                                                    .fontWeight(.bold)
-                                                Text("Added: 01.01.2025")
-                                                    .foregroundStyle(.secondary)
-                                                    .padding(.vertical, -10)
-                                            }
-                                            
-                                        }
-                                        
-                                        Divider()
-                                        HStack {
-                                            Text("User Name")
-                                            Spacer()
-                                            if editingMode == true{
-                                                HStack{
-                                                    Spacer()
-                                                    TextField("",text: $icloudmailSave)
-                                                        .foregroundStyle(.primary)
-                                                        .textFieldStyle(PlainTextFieldStyle())
-                                                        .multilineTextAlignment(.trailing)
-                                                        .autocorrectionDisabled(true)
-                                                        .onAppear{icloudmailSave = accountToShow.icloudmail}
-                                                        
-                                                }
-                                                
-                                            }else{
-                                                Text(accountToShow.icloudmail)
-                                                    .foregroundStyle(.secondary)
-                                            }
-                                        }
-                                        Divider()
-                                        HStack {
-                                            Text("Password")
-                                            Spacer()
-                                            if editingMode == true{
-                                                
-                                                TextField("",text: $passwordSave)
-                                                    .foregroundStyle(.primary)
-                                                    .textFieldStyle(PlainTextFieldStyle())
-                                                    .multilineTextAlignment(.trailing)
-                                                    .autocorrectionDisabled(true)
-                                                    .font(.system(.body, design: .monospaced))
-                                                    .onAppear{passwordSave = accountToShow.password}
-                                                
-                                                
-                                            }else{
-                                                Text(hoveredPassword ? accountToShow.password : String(repeating: "•", count: accountToShow.password.count))
-                                                    .foregroundStyle(.secondary)
-                                                    .font(.system(.body, design: .monospaced))
-                                                    .onHover { hovering in
-                                                        hoveredPassword = hovering
-                                                    }
-                                            }
-                                        }
-                                        Divider()
-                                        HStack {
-                                            Text("Country")
-                                            Spacer()
-                                            if editingMode == true{
-                                                Picker("",selection: $countrySave) {
-                                                    ForEach(CountryList.countriesAndTerritories, id: \.self) { country in
-                                                                                Text(country)
-                                                                            }
-                                                }
-                                                .onAppear{countrySave = accountToShow.country}
-                                                .frame(width:150)
-                                                
-                                                
-                                            }else{
-                                                Text(accountToShow.country)
-                                                    .foregroundStyle(.secondary)
-                                            }
-                                        }
-                                        Divider()
-                                        HStack {
-                                            Text("Cookies")
-                                            Spacer()
-                                            if editingMode == true{
-                                                
-                                                Picker("",selection: $cookiesSave) {
-                                                    Text("Set up").tag("y")
-                                                    Text("Not set up").tag("n")
-                                                }
-                                                .onAppear{cookiesSave = accountToShow.cookies}
-                                                .frame(width:150)
-                                                
-                                                
-                                            }else{
-                                                
-                                                if accountToShow.cookies == "y" {
-                                                    Text("✅")
-                                                } else {
-                                                    Text("❌")
-                                                }
-                                            }
-                                        }
-                                        Divider()
-                                        HStack {
-                                            Text("Apple Developer Account")
-                                            Spacer()
-                                            if editingMode == true{
-                                            
-                                                    Picker("",selection: $appledevSave) {
-                                                        Text("Accepted").tag("y")
-                                                        Text("Not Accepted").tag("n")
-                                                    }
-                                                    .onAppear{appledevSave = accountToShow.appledev}
-                                                    .frame(width:150)
-                                                    
-                                                    
-                                                    
-                                                
-                                                
-                                            }else{
-                                                if accountToShow.appledev == "y" {
-                                                    Text("✅")
-                                                } else {
-                                                    Text("❌")
-                                                }
-                                            }
-                                        }
-                                        Divider()
-                                        VStack(alignment: .leading) {
-                                            HStack {
-                                                Text("Notes")
-                                                Spacer()
-                                            }
-                                            Text("notes 8979p747p93749p57p39475p9372p9759p3874589p732979834725p9237p597389475p932847589p27983275p47p39824759p325p98327495p3729p")
-                                                .foregroundStyle(.secondary)
-                                        }
-                                    }
-                                    .padding()
-                                    
-                                    Button(action: {
-                                        editingMode.toggle()
-                                        editingButtonDisable = true
-                                        if editingMode == false{
-                                            indexSave = accountToShow.index
-                                            
-                                            AccountLoader.editAccounts(path: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.txt", relay: accountToShow.relay, account: accountToShow.account, password: passwordSave, country: countrySave, icloudmail: icloudmailSave, appledev: appledevSave, cookies: cookiesSave, index: accountToShow.index)
-                                            
-                                            viewSaveList = AccountLoader.loadAccounts(from: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.txt")
-                                            viewSave = viewSaveList[indexSave]
-                                            
-                                            accountToShow.icloudmail = viewSave.icloudmail
-                                            accountToShow.password = viewSave.password
-                                            accountToShow.country = viewSave.country
-                                            accountToShow.cookies = viewSave.cookies
-                                            accountToShow.appledev = viewSave.appledev
-                                        }
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                            editingButtonDisable = false
-                                        }
-                                    }) {
-                                        Text(editingMode ? "Save" : "Edit")
-                                    }
-                                    .disabled(editingButtonDisable)
-                                    .offset(x: geometry.size.width * 0.5 - 50, y: -150)
-                                    if editingMode == true{
-                                        Button(action: {
-                                            editingMode.toggle()
-                                            editingButtonDisable = true
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                editingButtonDisable = false
-                                            }
-                                        }) {
-                                            Text("Cancel")
-                                        }
-                                        .disabled(editingButtonDisable)
-                                        .offset(x: geometry.size.width * 0.5 - 105, y: -150)
-                                    }
-                                    
-                                    
-                                    
-                                    
-                                }
-                            }
-                            .background(
-                                RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                    .fill(Color.gray.opacity(0.1))
-                            )
-                            .padding(10)
-                        }
-                        
-                        Text("Security")
-                            .fontWeight(.bold)
-                            .padding(.leading, 15)
-                            .padding(.vertical, 10)
-                            .padding(.bottom, -10)
-                        
-                        VStack(alignment: .center, spacing: 10) {
-                            HStack {
-                                Spacer()
-                                Image(systemName: "exclamationmark.circle.fill")
-                                    .font(.system(size: 25)) // Set the size to 30
-                                    .foregroundColor(.yellow) // Set the color to yellow
-                                Spacer()
-                            }
-                            Text("Passwords are stored in plain text.")
-                                .font(.title3)
-                            Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files. So, please don’t enter your main Apple account. Instead, create separate Apple accounts specifically for duplicating feedbacks. I’ll consider encrypting sensitive data in future versions of this application.")
-                                .foregroundStyle(.secondary)
-                                .multilineTextAlignment(.center)
-                        }
-                        .padding(10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                .fill(Color.gray.opacity(0.1))
-                        )
-                        .padding(.horizontal, 10)
-                        HStack{
-                            Spacer()
-                            VStack(alignment: .center, spacing: 10) {
-                                Button(action:{showDeleteAlert.toggle()}){
-                                    HStack{
-                                        Image(systemName: "trash")
-                                        Text("Delete Account")
-                                    }.foregroundStyle(.red)
-                                    
-                                }.alert(isPresented: $showDeleteAlert) {
-                                    Alert(
-                                        title: Text("Attention"),
-                                        message: Text("Are you sure you want to delete Account \(accountToShow.icloudmail)?"),
-                                        primaryButton: .destructive(Text("Confirm")) {
-                                            // Clear accounts file line here
-                                        },
-                                        secondaryButton: .cancel()
-                                    )
-                                }
-                                
-                                
-                            }
-                            
-                            .padding(.horizontal, 10)
-                            Spacer()
-                        }
-                        
-                    }
-                    Spacer()
-                }
-            }
+        }
+        .onAppear {
+            accountLoader.loadAccounts(from: accountURL) // Ensure path is passed here
         }
     }
 }
 
 
 
+
+ 
+ struct DetailAccountsView: View {
+     @Binding var accountToShow: Account
+     let indexToShow: Int
+     @EnvironmentObject var accountLoader: AccountLoader
+     
+     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.json")
+     
+     @State private var hoveredPassword: Bool = false
+     @State private var showDeleteAlert: Bool = false
+     @State private var editingMode: Bool = false
+     @State private var editingButtonDisable: Bool = false
+     
+     @State private var icloudmailSave: String = ""
+     @State private var passwordSave: String = ""
+     @State private var countrySave: String = "DrakyLand"
+     @State private var cookiesSave: String = "n"
+     @State private var appledevSave: String = "n"
+     
+     @State private var currentIndex: Int = 0 // Track the current index
+     
+     
+     
+     // Save the edited account
+     func saveAccount() {
+         // Create a new Account with the updated values
+         let updatedAccount = Account(
+             account: accountToShow.account,
+             icloudmail: icloudmailSave,
+             password: passwordSave,
+             relay: accountToShow.relay,
+             country: countrySave,
+             appledev: appledevSave,
+             cookies: cookiesSave
+         )
+         
+         accountLoader.editAccount(at: indexToShow, with: updatedAccount, to: accountURL)
+     }
+     
+     var body: some View {
+         GeometryReader { geometry in
+             ScrollView {
+                 HStack {
+                     Spacer()
+                     VStack(alignment: .leading) {
+                         VStack {
+                             VStack(alignment: .leading, spacing: 20) {
+                                 ZStack {
+                                     VStack(alignment: .leading, spacing: 10) {
+                                         HStack {
+                                             Button(action: {
+                                                 if !editingMode {
+                                                     hoveredPassword.toggle()
+                                                 }
+                                             }) {
+                                                 ZStack {
+                                                     Image(systemName: hoveredPassword ? "lock.open.fill" : "lock.fill")
+                                                         .font(.system(size: 40))
+                                                         .frame(width: 70, height: 70)
+                                                         .background(
+                                                             RoundedRectangle(cornerRadius: 15)
+                                                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                                                 .fill(Color.accentColor)
+                                                         )
+                                                     
+                                                     Text("\(indexToShow)") // Display account ID
+                                                         .padding(10)
+                                                         .background(
+                                                             Circle()
+                                                                 .stroke(Color.black.opacity(0.2), lineWidth: 1)
+                                                                 .fill(Color.gray)
+                                                         )
+                                                         .offset(x: 30, y: 30)
+                                                 }
+                                             }
+                                             .buttonStyle(PlainButtonStyle())
+                                             VStack(alignment: .leading) {
+                                                 Text(accountToShow.icloudmail)
+                                                     .font(.title)
+                                                     .fontWeight(.bold)
+                                                 Text("Added: 01.01.2025")
+                                                     .foregroundStyle(.secondary)
+                                                     .padding(.vertical, -10)
+                                             }
+                                         }
+                                         
+                                         Divider()
+                                         
+                                         // User Name Section
+                                         HStack {
+                                             Text("User Name")
+                                             Spacer()
+                                             if editingMode {
+                                                 TextField("", text: $icloudmailSave)
+                                                     .foregroundStyle(.primary)
+                                                     .textFieldStyle(PlainTextFieldStyle())
+                                                     .multilineTextAlignment(.trailing)
+                                                     .onAppear { icloudmailSave = accountToShow.icloudmail }
+                                             } else {
+                                                 Text(accountToShow.icloudmail)
+                                                     .foregroundStyle(.secondary)
+                                             }
+                                         }
+                                         Divider()
+                                         
+                                         // Password Section
+                                         HStack {
+                                             Text("Password")
+                                             Spacer()
+                                             if editingMode {
+                                                 TextField("", text: $passwordSave)
+                                                     .foregroundStyle(.primary)
+                                                     .textFieldStyle(PlainTextFieldStyle())
+                                                     .multilineTextAlignment(.trailing)
+                                                     .font(.system(.body, design: .monospaced))
+                                                     .onAppear { passwordSave = accountToShow.password }
+                                             } else {
+                                                 Text(hoveredPassword ? accountToShow.password : String(repeating: "•", count: accountToShow.password.count))
+                                                     .foregroundStyle(.secondary)
+                                                     .font(.system(.body, design: .monospaced))
+                                                     .onHover { hovering in
+                                                         hoveredPassword = hovering
+                                                     }
+                                             }
+                                         }
+                                         Divider()
+                                         
+                                         // Country Picker
+                                         HStack {
+                                             Text("Country")
+                                             Spacer()
+                                             if editingMode {
+                                                 Picker("", selection: $countrySave) {
+                                                     ForEach(CountryList.countriesAndTerritories, id: \.self) { country in
+                                                         Text(country)
+                                                     }
+                                                 }
+                                                 .onAppear { countrySave = accountToShow.country }
+                                                 .frame(width: 150)
+                                             } else {
+                                                 Text(accountToShow.country)
+                                                     .foregroundStyle(.secondary)
+                                             }
+                                         }
+                                         Divider()
+                                         
+                                         // Cookies Picker
+                                         HStack {
+                                             Text("Cookies")
+                                             Spacer()
+                                             if editingMode {
+                                                 Picker("", selection: $cookiesSave) {
+                                                     Text("Set up").tag("y")
+                                                     Text("Not set up").tag("n")
+                                                 }
+                                                 .onAppear { cookiesSave = accountToShow.cookies }
+                                                 .frame(width: 150)
+                                             } else {
+                                                 Text(accountToShow.cookies == "y" ? "✅" : "❌")
+                                             }
+                                         }
+                                         Divider()
+                                         
+                                         // Apple Developer Account Picker
+                                         HStack {
+                                             Text("Apple Developer Account")
+                                             Spacer()
+                                             if editingMode {
+                                                 Picker("", selection: $appledevSave) {
+                                                     Text("Accepted").tag("y")
+                                                     Text("Not Accepted").tag("n")
+                                                 }
+                                                 .onAppear { appledevSave = accountToShow.appledev }
+                                                 .frame(width: 150)
+                                             } else {
+                                                 Text(accountToShow.appledev == "y" ? "✅" : "❌")
+                                             }
+                                         }
+                                         Divider()
+                                         
+                                         VStack(alignment: .leading) {
+                                             HStack {
+                                                 Text("Notes")
+                                                 Spacer()
+                                             }
+                                             Text("notes 8979p747p93749p57p39475p9372p9759p3874589p732979834725p9237p597389475p932847589p27983275p47p39824759p325p98327495p3729p")
+                                                 .foregroundStyle(.secondary)
+                                         }
+                                     }
+                                     .padding()
+                                     
+                                     // Save/Cancel Buttons
+                                     Button(action: {
+                                         editingMode.toggle()
+                                         editingButtonDisable = true
+                                         if !editingMode {
+                                             saveAccount() // Save the updated account data
+                                         }
+                                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                             editingButtonDisable = false
+                                         }
+                                     }) {
+                                         Text(editingMode ? "Save" : "Edit")
+                                     }
+                                     .disabled(editingButtonDisable)
+                                     .offset(x: geometry.size.width * 0.5 - 50, y: -150)
+                                     
+                                     if editingMode {
+                                         Button(action: {
+                                             editingMode.toggle()
+                                             editingButtonDisable = true
+                                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                 editingButtonDisable = false
+                                             }
+                                         }) {
+                                             Text("Cancel")
+                                         }
+                                         .disabled(editingButtonDisable)
+                                         .offset(x: geometry.size.width * 0.5 - 105, y: -150)
+                                     }
+                                 }
+                             }
+                             .background(
+                                 RoundedRectangle(cornerRadius: 15)
+                                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                     .fill(Color.gray.opacity(0.1))
+                             )
+                             .padding(10)
+                         }
+                         
+                         // Security Section
+                         Text("Security")
+                             .fontWeight(.bold)
+                             .padding(.leading, 15)
+                             .padding(.vertical, 10)
+                             .padding(.bottom, -10)
+                         
+                         VStack(alignment: .center, spacing: 10) {
+                             HStack {
+                                 Spacer()
+                                 Image(systemName: "exclamationmark.circle.fill")
+                                     .font(.system(size: 25))
+                                     .foregroundColor(.yellow)
+                                 Spacer()
+                             }
+                             Text("Passwords are stored in plain text.")
+                                 .font(.title3)
+                             Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files.")
+                                 .foregroundStyle(.secondary)
+                                 .multilineTextAlignment(.center)
+                         }
+                         .padding(10)
+                         .background(
+                             RoundedRectangle(cornerRadius: 15)
+                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                 .fill(Color.gray.opacity(0.1))
+                         )
+                         .padding(.horizontal, 10)
+                         
+                         // Delete Account Section
+                         HStack {
+                             Spacer()
+                             VStack(alignment: .center, spacing: 10) {
+                                 Button(action: { showDeleteAlert.toggle() }) {
+                                     HStack {
+                                         Image(systemName: "trash")
+                                         Text("Delete Account")
+                                     }.foregroundStyle(.red)
+                                 }
+                                 .alert(isPresented: $showDeleteAlert) {
+                                     Alert(
+                                         title: Text("Attention"),
+                                         message: Text("Are you sure you want to delete Account \(accountToShow.icloudmail)?"),
+                                         primaryButton: .destructive(Text("Confirm")) {
+                                             // Delete account logic here
+                                         },
+                                         secondaryButton: .cancel()
+                                     )
+                                 }
+                             }
+                             .padding(.horizontal, 10)
+                             Spacer()
+                         }
+                     }
+                     Spacer()
+                 }
+             }
+         }
+         
+     }
+ }
+
+
+
+
 struct CombinedAccountView: View {
-    @State private var selectedAccount: (relay: String, account: String, password: String, country: String, icloudmail: String, appledev: String, cookies: String)? = nil
+    @StateObject private var accountLoader = AccountLoader()
+    @State private var selectedAccount: Account? = nil
     @State private var selectedIndex: Int? = nil
 
     var body: some View {
         HSplitView {
             RecentAccountsView(selectedAccount: $selectedAccount, selectedIndex: $selectedIndex)
+                .environmentObject(accountLoader)
                 .frame(minWidth: 250, maxWidth: .infinity)
 
-            if let index = selectedIndex {
-                DetailAccountsView(accountToShow: Binding(
-                    get: {
-                        guard let account = selectedAccount else {
-                            return (relay: "", account: "", password: "", country: "", icloudmail: "", appledev: "", cookies: "", index: -1)
-                        }
-                        return (relay: account.relay, account: account.account, password: account.password, country: account.country, icloudmail: account.icloudmail, appledev: account.appledev, cookies: account.cookies, index: index)
-                    },
-                    set: { newValue in
-                        selectedAccount = (
-                            relay: newValue.relay,
-                            account: newValue.account,
-                            password: newValue.password,
-                            country: newValue.country,
-                            icloudmail: newValue.icloudmail,
-                            appledev: newValue.appledev,
-                            cookies: newValue.cookies
-                        )
-                    }
-                ))
-                .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when a file is selected
+            if let selectedIndex = selectedIndex {
+                DetailAccountsView(accountToShow: $accountLoader.accounts[selectedIndex], indexToShow: selectedIndex)
+                    .environmentObject(accountLoader)
+                    .frame(minWidth: 575, maxWidth: 1250)
+
             } else {
                 CreateAccountView()
-                    .frame(minWidth: 500, maxWidth: 1250, maxHeight: .infinity) // Fill remaining space when no file is selected
+                    .frame(minWidth: 575, maxWidth: 1250, maxHeight: .infinity)
             }
         }
-        Spacer()
+        .onAppear {
+            let accountURL = URL(fileURLWithPath: "/path/to/accounts.json")
+            accountLoader.loadAccounts(from: accountURL)
+        }
     }
 }
 
 
 
-
 /*
 #Preview{
-    DetailAccountsView(accountToShow: (relay:"stfu",account:"i like cok",password:"password123",country:"stfuLand",icloudmail:"stfu@icloud.com",appledev:"n",cookies:"n",index:0))
-}*/
- 
-
+    
+    let exampleAccount = Account(
+        account: "john_doe",
+        icloudmail: "john.doe@icloud.com",
+        password: "password123",
+        relay: "relay@example.com",
+        country: "United States",
+        appledev: "y", // y for accepted, n for not accepted
+        cookies: "y" // y for set up, n for not set up
+    )
+    
+    
+    DetailAccountsView(accountToShow:exampleAccount,indexToShow:0)
+}
+ */
 #Preview{
     CombinedAccountView()
 }
- 
