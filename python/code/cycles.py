@@ -28,7 +28,7 @@ class cycles():
         print("Started Duplication Cycle" )
         
 
-        accounts_file_path = file_path("../accounts/accounts.txt")
+        accounts_file_path = file_path("../accounts/accounts.json")
         content_file_path = file_path("../current_fdb/content.txt")
         
         account_list = accounts_read("icloudmail", start_value,iteration_value,accounts_file_path)
@@ -116,7 +116,7 @@ class cycles():
             None
         """
         
-        accounts_file_path = file_path("../accounts/accounts.txt")
+        accounts_file_path = file_path("../accounts/accounts.json")
         print("Started Login Cycle")
         #Filling Variables
         account_list = accounts_read("icloudmail",start_value, iteration_value,accounts_file_path)

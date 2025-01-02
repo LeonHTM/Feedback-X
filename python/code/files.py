@@ -97,15 +97,17 @@ def file_clear(name: str) -> None:
 
 
 
+import json
+
 def accounts_read(type: str, start: int, end: int, path: str) -> list | tuple[list, list] | str:
     """
-    Reads account or password data from a file within a specified range.
+    Reads account or password data from a JSON file within a specified range.
 
     Args:
         type (str): Either "account", "password", "both", or "icloudmail".
-        start (int): The starting line number (1-based).
-        end (int): The ending line number (inclusive, 1-based).
-        path (str): Path to the file.
+        start (int): The starting item number (1-based).
+        end (int): The ending item number (inclusive, 1-based).
+        path (str): Path to the JSON file.
 
     Returns:
         list | tuple[list, list]: Depending on the type:
@@ -115,10 +117,12 @@ def accounts_read(type: str, start: int, end: int, path: str) -> list | tuple[li
             - "unsupported type": If the type is invalid.
 
     Example:
-        For type="both", start=2, end=3, and a file containing:
-            {"account": "user1@example.com", "password": "pass1"}
-            {"account": "user2@example.com", "password": "pass2"}
-            {"account": "user3@example.com", "password": "pass3"}
+        For type="both", start=2, end=3, and a JSON file containing:
+            [
+                {"account": "user1@example.com", "password": "pass1"},
+                {"account": "user2@example.com", "password": "pass2"},
+                {"account": "user3@example.com", "password": "pass3"}
+            ]
         Output:
             (["user2@example.com", "user3@example.com"], ["pass2", "pass3"])
     """
@@ -133,28 +137,24 @@ def accounts_read(type: str, start: int, end: int, path: str) -> list | tuple[li
 
     try:
         with open(path, "r") as file:
-            for counter, line in enumerate(file, start=1):
-                if counter < start:
-                    continue  # Skip lines before the start
-                if counter > end:
-                    break  # Stop reading after the end
-                
-                try:
-                    # Directly evaluate the line content as a Python dictionary
-                    line_content = eval(line.strip())
-                except (SyntaxError, ValueError):
-                    continue  # Skip invalid lines
-                
-                if type == "both":
-                    account_list.append(line_content.get("account"))
-                    password_list.append(line_content.get("password"))
-                elif type in ["account", "icloudmail"]:
-                    account_list.append(line_content.get(type))
-                else:  # type == "password"
-                    password_list.append(line_content.get("password"))
+            data = json.load(file)  # Load the JSON data as a Python list
+
+        # Extract the specified range of data (adjusting for 1-based index)
+        sliced_data = data[start - 1:end]
+
+        for entry in sliced_data:
+            if type == "both":
+                account_list.append(entry.get("account"))
+                password_list.append(entry.get("password"))
+            elif type in ["account", "icloudmail"]:
+                account_list.append(entry.get(type))
+            else:  # type == "password"
+                password_list.append(entry.get("password"))
 
     except FileNotFoundError:
         return "File not found."
+    except json.JSONDecodeError:
+        return "Invalid JSON format."
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
@@ -164,6 +164,7 @@ def accounts_read(type: str, start: int, end: int, path: str) -> list | tuple[li
         return account_list
     else:
         return password_list
+
     
 
 def file_path( relative_path: str) -> str:
