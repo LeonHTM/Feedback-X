@@ -18,6 +18,8 @@ struct Account: Identifiable, Codable {
     var country: String
     var appledev: String
     var cookies: String
+    var note: String
+    var date: String
 }
 
 class AccountLoader: ObservableObject {
@@ -51,7 +53,6 @@ class AccountLoader: ObservableObject {
     
     // Function to save the accounts to a URL
     private func saveAccounts(to accountURL: URL) {
-        let fileManager = FileManager.default
         do {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted

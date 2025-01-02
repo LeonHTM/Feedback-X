@@ -9,19 +9,23 @@
 import SwiftUI
 
 struct RecentAccountsView: View {
-    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.json")
+    
+
+    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.json")
     
     @EnvironmentObject var accountLoader: AccountLoader
     @Binding var selectedAccount: Account?
     @Binding var selectedIndex: Int?
+
 
     var body: some View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     if accountLoader.accounts.isEmpty {
-                        Text("No files found or folder is empty.")
+                        Text("No Accounts in Directory")
                             .foregroundColor(.gray)
+                            .padding(.vertical,10)
                     } else {
                         ForEach(accountLoader.accounts.indices, id: \.self) { index in
                             let account = accountLoader.accounts[index]
@@ -96,12 +100,16 @@ struct RecentAccountsView: View {
      @State private var countrySave: String = "DrakyLand"
      @State private var cookiesSave: String = "n"
      @State private var appledevSave: String = "n"
+     @State private var noteSave: String = "Notes"
+     @State private var dateSave: String = "01.01.2025"
      
      @State private var currentIndex: Int = 0 // Track the current index
      
+     @State private var yoffset: Int = -125
      
      
-     // Save the edited account
+     
+     
      func saveAccount() {
          // Create a new Account with the updated values
          let updatedAccount = Account(
@@ -111,7 +119,9 @@ struct RecentAccountsView: View {
              relay: accountToShow.relay,
              country: countrySave,
              appledev: appledevSave,
-             cookies: cookiesSave
+             cookies: cookiesSave,
+             note: noteSave,
+             date: dateSave
          )
          
          accountLoader.editAccount(at: indexToShow, with: updatedAccount, to: accountURL)
@@ -138,17 +148,17 @@ struct RecentAccountsView: View {
                                                          .font(.system(size: 40))
                                                          .frame(width: 70, height: 70)
                                                          .background(
-                                                             RoundedRectangle(cornerRadius: 15)
-                                                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                                                 .fill(Color.accentColor)
+                                                            RoundedRectangle(cornerRadius: 15)
+                                                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                                                .fill(Color.accentColor)
                                                          )
                                                      
-                                                     Text("\(indexToShow)") // Display account ID
+                                                     Text("\(indexToShow + 1)") // Display account ID
                                                          .padding(10)
                                                          .background(
-                                                             Circle()
-                                                                 .stroke(Color.black.opacity(0.2), lineWidth: 1)
-                                                                 .fill(Color.gray)
+                                                            Circle()
+                                                                .stroke(Color.black.opacity(0.2), lineWidth: 1)
+                                                                .fill(Color.gray)
                                                          )
                                                          .offset(x: 30, y: 30)
                                                  }
@@ -158,7 +168,7 @@ struct RecentAccountsView: View {
                                                  Text(accountToShow.icloudmail)
                                                      .font(.title)
                                                      .fontWeight(.bold)
-                                                 Text("Added: 01.01.2025")
+                                                 Text("Added: \(accountToShow.date)")
                                                      .foregroundStyle(.secondary)
                                                      .padding(.vertical, -10)
                                              }
@@ -256,16 +266,38 @@ struct RecentAccountsView: View {
                                                  Text(accountToShow.appledev == "y" ? "✅" : "❌")
                                              }
                                          }
-                                         Divider()
                                          
-                                         VStack(alignment: .leading) {
-                                             HStack {
-                                                 Text("Notes")
-                                                 Spacer()
+                                         if accountToShow.note != "Notes" && !editingMode{
+                                             Divider()
+                                             
+                                             VStack(alignment: .leading) {
+                                                 HStack {
+                                                     ScrollView{
+                                                         Text(accountToShow.note)
+                                                             .frame(maxWidth:.infinity,alignment:.leading)
+                                                     }.frame(height: 50)
+                                                     
+                                                 }
+
+                                                 
                                              }
-                                             Text("notes 8979p747p93749p57p39475p9372p9759p3874589p732979834725p9237p597389475p932847589p27983275p47p39824759p325p98327495p3729p")
-                                                 .foregroundStyle(.secondary)
+                                             
+                                         }else if editingMode{
+                                             Divider()
+                                             TextEditor(text: $noteSave)
+                                                 .textEditorStyle(PlainTextEditorStyle())
+                                                 .font(.body)
+                                                 .foregroundStyle(noteSave == "Notes" ? Color.secondary : Color.primary)
+                                                 .frame(height: 50)
+                                                 .onAppear {
+                                                     noteSave = accountToShow.note
+                                                 }
+                                                 .padding(.leading,-5)
+
+                                                 
+                                             
                                          }
+                                         
                                      }
                                      .padding()
                                      
@@ -283,7 +315,13 @@ struct RecentAccountsView: View {
                                          Text(editingMode ? "Save" : "Edit")
                                      }
                                      .disabled(editingButtonDisable)
-                                     .offset(x: geometry.size.width * 0.5 - 50, y: -150)
+                                     .offset(
+                                         x: geometry.size.width * 0.5 - 50,
+                                         y: editingMode ? -167 : (accountToShow.note != "Notes" ? -160 : -125)
+                                     )
+
+
+
                                      
                                      if editingMode {
                                          Button(action: {
@@ -296,7 +334,7 @@ struct RecentAccountsView: View {
                                              Text("Cancel")
                                          }
                                          .disabled(editingButtonDisable)
-                                         .offset(x: geometry.size.width * 0.5 - 105, y: -150)
+                                         .offset(x: geometry.size.width * 0.5 - 105, y: -167)
                                      }
                                  }
                              }
@@ -394,32 +432,34 @@ struct CombinedAccountView: View {
                     .frame(minWidth: 575, maxWidth: 1250, maxHeight: .infinity)
             }
         }
-        .onAppear {
-            let accountURL = URL(fileURLWithPath: "/path/to/accounts.json")
-            accountLoader.loadAccounts(from: accountURL)
-        }
     }
 }
 
 
 
 /*
-#Preview{
-    
-    let exampleAccount = Account(
+struct ContentView: View {
+    @State private var exampleAccount = Account(
         account: "john_doe",
         icloudmail: "john.doe@icloud.com",
         password: "password123",
         relay: "relay@example.com",
         country: "United States",
         appledev: "y", // y for accepted, n for not accepted
-        cookies: "y" // y for set up, n for not set up
+        cookies: "y",
+        note: "Notes"
     )
     
-    
-    DetailAccountsView(accountToShow:exampleAccount,indexToShow:0)
+    var body: some View {
+        DetailAccountsView(accountToShow: $exampleAccount, indexToShow: 9)
+    }
 }
- */
+#Preview{
+    ContentView()
+}
+*/
+ 
 #Preview{
     CombinedAccountView()
 }
+
