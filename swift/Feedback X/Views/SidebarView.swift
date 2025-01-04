@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @State private var selectedPage: String? = "Recent Activity"
+    @State public var selectedPage: String? = "Recent Activity"
     @State private var showSheet =  false
     var body: some View {
         NavigationSplitView {

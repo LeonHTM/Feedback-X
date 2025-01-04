@@ -11,7 +11,7 @@ import SwiftUI
 struct CreateAccountSheetView: View {
     
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
-    @StateObject private var accountLoader = AccountLoader()
+    @EnvironmentObject var accountLoader: AccountLoader
     
     @State private var icloudmailSave: String = ""
     @State private var passwordSave: String = ""
@@ -32,6 +32,7 @@ struct CreateAccountSheetView: View {
     
     @State private var showCloseAlert = false
     @State public var showHelpSheet = false
+    @State private var showDuplicateAlert = false
     @Binding var showSheet: Bool
     
     private var isSubmitEnabled: Bool {
@@ -89,7 +90,7 @@ struct CreateAccountSheetView: View {
                 
                 Text("Please select the country of origin")
                 ZStack(alignment:.leading){
-                    if appledevSave == ""{
+                    if countrySave == ""{
                         Text("Country").padding(.leading, 7)
                             .foregroundStyle(.secondary)
                             .opacity(0.5)
@@ -158,7 +159,7 @@ struct CreateAccountSheetView: View {
     
             Spacer()
             if isSubmitEnabled == false{
-                Text("You Haven't filled every Field yet")}
+                Text("You haven't filled every field yet")}
             Button(action: {
                 showSheet = false
             }) {
@@ -171,8 +172,6 @@ struct CreateAccountSheetView: View {
             
             
             Button(action: {
-                showSheet = false
-                
                 let newAccount = Account(
                     account: icloudmailSave,
                     icloudmail: icloudmailSave,
@@ -185,19 +184,33 @@ struct CreateAccountSheetView: View {
                     date: dateSave
                 )
                 
-                accountLoader.addAccount(newAccount, to: accountURL)
-                
+                if accountLoader.addAccount(newAccount, to: accountURL) == false {
+                    showDuplicateAlert = true
+                } else {
+                    showSheet = false
+                }
             }) {
                 Text("Submit")
                     .padding(5) // Add padding around the text
             }
             .disabled(!isSubmitEnabled)
-          
+            .alert("Account already exists", isPresented: $showDuplicateAlert) {
+                
+                Button("Quit Add Account", role: .cancel) {
+                    showSheet = false
+                }
+                Button("OK", role: .cancel) {
+                    // This is where we handle the alert dismissing logic
+                    showDuplicateAlert = false
+                }
+            } message: {
+                Text("The account you tried to add already exists.")
+            }
             .background(isSubmitEnabled ? Color.accentColor: Color.gray)
             .foregroundColor(.white)
             .cornerRadius(5)
-            
             .padding([.trailing,])
+
         }.frame(width:1000)
         
         
@@ -206,8 +219,5 @@ struct CreateAccountSheetView: View {
        
 }
 
-#Preview {
-    CreateAccountSheetView(showSheet: .constant(true))
-}
 
 

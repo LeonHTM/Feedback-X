@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import UniformTypeIdentifiers
+
 
 struct CreateFeedbackSheetView: View {
     @State private var feedbackTitle: String = ""
@@ -257,7 +257,7 @@ struct CreateFeedbackSheetView: View {
     
             Spacer()
             if isSubmitEnabled == false{
-                Text("You Haven't filled every Field yet")}
+                Text("You haven't filled every field yet")}
             Button(action: {
                 showSheet = false
             }) {
@@ -291,6 +291,8 @@ struct CreateFeedbackSheetView: View {
 }
 
 #Preview {
+    
     CreateFeedbackSheetView(showSheet: .constant(true))
+        
 }
 

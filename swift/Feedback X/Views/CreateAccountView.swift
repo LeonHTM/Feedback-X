@@ -11,7 +11,8 @@ import SwiftUI
 struct CreateAccountView: View {
     @State private var isRunning: Bool = false
     @State private var showAlert: Bool = false
-    @State private var showSheet = false // Use this consistently
+    @State private var showSheet = false 
+    @EnvironmentObject var accountLoader: AccountLoader
     
     var body: some View {
         VStack {
@@ -27,7 +28,8 @@ struct CreateAccountView: View {
             }
             .disabled(isRunning)
             .sheet(isPresented: $showSheet) {
-                CreateAccountSheetView(showSheet: $showSheet) // Pass the correct binding
+                CreateAccountSheetView(showSheet: $showSheet)
+                    .environmentObject(accountLoader)
             }
         }
     }

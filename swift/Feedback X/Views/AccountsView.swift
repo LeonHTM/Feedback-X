@@ -88,6 +88,8 @@ struct RecentAccountsView: View {
      let indexToShow: Int
      @EnvironmentObject var accountLoader: AccountLoader
      
+     
+     let onDelete: () -> Void
      let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
      
      @State private var hoveredPassword: Bool = false
@@ -390,7 +392,9 @@ struct RecentAccountsView: View {
                                          title: Text("Attention"),
                                          message: Text("Are you sure you want to delete Account \(accountToShow.icloudmail)?"),
                                          primaryButton: .destructive(Text("Confirm")) {
-                                             // Delete account logic here
+                                             accountLoader.deleteAccount(by: accountToShow.icloudmail, to: accountURL)
+                                             onDelete()
+                                             
                                          },
                                          secondaryButton: .cancel()
                                      )
@@ -412,7 +416,7 @@ struct RecentAccountsView: View {
 
 
 struct CombinedAccountView: View {
-    @StateObject private var accountLoader = AccountLoader()
+    @StateObject public var accountLoader = AccountLoader()
     @State private var selectedAccount: Account? = nil
     @State private var selectedIndex: Int? = nil
 
@@ -423,17 +427,32 @@ struct CombinedAccountView: View {
                 .frame(minWidth: 250, maxWidth: .infinity)
 
             if let selectedIndex = selectedIndex {
-                DetailAccountsView(accountToShow: $accountLoader.accounts[selectedIndex], indexToShow: selectedIndex)
-                    .environmentObject(accountLoader)
-                    .frame(minWidth: 575, maxWidth: 1250)
-
+                DetailAccountsView(
+                    accountToShow: $accountLoader.accounts[selectedIndex],
+                    indexToShow: selectedIndex,
+                    onDelete: {
+                        // Reset selected state
+                        if let currentIndex = self.selectedIndex {
+                            if currentIndex > 1 {
+                                self.selectedIndex = currentIndex - 1
+                                self.selectedAccount = accountLoader.accounts[self.selectedIndex!]
+                            } else if currentIndex == 0 {
+                                self.selectedIndex = nil
+                            }
+                        }
+                    }
+                )
+                .environmentObject(accountLoader)
+                .frame(minWidth: 575, maxWidth: 1250)
             } else {
                 CreateAccountView()
-                    .frame(minWidth: 575, maxWidth: 1250, maxHeight: .infinity)
+                                    .environmentObject(accountLoader)
+                                    .frame(minWidth: 575, maxWidth: 1250, maxHeight: .infinity)
             }
         }
     }
 }
+
 
 
 
@@ -458,8 +477,8 @@ struct ContentView: View {
     ContentView()
 }
 */
- 
+ /*
 #Preview{
     CombinedAccountView()
-}
+}*/
 

@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Combine
+
 
 struct Account: Identifiable, Codable {
     var id: String { account } // Use account as a unique identifier
@@ -42,11 +42,21 @@ class AccountLoader: ObservableObject {
     }
     
     //Fucntion to add an account to json list
-    func addAccount(_ newAccount: Account, to accountURL: URL) {
+    func addAccount(_ newAccount: Account, to accountURL: URL) -> Bool {
+           // Check if the icloudmail already exists in the accounts
+           for account in accounts {
+               if account.icloudmail == newAccount.icloudmail {
+                   // Return false to indicate that the account could not be added
+                   print("Error: Account with this iCloud email already exists.")
+                   return false
+               }
+           }
+           
+           // If no duplicate is found, add the new account
            accounts.append(newAccount)
            saveAccounts(to: accountURL)
+           return true
        }
-    
     
     
     // Function to edit an account at a specific index
@@ -58,6 +68,19 @@ class AccountLoader: ObservableObject {
         // Save the updated accounts array back to the file
         saveAccounts(to: accountURL)
     }
+    
+    func deleteAccount(by icloudmail: String, to accountURL: URL) -> Bool {
+            if let index = accounts.firstIndex(where: { $0.icloudmail == icloudmail }) {
+                // Remove the account at the found index
+                accounts.remove(at: index)
+                // Save the updated accounts list to the file
+                saveAccounts(to: accountURL)
+                return true
+            } else {
+                print("Error: Account with icloudmail \(icloudmail) not found.")
+                return false
+            }
+        }
     
     // Function to save the accounts to a URL
     private func saveAccounts(to accountURL: URL) {
