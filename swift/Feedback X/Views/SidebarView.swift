@@ -41,7 +41,7 @@ struct SidebarView: View {
                     
                 }
 
-                Section(header: Text("Testing")
+                Section(header: Text("Tools")
                     .font(.system(size: 11))
                     .foregroundColor(.gray)
                     .frame(maxWidth: .infinity, alignment: .leading) // Ensure the header is left-aligned
@@ -52,6 +52,10 @@ struct SidebarView: View {
                     }
                     NavigationLink(value: "Rewrite Cycle") {
                         Label("Test Rewriting", systemImage: "document.on.document")
+                            .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
+                    }
+                    NavigationLink(value: "Cookies") {
+                        Label("Cookies", systemImage: "birthday.cake")
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                 }
@@ -83,6 +87,10 @@ struct SidebarView: View {
                    
                 case "About":
                     AboutView()
+                    
+                case "Cookies":
+                    CookiesView()
+                        .environmentObject(accountLoader)
                 case "Rewrite Cycle":
                     TestRewriteView()
                 case "Login Cycle":

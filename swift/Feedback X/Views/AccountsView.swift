@@ -25,9 +25,9 @@ struct RecentAccountsView: View {
                     if accountLoader.accounts.isEmpty {
                         Text("No Accounts in Directory")
                             .foregroundColor(.gray)
-                            .padding(.vertical,10)
+                            .padding(10)
                     } else {
-                        VStack{
+                        VStack(spacing:0){
                             Button(action: {
                                 showSheet.toggle() // Toggle the correct state
                             }) {
