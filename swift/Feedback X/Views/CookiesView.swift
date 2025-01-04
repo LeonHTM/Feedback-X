@@ -30,17 +30,27 @@ struct CookiesView: View {
                     ForEach(accountLoader.accounts.indices, id: \.self) { index in
                         let account = accountLoader.accounts[index]
                         HStack{
+                            
                             Button(action:{
                                 
                                 buttonActive.toggle()
                             }){
-                                Image(systemName: "circle")
-                                    .font(.system(size: 20,weight:.thin))
+                                ZStack{
+                                    Image(systemName: "circle")
+                                        .font(.system(size: 20))
+                                    Image(systemName: buttonActive ? "checkmark": "").foregroundStyle(Color.primary)
+                                }
                             }
                             .buttonStyle(PlainButtonStyle())
-                            .background(buttonActive ? Color.accentColor : nil)
-                            .foregroundStyle(buttonActive ? Color.accentColor : Color.primary)
-                            .clipShape(Circle())
+                            .background(
+                                Circle()
+                                    .fill(buttonActive ? Color.accentColor : Color.clear)
+                                
+                            )
+                            .foregroundStyle(buttonActive ? Color.accentColor: Color.primary)
+                            
+                            
+                            
                             
                            
                             VStack(alignment:.leading){
