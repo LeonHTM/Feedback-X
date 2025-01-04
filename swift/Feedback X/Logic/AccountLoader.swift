@@ -41,6 +41,14 @@ class AccountLoader: ObservableObject {
         }
     }
     
+    //Fucntion to add an account to json list
+    func addAccount(_ newAccount: Account, to accountURL: URL) {
+           accounts.append(newAccount)
+           saveAccounts(to: accountURL)
+       }
+    
+    
+    
     // Function to edit an account at a specific index
     func editAccount(at index: Int, with updatedAccount: Account, to accountURL: URL) {
         guard index >= 0 && index < accounts.count else { return }

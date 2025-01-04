@@ -11,7 +11,7 @@ import SwiftUI
 struct RecentAccountsView: View {
     
 
-    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.json")
+    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     
     @EnvironmentObject var accountLoader: AccountLoader
     @Binding var selectedAccount: Account?
@@ -88,7 +88,7 @@ struct RecentAccountsView: View {
      let indexToShow: Int
      @EnvironmentObject var accountLoader: AccountLoader
      
-     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accountscopy.json")
+     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
      
      @State private var hoveredPassword: Bool = false
      @State private var showDeleteAlert: Bool = false
@@ -240,8 +240,8 @@ struct RecentAccountsView: View {
                                              Spacer()
                                              if editingMode {
                                                  Picker("", selection: $cookiesSave) {
-                                                     Text("Set up").tag("y")
-                                                     Text("Not set up").tag("n")
+                                                     Text("Accepted").tag("y")
+                                                     Text("Not Accepted").tag("n")
                                                  }
                                                  .onAppear { cookiesSave = accountToShow.cookies }
                                                  .frame(width: 150)
@@ -257,8 +257,8 @@ struct RecentAccountsView: View {
                                              Spacer()
                                              if editingMode {
                                                  Picker("", selection: $appledevSave) {
-                                                     Text("Accepted").tag("y")
-                                                     Text("Not Accepted").tag("n")
+                                                     Text("Set up").tag("y")
+                                                     Text("Not set up").tag("n")
                                                  }
                                                  .onAppear { appledevSave = accountToShow.appledev }
                                                  .frame(width: 150)
