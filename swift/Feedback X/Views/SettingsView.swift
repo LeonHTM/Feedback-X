@@ -13,9 +13,16 @@ struct SettingsView: View {
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
+    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    
+    @EnvironmentObject var accountLoader: AccountLoader
+
+
+    
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
     @AppStorage("rotationAngle") var rotationAngle: Double = 0
+    
 
     var body: some View {
         TabView{
@@ -95,6 +102,16 @@ struct SettingsView: View {
                                 hasShownAlert = false
                                 rotationAngle = 0
                         
+                            }
+                            if alertTitle == "Reset Accounts" {
+                            
+                                accountLoader.loadAccounts(from:accountURL)
+                                accountLoader.deleteAll(from:accountURL)
+                               
+                                
+                                
+                                
+                                
                             }
                             // Handle confirmation action here
                             print("\(alertTitle) confirmed.")

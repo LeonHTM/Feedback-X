@@ -10,7 +10,7 @@ import SwiftUI
 
 struct RecentAccountsView: View {
     
-
+    @State private var showSheet = false
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     
     @EnvironmentObject var accountLoader: AccountLoader
@@ -27,45 +27,60 @@ struct RecentAccountsView: View {
                             .foregroundColor(.gray)
                             .padding(.vertical,10)
                     } else {
-                        ForEach(accountLoader.accounts.indices, id: \.self) { index in
-                            let account = accountLoader.accounts[index]
+                        VStack{
                             Button(action: {
-                                selectedAccount = account
-                                selectedIndex = index
+                                showSheet.toggle() // Toggle the correct state
                             }) {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack {
-                                        Text(account.icloudmail.isEmpty ? "Untitled" : account.icloudmail)
-                                            .font(.headline)
-                                            .lineLimit(1)
-
-                                        Spacer()
-                                        Text(account.country)
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                    }
-                                    if account.cookies == "y" {
-                                        Text("Cookies: ✅")
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(1)
-                                    } else {
-                                        Text("Cookies: ❌")
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(1)
-                                    }
-                                }
-                                .padding([.leading, .trailing], 20)
-                                .padding(.vertical, 5)
-                                .background(selectedAccount?.id == account.id ? Color.accentColor : Color.clear)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .contentShape(RoundedRectangle(cornerRadius: 8))
+                                Text(isRunning ? "Adding New Account" : "Add Account")
+                                    .padding(1)
                             }
-                            .buttonStyle(PlainButtonStyle())
-
-                            if index < accountLoader.accounts.count - 1 {
-                                Divider()
+                            .disabled(isRunning)
+                            .sheet(isPresented: $showSheet) {
+                                CreateAccountSheetView(showSheet: $showSheet)
+                                    .environmentObject(accountLoader)
+                            }
+                            .padding(10)
+                            
+                            ForEach(accountLoader.accounts.indices, id: \.self) { index in
+                                let account = accountLoader.accounts[index]
+                                Button(action: {
+                                    selectedAccount = account
+                                    selectedIndex = index
+                                }) {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        HStack {
+                                            Text(account.icloudmail.isEmpty ? "Untitled" : account.icloudmail)
+                                                .font(.headline)
+                                                .lineLimit(1)
+                                            
+                                            Spacer()
+                                            Text(account.country)
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        if account.cookies == "y" {
+                                            Text("Cookies: ✅")
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                                .lineLimit(1)
+                                        } else {
+                                            Text("Cookies: ❌")
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                                .lineLimit(1)
+                                        }
+                                    }
+                                    .padding([.leading, .trailing], 20)
+                                    .padding(.vertical, 5)
+                                    .background(selectedAccount?.id == account.id ? Color.accentColor : Color.clear)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .contentShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                
+                                if index < accountLoader.accounts.count - 1 {
+                                    Divider()
+                                }
                             }
                         }
                     }
@@ -89,7 +104,7 @@ struct RecentAccountsView: View {
      @EnvironmentObject var accountLoader: AccountLoader
      
      
-     let onDelete: () -> Void
+     public let onDelete: () -> Void
      let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
      
      @State private var hoveredPassword: Bool = false
@@ -365,7 +380,7 @@ struct RecentAccountsView: View {
                              }
                              Text("Passwords are stored in plain text.")
                                  .font(.title3)
-                             Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files.")
+                             Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files. If you dont use password and or icloud accounts you use elsewhere this isn't a issue. Therefore please never use data you use in other places.")
                                  .foregroundStyle(.secondary)
                                  .multilineTextAlignment(.center)
                          }
@@ -416,9 +431,10 @@ struct RecentAccountsView: View {
 
 
 struct CombinedAccountView: View {
-    @StateObject public var accountLoader = AccountLoader()
+   
     @State private var selectedAccount: Account? = nil
     @State private var selectedIndex: Int? = nil
+    @EnvironmentObject var accountLoader: AccountLoader
 
     var body: some View {
         HSplitView {
@@ -426,18 +442,20 @@ struct CombinedAccountView: View {
                 .environmentObject(accountLoader)
                 .frame(minWidth: 250, maxWidth: .infinity)
 
-            if let selectedIndex = selectedIndex {
+            if let selectedIndex = selectedIndex, selectedIndex >= 0, selectedIndex < accountLoader.accounts.count {
+                // Show DetailAccountsView if the selectedIndex is valid
                 DetailAccountsView(
                     accountToShow: $accountLoader.accounts[selectedIndex],
                     indexToShow: selectedIndex,
                     onDelete: {
                         // Reset selected state
                         if let currentIndex = self.selectedIndex {
-                            if currentIndex > 1 {
+                            if currentIndex > 0 {
                                 self.selectedIndex = currentIndex - 1
                                 self.selectedAccount = accountLoader.accounts[self.selectedIndex!]
-                            } else if currentIndex == 0 {
+                            } else {
                                 self.selectedIndex = nil
+                                self.selectedAccount = nil
                             }
                         }
                     }
@@ -445,13 +463,15 @@ struct CombinedAccountView: View {
                 .environmentObject(accountLoader)
                 .frame(minWidth: 575, maxWidth: 1250)
             } else {
+                // Show CreateAccountView if no valid selectedIndex is available
                 CreateAccountView()
-                                    .environmentObject(accountLoader)
-                                    .frame(minWidth: 575, maxWidth: 1250, maxHeight: .infinity)
+                    .environmentObject(accountLoader)
+                    .frame(minWidth: 575, maxWidth: 1250, maxHeight: .infinity)
             }
         }
     }
 }
+
 
 
 

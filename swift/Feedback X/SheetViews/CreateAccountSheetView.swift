@@ -53,6 +53,25 @@ struct CreateAccountSheetView: View {
                 SecureInputView("Password", text: $passwordSave)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.top,-10)
+                VStack(alignment: .center, spacing: 10) {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .font(.system(size: 25))
+                            .foregroundColor(.yellow)
+                        Spacer()
+                    }
+                    Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files. If you dont use password and or icloud accounts you use elsewhere this isn't a issue. Therefore please never use data you use in other places.")
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        .fill(Color.gray.opacity(0.1))
+                )
+                .padding(.horizontal, 10)
                    
                  
                 Text("Details")

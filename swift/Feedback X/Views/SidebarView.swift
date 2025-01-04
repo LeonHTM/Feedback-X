@@ -12,6 +12,11 @@ import SwiftUI
 struct SidebarView: View {
     @State public var selectedPage: String? = "Recent Activity"
     @State private var showSheet =  false
+    @State private var showAccountSheet = false
+    
+    @EnvironmentObject var accountLoader: AccountLoader
+
+    
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedPage) {
@@ -74,6 +79,8 @@ struct SidebarView: View {
                     CombinedView()
                 case "Accounts":
                     CombinedAccountView()
+                        .environmentObject(accountLoader)
+                   
                 case "About":
                     AboutView()
                 case "Rewrite Cycle":
@@ -81,7 +88,7 @@ struct SidebarView: View {
                 case "Login Cycle":
                     TestLoginView()
                 default:
-                    CombinedView() 
+                    CombinedView()
                 }
             } else {
                 CombinedView()
@@ -116,6 +123,7 @@ struct SidebarView: View {
                     
                 
             }
+        
         }
 
     }

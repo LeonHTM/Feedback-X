@@ -82,6 +82,12 @@ class AccountLoader: ObservableObject {
             }
         }
     
+    func deleteAll(from accountURL: URL) {
+        accounts.removeAll() // Clear the accounts list
+        saveAccounts(to: accountURL) // Save the empty list to the file
+        print("All accounts have been deleted.")
+    }
+    
     // Function to save the accounts to a URL
     private func saveAccounts(to accountURL: URL) {
         do {

@@ -6,4 +6,9 @@
 //  Copyright © 2025 LeonHTM. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
+
+class fullDeletion: ObservableObject {
+    @Published var isfullDeletion: Bool = false
+}
+
