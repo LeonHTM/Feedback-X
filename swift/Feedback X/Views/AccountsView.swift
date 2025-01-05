@@ -366,6 +366,7 @@ struct RecentAccountsView: View {
                          // Security Section
                          Text("Security")
                              .fontWeight(.bold)
+                             .font(.title3)
                              .padding(.leading, 15)
                              .padding(.vertical, 10)
                              .padding(.bottom, -10)
