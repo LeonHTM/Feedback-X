@@ -201,7 +201,7 @@ struct CookiesView: View {
                             }
                             .disabled(!isButtonAllowed)
                             .sheet(isPresented: $showSheet) {
-                                CookiesSheetView(showSheet: $showSheet)
+                                CookiesSheetView(showSheet: $showSheet,selectedList: $cookiesList)
                                     .environmentObject(accountLoader)
                             }
                         }

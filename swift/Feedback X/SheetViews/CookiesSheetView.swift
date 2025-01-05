@@ -23,6 +23,7 @@ struct CookiesSheetView: View {
     @State private var progress: Double = 0
     
     @Binding var showSheet: Bool
+    @Binding var selectedList: [Int]
     
 
     var body: some View {
@@ -30,23 +31,31 @@ struct CookiesSheetView: View {
             
             VStack(alignment: .center, spacing: 15) {
                 
-                Text("Account \(Int(progress)) of 10")
+                Text("Account \(Int(progress)) of \(selectedList.count)")
 
                 
 
-                
-                ForEach(accountLoader.accounts.indices, id: \.self) { index in
-                    let account = accountLoader.accounts[index]
-                    Text(account.icloudmail)
-                    
+                HStack{
+                    ForEach(selectedList, id: \.self) { element in
+                        Text(String(element))
+                    }
                 }
                 
-                ProgressView(value: progress)
+                ProgressView(value: (progress*0.1))
                 
                 
                 Button(action:{}){
                     
                     Text("Next")
+                }
+                
+                Button(action:{
+                    
+                    progress += 1
+                }){
+                    
+                    Text("Next Step")
+                    
                 }
                 
                 
@@ -107,6 +116,7 @@ struct CookiesSheetView: View {
     
 #Preview{
     @Previewable @StateObject var accountLoader = AccountLoader()
-    CookiesSheetView(showSheet:.constant(true))
+    @Previewable @State var list: [Int] = [0,1,7,8,9]
+    CookiesSheetView(showSheet:.constant(true),selectedList: $list)
         .environmentObject(accountLoader)
 }
