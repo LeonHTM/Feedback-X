@@ -16,8 +16,9 @@ struct CookiesView: View {
     @State private var waitingTime = 50.0
     @State private var extraWaiting:Bool = false
     @State private var maxSlider: Double = 60
-    @State private var stepSlider:Double = 5
+    @State private var stepSlider:Double = 1
     @State private var buttonActive: Bool = false
+    @State private var showSheet: Bool = false
     
     @State private var cookiesList: [Int] = []
     
@@ -165,11 +166,11 @@ struct CookiesView: View {
                             }.onChange(of: extraWaiting) {
                                 if extraWaiting == true{
                                     maxSlider = 300
-                                    stepSlider = 10
+                                    stepSlider = 5
                                     
                                 }else{
                                     maxSlider = 60
-                                    stepSlider = 5
+                                    stepSlider = 1
                                     if waitingTime > maxSlider{
                                         waitingTime = maxSlider
                                     }
@@ -193,10 +194,16 @@ struct CookiesView: View {
                                 .frame(maxWidth:.infinity)
                             
                             
-                            Button(action:{}){
+                            Button(action:{
+                                showSheet.toggle()
+                            }){
                                 Text("Start")
                             }
                             .disabled(!isButtonAllowed)
+                            .sheet(isPresented: $showSheet) {
+                                CookiesSheetView(showSheet: $showSheet)
+                                    .environmentObject(accountLoader)
+                            }
                         }
                         .padding()
                         .background(

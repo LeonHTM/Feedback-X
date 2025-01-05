@@ -178,6 +178,18 @@ struct RecentAccountsView: View {
                                                                 .fill(Color.gray)
                                                          )
                                                          .offset(x: 30, y: 30)
+                                                         .onChange(of: indexToShow){
+                                                            editingMode = false
+                                                            icloudmailSave = ""
+                                                             passwordSave = ""
+                                                            countrySave = "DrakyLand"
+                                                            cookiesSave = "n"
+                                                            appledevSave = "n"
+                                                             noteSave = "Notes"
+                                                              dateSave = "01.01.2025"
+                                                            
+                                                         }
+                                                     
                                                  }
                                              }
                                              .buttonStyle(PlainButtonStyle())
