@@ -13,7 +13,8 @@ struct CookiesView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var isEditing: Bool = false
-    @State private var waitingTime = 50.0
+    @State private var waitingTime = 30.0
+    @State private var waitingTimeInt = 30
     @State private var extraWaiting:Bool = false
     @State private var maxSlider: Double = 60
     @State private var stepSlider:Double = 1
@@ -196,12 +197,13 @@ struct CookiesView: View {
                             
                             Button(action:{
                                 showSheet.toggle()
+                                waitingTimeInt = Int(waitingTime)
                             }){
                                 Text("Start")
                             }
                             .disabled(!isButtonAllowed)
                             .sheet(isPresented: $showSheet) {
-                                CookiesSheetView(showSheet: $showSheet,selectedList: $cookiesList)
+                                CookiesSheetView(showSheet: $showSheet,selectedList: $cookiesList, waitingTime: $waitingTimeInt )
                                     .environmentObject(accountLoader)
                             }
                         }

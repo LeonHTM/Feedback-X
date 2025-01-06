@@ -1,9 +1,7 @@
 #Normal Imports
 import time
 import datetime
-import os
-import undetected_chromedriver as uc
-from fake_useragent import UserAgent
+
 
 #Selenium imports
 from selenium import webdriver
