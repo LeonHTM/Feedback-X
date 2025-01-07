@@ -48,71 +48,89 @@ struct CookiesView: View {
                             Divider()
                             ForEach(accountLoader.accounts.indices, id: \.self) { index in
                                 let account = accountLoader.accounts[index]
-                                HStack{
+                                
+                                Button(action:{
                                     
-                                    Button(action:{
-                                        
-                                        if !cookiesList.contains(index){
-                                            cookiesList.append(index)
-                                        }else{
-                                            cookiesList.removeAll{$0 == index}
-                                        }
-                                    }){
-                                        ZStack{
-                                            Image(systemName: "circle")
-                                                .font(.system(size: 20))
-                                            Image(systemName: cookiesList.contains(index) ? "checkmark": "").foregroundStyle(Color.primary)
-                                        }
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .background(
-                                        Circle()
-                                            .fill(cookiesList.contains(index) ? Color.accentColor : Color.clear)
-                                        
-                                    )
-                                    .foregroundStyle(cookiesList.contains(index) ? Color.accentColor: Color.primary)
-                                    
-                                    
-                                    .onChange(of:cookiesList){
-                                        let text = "Numbers: " + cookiesList.map { String($0) }.joined(separator: ", ")
-                                        print(text)
-                                        
-                                        
+                                    if !cookiesList.contains(index){
+                                        cookiesList.append(index)
+                                    }else{
+                                        cookiesList.removeAll{$0 == index}
                                     }
                                     
                                     
-                                    VStack(alignment:.leading){
-                                        Text(account.icloudmail)
-                                            .padding(.horizontal)
-                                            .fontWeight(.bold)
-                                        if account.cookies == "y"{
-                                            Text("Cookies already set up: ✅")
-                                                .padding(.horizontal)
-                                                .padding(.vertical,1)
-                                            
-                                        }else{
-                                            Text("Cookies not set up: ❌")
-                                                .padding(.horizontal)
-                                                .padding(.vertical,1)
-                                        }
-                                    }
                                     
-                                    Spacer()
-                                    if account.cookies == "n" && !cookiesList.contains(index) {
+                                })
+                                {
+                                    HStack{
                                         
                                         Button(action:{
                                             
                                             if !cookiesList.contains(index){
                                                 cookiesList.append(index)
+                                            }else{
+                                                cookiesList.removeAll{$0 == index}
                                             }
-                                            
-                                            
                                         }){
-                                            Text("Cookie set up recommended")
+                                            ZStack{
+                                                Image(systemName: "circle")
+                                                    .font(.system(size: 20))
+                                                Image(systemName: cookiesList.contains(index) ? "checkmark": "").foregroundStyle(Color.primary)
+                                            }
                                         }
+                                        .buttonStyle(PlainButtonStyle())
+                                        .background(
+                                            Circle()
+                                                .fill(cookiesList.contains(index) ? Color.accentColor : Color.clear)
+                                            
+                                        )
+                                        .foregroundStyle(cookiesList.contains(index) ? Color.accentColor: Color.primary)
+                                        
+                                        
+                                        /*.onChange(of:cookiesList){
+                                            let text = "Numbers: " + cookiesList.map { String($0) }.joined(separator: ", ")
+                                            print(text)
+                                            
+                                            
+                                        }*/
+                                        
+                                        
+                                        VStack(alignment:.leading){
+                                            Text(account.icloudmail)
+                                                .padding(.horizontal)
+                                                .fontWeight(.bold)
+                                            if account.cookies == "y"{
+                                                Text("Cookies already set up: ✅")
+                                                    .padding(.horizontal)
+                                                    .padding(.vertical,1)
+                                                
+                                            }else{
+                                                Text("Cookies not set up: ❌")
+                                                    .padding(.horizontal)
+                                                    .padding(.vertical,1)
+                                            }
+                                        }
+                                        
+                                        Spacer()
+                                        if account.cookies == "n" && !cookiesList.contains(index) {
+                                            
+                                            Button(action:{
+                                                
+                                                if !cookiesList.contains(index){
+                                                    cookiesList.append(index)
+                                                }
+                                                
+                                                
+                                            }){
+                                                Text("Cookie set up recommended")
+                                            }
+                                        }
+                                        
                                     }
-                                    
                                 }
+                                .buttonStyle(PlainButtonStyle())
+                                
+                                
+                                
                                 if index != accountLoader.accounts.count-1{
                                     Divider()
                                     

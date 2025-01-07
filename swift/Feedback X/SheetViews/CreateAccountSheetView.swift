@@ -20,10 +20,11 @@ struct CreateAccountSheetView: View {
     @State private var appledevSave = ""
     @State private var countrySave: String = ""
     
-    let dateSave = Date().formatted(Date.FormatStyle()
-        .day(.defaultDigits)
-        .month(.defaultDigits)
-        .year())
+    @State var dateSave = Calendar.current.date(byAdding: .day, value: 30, to: Date())?
+        .formatted(Date.FormatStyle()
+            .day(.defaultDigits)
+            .month(.defaultDigits)
+            .year())
     
     @State private var showFileImporter = false
     @State private var selectedFiles: [String] = []
@@ -191,6 +192,13 @@ struct CreateAccountSheetView: View {
             
             
             Button(action: {
+                
+                if cookiesSave != "y"{
+                    
+                    dateSave = nil
+                    
+                }
+                
                 let newAccount = Account(
                     account: icloudmailSave,
                     icloudmail: icloudmailSave,
@@ -200,7 +208,7 @@ struct CreateAccountSheetView: View {
                     appledev: appledevSave,
                     cookies: cookiesSave,
                     note: noteSave,
-                    date: dateSave
+                    date: dateSave ?? "No cookies added yet"
                 )
                 
                 if accountLoader.addAccount(newAccount, to: accountURL) == false {

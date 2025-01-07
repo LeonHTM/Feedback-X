@@ -44,7 +44,7 @@ struct CookiesPython {
                 // Capture the output if needed
                 let outputData = pipe.fileHandleForReading.readDataToEndOfFile()
                 if let outputString = String(data: outputData, encoding: .utf8) {
-                    print("Python script output: \(outputString)")
+                    print("\(outputString)")
                     
                     // If the process fails, we assume there's an error message in output
                     if process.terminationStatus != 0 {
@@ -52,7 +52,7 @@ struct CookiesPython {
                         completion(false, outputString, nil)
                     } else {
                         // If the script succeeds, return no error and an empty message
-                        completion(true, nil, nil)
+                        completion(true, outputString, nil)
                     }
                 }
             } catch {

@@ -117,23 +117,23 @@ class cycles():
         """
         
         accounts_file_path = file_path("../accounts/accounts.json")
-        print("Started Login Cycle")
         #Filling Variables
         account_list = accounts_read("icloudmail",start_value, iteration_value,accounts_file_path)
         password_list = accounts_read("password",start_value, iteration_value,accounts_file_path)
         isinCycle = False
-        error = ErrorListHandler(2,iteration_value)
+        error1 = True
+        error2 = True
         startup(headless_value)
         for index in range(0, iteration_value):
                 try: 
                     login(account_list[index], password_list[index],path_value="https://feedbackassistant.apple.com/")
-                    error.remove(0,1)
+                    error1 = False
                 except:
                      continue
                 chill(chill_value)
                 try:
                     logout(1)
-                    error.remove(1,1)
+                    error2 = False
                 except:
                     pass
                 if index == 0:
@@ -141,8 +141,8 @@ class cycles():
                 chill(1)
                
 
-        for report_str in error.report():
-            print(report_str)
+        if error1 == True or error2 == True:
+             print("Failed " + str(account_list[0]))
         
     
 

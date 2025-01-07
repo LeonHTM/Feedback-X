@@ -197,7 +197,7 @@ struct RecentAccountsView: View {
                                                  Text(accountToShow.icloudmail)
                                                      .font(.title)
                                                      .fontWeight(.bold)
-                                                 Text("Added: \(accountToShow.date)")
+                                                 Text("Cookies Expire: \(accountToShow.date)")
                                                      .foregroundStyle(.secondary)
                                                      .padding(.vertical, -10)
                                              }
