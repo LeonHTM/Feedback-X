@@ -15,8 +15,8 @@ struct CreateAccountSheetView: View {
     
     @State private var icloudmailSave: String = ""
     @State private var passwordSave: String = ""
-    @State private var noteSave: String = ""
-    @State private var cookiesSave = ""
+    @State private var noteSave: String = "Notes"
+    @State private var cookiesSave = "n"
     @State private var appledevSave = ""
     @State private var countrySave: String = ""
     
@@ -84,29 +84,29 @@ struct CreateAccountSheetView: View {
                 Text("Does the Account have Apple Developer?")
                 
                 ZStack(alignment:.leading){
-                    if cookiesSave == ""{
+                    if appledevSave == ""{
                         Text("Apple Developer").padding(.leading, 7)
                             .foregroundStyle(.secondary)
                             .opacity(0.5)
                     }
-                    Picker("", selection: $cookiesSave) {
+                    Picker("", selection: $appledevSave) {
                         Text("Set up").tag("y")
                         Text("Not set up").tag("n")
                     }.labelsHidden()
                 }
-                
+                /*
                 Text("Does the account have stored cookies?")
                 ZStack(alignment:.leading){
-                    if appledevSave == ""{
+                    if cookiesSave == ""{
                         Text("Cookies").padding(.leading, 7)
                             .foregroundStyle(.secondary)
                             .opacity(0.5)
                     }
-                    Picker("", selection: $appledevSave) {
-                        Text("Accepted").tag("y")
-                        Text("Not accepted").tag("n")
+                    Picker("", selection: $cookiesSave) {
+                        Text("Has stored cookies").tag("y")
+                        Text("Doesn't have stored cookies").tag("n")
                     }.labelsHidden()
-                }
+                }*/
                 
                 Text("Please select the country of origin")
                 ZStack(alignment:.leading){
@@ -206,7 +206,7 @@ struct CreateAccountSheetView: View {
                     relay: icloudmailSave,
                     country: countrySave,
                     appledev: appledevSave,
-                    cookies: cookiesSave,
+                    cookies: "n",
                     note: noteSave,
                     date: dateSave ?? "No cookies added yet"
                 )

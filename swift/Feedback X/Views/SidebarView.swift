@@ -82,7 +82,7 @@ struct SidebarView: View {
                 case "Recent Activity":
                     CombinedView()
                 case "Accounts":
-                    CombinedAccountView()
+                    CombinedAccountsView()
                         .environmentObject(accountLoader)
                    
                 case "About":

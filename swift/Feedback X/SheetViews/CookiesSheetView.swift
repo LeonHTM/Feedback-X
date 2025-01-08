@@ -36,7 +36,7 @@ struct CookiesSheetView: View {
     @State private var currentStep: Int = 0
     @State private var totalSteps: Int = 0
     
-    let dateSave = Calendar.current.date(byAdding: .day, value: 30, to: Date())?
+    @State var dateSave = Calendar.current.date(byAdding: .day, value: 30, to: Date())?
         .formatted(Date.FormatStyle()
             .day(.defaultDigits)
             .month(.defaultDigits)
@@ -111,6 +111,16 @@ struct CookiesSheetView: View {
                                 
                                 
                                 if currentStep - 1 < selectedList.count && !goneWrong == true{
+                                    
+                                    if accountLoader.accounts[selectedList[currentStep - 1]].cookies == "y"{
+                                        
+                                        dateSave = accountLoader.accounts[selectedList[currentStep - 1]].date
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    
                                     let updatedAccount = Account(
                                         account: accountLoader.accounts[selectedList[currentStep - 1]].account,
                                         icloudmail: accountLoader.accounts[selectedList[currentStep - 1]].icloudmail,
@@ -196,6 +206,17 @@ struct CookiesSheetView: View {
                                 
                                 
                                 if currentStep - 1 < selectedList.count && !goneWrong == true{
+                                    
+                                    if accountLoader.accounts[selectedList[currentStep - 1]].cookies == "y"{
+                                        
+                                        dateSave = accountLoader.accounts[selectedList[currentStep - 1]].date
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    
                                     let updatedAccount = Account(
                                         account: accountLoader.accounts[selectedList[currentStep - 1]].account,
                                         icloudmail: accountLoader.accounts[selectedList[currentStep - 1]].icloudmail,
