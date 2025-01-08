@@ -65,16 +65,17 @@ struct RecentAccountsView: View {
                                                 Text(account.icloudmail.isEmpty ? "Untitled" : account.icloudmail)
                                                     .font(.headline)
                                                     .lineLimit(1)
+                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white : Color.primary)
                                                 
                                                 Spacer()
                                                 Text(account.country)
                                                     .font(.subheadline)
-                                                    .foregroundColor(.secondary)
+                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
                                             }
                                             if account.cookies == "y" {
                                                 Text("Cookies: ✅")
                                                     .font(.subheadline)
-                                                    .foregroundColor(.secondary)
+                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
                                                     .lineLimit(1)
                                                     .onAppear{
                                                         
@@ -118,7 +119,7 @@ struct RecentAccountsView: View {
                                             } else {
                                                 Text("Cookies: ❌")
                                                     .font(.subheadline)
-                                                    .foregroundColor(.secondary)
+                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
                                                     .lineLimit(1)
                                             }
                                         }

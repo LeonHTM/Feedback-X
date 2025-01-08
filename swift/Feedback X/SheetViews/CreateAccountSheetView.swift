@@ -86,7 +86,7 @@ struct CreateAccountSheetView: View {
                 ZStack(alignment:.leading){
                     if appledevSave == ""{
                         Text("Apple Developer").padding(.leading, 7)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.primary.opacity(0.7))
                             .opacity(0.5)
                     }
                     Picker("", selection: $appledevSave) {
@@ -112,7 +112,7 @@ struct CreateAccountSheetView: View {
                 ZStack(alignment:.leading){
                     if countrySave == ""{
                         Text("Country").padding(.leading, 7)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.primary.opacity(0.5))
                             .opacity(0.5)
                     }
                     Picker("", selection: $countrySave) {

@@ -48,7 +48,7 @@ struct CookiesView: View {
                             Divider()
                             ForEach(accountLoader.accounts.indices, id: \.self) { index in
                                 let account = accountLoader.accounts[index]
-                                
+                            
                                 Button(action:{
                                     
                                     if !cookiesList.contains(index){
@@ -103,12 +103,24 @@ struct CookiesView: View {
                                                     .padding(.horizontal)
                                                     .padding(.vertical,1)
                                                 
+                                                
+                                            }else if account.appledev != "y"{
+                                                Text("This Account doesn't have Apple developer. Please set up Apple developer first (free).")
+                                                    .foregroundStyle(Color.red)
+                                                    .padding(.horizontal)
+                                                    .padding(.vertical,1)
+                                            
+                                                
+
+                                            
+                                                
                                             }else{
                                                 Text("Cookies not set up: ❌")
                                                     .padding(.horizontal)
                                                     .padding(.vertical,1)
                                             }
                                         }
+                                        
                                         
                                         Spacer()
                                         if account.cookies == "n" && !cookiesList.contains(index) {
@@ -128,6 +140,7 @@ struct CookiesView: View {
                                     }
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .disabled(account.appledev != "y")
                                 
                                 
                                 

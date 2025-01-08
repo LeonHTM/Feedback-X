@@ -41,17 +41,19 @@ struct RecentActivityView: View {
                                 VStack(alignment: .leading, spacing: 8) {
                                     HStack {
                                         Text(file.title.isEmpty ? "Untitled" : file.title)
+                                            .foregroundStyle(selectedFile?.name == file.name ? Color.white : Color.primary)
                                             .font(.headline)
                                             .lineLimit(1)
+                                            
                                         
                                         Spacer()
                                         Text(file.date.contains(":") ? String(file.date.dropLast(6)) : file.date)
                                             .font(.subheadline)
-                                            .foregroundColor(.secondary)
+                                            .foregroundStyle(selectedFile?.name == file.name ? Color.white.opacity(0.7) : Color.secondary)
                                     }
                                     Text("FB\(file.name.prefix(file.name.count - 4))")
                                         .font(.subheadline)
-                                        .foregroundColor(.secondary)
+                                        .foregroundStyle(selectedFile?.name == file.name ? Color.white.opacity(0.7) : Color.secondary)
                                         .lineLimit(1)
                                 }
                                 .padding([.leading, .trailing], 20)

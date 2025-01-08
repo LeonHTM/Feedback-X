@@ -84,13 +84,15 @@ struct DetailAccountsView: View {
                                                         Image(systemName: hoveredPassword ? "lock.open.fill" : "lock.fill")
                                                             .font(.system(size: 40))
                                                             .frame(width: 70, height: 70)
+                                                            .foregroundStyle(Color.white)
                                                             .background(
                                                                RoundedRectangle(cornerRadius: 15)
                                                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                                                    .fill(Color.accentColor)
                                                             )
                                                         
-                                                        Text("\(indexToShow + 1)") // Display account ID
+                                                        Text("\(indexToShow + 1)")
+                                                            .foregroundStyle(Color.white)
                                                             .padding(10)
                                                             .background(
                                                                Circle()
@@ -146,7 +148,7 @@ struct DetailAccountsView: View {
                                                         }else{
                                                             
                                                             
-                                                            Text("No cookies yet")
+                                                            Text(accountToShow.date)
                                                                 .foregroundStyle(.secondary)
                                                                 .padding(.vertical, -10)
                                                         }
@@ -226,7 +228,7 @@ struct DetailAccountsView: View {
                                                 Text("Cookies")
                                                 Spacer()
                                                 if editingMode {
-                                                    if accountToShow.cookies == "No cookies added yet" {
+                                                    if accountToShow.date != "No cookies added yet" {
                                                         Picker("", selection: $cookiesSave) {
                                                             Text("Accepted").tag("y")
                                                             Text("Not Accepted").tag("n")
@@ -247,12 +249,26 @@ struct DetailAccountsView: View {
                                                 Text("Apple Developer Account")
                                                 Spacer()
                                                 if editingMode {
-                                                    Picker("", selection: $appledevSave) {
-                                                        Text("Set up").tag("y")
-                                                        Text("Not set up").tag("n")
+                                                    HStack{
+                                                        if accountToShow.appledev != "y" {
+                                                            
+                                                            Spacer()
+                                                            Link("Set up Apple Developer",
+                                                                 destination: URL(string: "https://developer.apple.com/account/")!)
+                                                            
+                                                            Spacer()
+                                                            
+                                                            
+                                                            
+                                                        }
+                                                        
+                                                        Picker("", selection: $appledevSave) {
+                                                            Text("Set up").tag("y")
+                                                            Text("Not set up").tag("n")
+                                                        }
+                                                        .onAppear { appledevSave = accountToShow.appledev }
+                                                        .frame(width: 150)
                                                     }
-                                                    .onAppear { appledevSave = accountToShow.appledev }
-                                                    .frame(width: 150)
                                                 } else {
                                                     Text(accountToShow.appledev == "y" ? "✅" : "❌")
                                                 }
@@ -297,7 +313,7 @@ struct DetailAccountsView: View {
                                             editingMode.toggle()
                                             editingButtonDisable = true
                                             
-                                            if noteSave.range(of: "[a-zA-Z0-9]", options: .regularExpression) == nil {
+                                            if noteSave.range(of: "[^\n]", options: .regularExpression) == nil {
                                                 noteSave = "Notes"
                                             }
 
