@@ -72,14 +72,15 @@ struct RecentAccountsView: View {
                                                     .font(.subheadline)
                                                     .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
                                             }
-                                            if account.cookies == "y" {
-                                                Text("Cookies: ✅")
-                                                    .font(.subheadline)
-                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
-                                                    .lineLimit(1)
-                                                    .onAppear{
-                                                        
-                                                        
+                                            HStack{
+                                                if account.cookies == "y" {
+                                                    Text("Cookies: ✅")
+                                                        .font(.subheadline)
+                                                        .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                        .lineLimit(1)
+                                                        .onAppear{
+                                                            
+                                                            
                                                             
                                                             
                                                             if let cookieDate = convertToDate(dateString: account.date),
@@ -100,28 +101,44 @@ struct RecentAccountsView: View {
                                                                     
                                                                     accountLoader.editAccount(at: index, with: updatedAccountCookies, to: accountURL)
                                                                 }
-                                                                    
-                                                                    
-                                                                    
-                                                                }
                                                                 
+                                                                
+                                                                
+                                                            }
                                                             
-                                                        
-                                                        
-                                                        
-                                                        
-                                                    }
-                                                   
-                                                        
-                                                        
-                                                        
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                        }
                                                     
-                                            } else {
-                                                Text("Cookies: ❌")
-                                                    .font(.subheadline)
-                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
-                                                    .lineLimit(1)
+                                                    
+                                                    
+                                                    
+                                                    
+                                                } else {
+                                                    Text("Cookies: ❌")
+                                                        .font(.subheadline)
+                                                        .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                        .lineLimit(1)
+                                                }
+                                                /*
+                                                if account.appledev == "y"{
+                                                    Text("Apple Dev: ✅")
+                                                        .font(.subheadline)
+                                                        .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                        .lineLimit(1)
+                                                }else{
+                                                    
+                                                    Text("Apple Dev: ❌")
+                                                        .font(.subheadline)
+                                                        .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                        .lineLimit(1)
+                                                }*/
+                                                
                                             }
+                                            
                                         }
                                         .padding([.leading, .trailing], 20)
                                         .padding(.vertical, 5)
