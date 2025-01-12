@@ -34,6 +34,7 @@ struct DetailAccountsView: View {
         @State private var currentIndex: Int = 0 // Track the current index
         
         @State private var yoffset: Int = -125
+
         
         let dateSaveNow = Date().formatted(Date.FormatStyle()
                 .day(.defaultDigits)
@@ -63,6 +64,9 @@ struct DetailAccountsView: View {
             dateFormatter.dateFormat = "d.M.yyyy" // No leading zeros
             return dateFormatter.date(from: dateString)
         }
+    
+    
+        
         
         var body: some View {
             GeometryReader { geometry in

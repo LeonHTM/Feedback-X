@@ -22,6 +22,7 @@ struct SettingsView: View {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
     @AppStorage("rotationAngle") var rotationAngle: Double = 0
+    @AppStorage("DeveloperSettings") var developerSettings: Bool = false
     
 
     var body: some View {
@@ -29,19 +30,18 @@ struct SettingsView: View {
             Tab("Main", systemImage: "gear") {
                 Form {
                     // Synchronisation Section
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading,spacing:10) {
                         Text("Synchronisation")
                             .fontWeight(.bold)
                         Toggle(isOn: $SyncOpen) {
                             Text("Sync to Open Feedback Repository")
                         }
-                        .padding(.vertical, 5)
+                    
                         .padding(.leading, 10)
                     }
-                    .padding(.horizontal, 10)
                     
                     // Resets Section
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading,spacing:10) {
                         Text("Resets")
                             .fontWeight(.bold)
                         
@@ -53,7 +53,7 @@ struct SettingsView: View {
                         }) {
                             Text("Reset Warnings")
                         }
-                        .padding(.vertical, 5)
+                   
                         .padding(.leading, 10)
                         
                         Text("This will show all Warnings again")
@@ -67,10 +67,10 @@ struct SettingsView: View {
                         }) {
                             Text("Reset Accounts")
                         }
-                        .padding(.vertical, 5)
+              
                         .padding(.leading, 10)
                         
-                        Text("All Accounts will be reset. The App will have no Accounts saved.")
+                        Text("All Accounts will be reset. The App will have no Accounts saved")
                             .padding(.leading, 10)
                         
                         Button(action: {
@@ -81,13 +81,14 @@ struct SettingsView: View {
                         }) {
                             Text("Reset Feedbacks")
                         }
-                        .padding(.vertical, 5)
+ 
                         .padding(.leading, 10)
                         
                         Text("The App will forget all Feedbacks sent")
                             .padding(.leading, 10)
                     }
-                    .padding(.horizontal, 10)
+                    
+                    Spacer()
                 }
                 .padding(10)
                 // Attach the alert to the form
@@ -120,7 +121,29 @@ struct SettingsView: View {
                     )
                 }
             }
-        }.navigationTitle("Feedback X Settings")
+            Tab("Developer",systemImage: "gear"){
+                
+                Form{
+                    HStack{
+                        // Synchronisation Section
+                        VStack(alignment:.leading) {
+                            Text("Developer Details")
+                                .fontWeight(.bold)
+                            Toggle(isOn: $developerSettings) {
+                                Text("Show Developer Details")
+                            }.padding(.horizontal, 10)
+                            Spacer()
+                            
+                        }.padding(10)
+                        Spacer()
+                    }
+                
+              
+                    
+                  
+                }
+            }
+        }
     }
 }
 

@@ -26,7 +26,7 @@ struct CookiesView: View {
     private var isButtonAllowed: Bool {
             return !cookiesList.isEmpty
         }
-    
+    @AppStorage("DeveloperSettings") var developerSettings: Bool = false
     
     var body: some View {
         VStack(alignment:.leading,spacing: 0) { // Wrap the entire layout
@@ -39,7 +39,7 @@ struct CookiesView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading,5)
                             .padding(.top,15)
-                        //Text(cookiesList.map { String($0) }.joined(separator: ", "))
+                        
                         
                         VStack(alignment:.leading){
                             Text("Select accounts you want to save cookies for")
@@ -152,7 +152,6 @@ struct CookiesView: View {
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                 .fill(Color.gray.opacity(0.1)))
                         
-                        
                         Text("Details")
                             .font(.title3)
                             .fontWeight(.bold)
@@ -237,6 +236,7 @@ struct CookiesView: View {
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                 .fill(Color.gray.opacity(0.1)))
                         
+                       
                         
                         
                     }
@@ -274,6 +274,15 @@ struct CookiesView: View {
                 .sheet(isPresented: $showHelpSheet) {
                     HelpMeView()
                         .frame(minWidth: 1100, minHeight: 750)
+                }
+                Spacer()
+                if developerSettings == true{
+                    
+                    Text("DevDetails: List: \(cookiesList.map { String($0) }.joined(separator: ", ")), WaitingTime: \(String(waitingTimeInt))")
+                        .foregroundStyle(Color.secondary)
+                        
+                        
+                    
                 }
                 Spacer()
             }

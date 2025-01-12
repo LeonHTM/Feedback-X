@@ -48,7 +48,7 @@ struct CookiesSheetView: View {
         Double(currentStep) / Double(totalSteps)
     }
     
-    
+    @AppStorage("DeveloperSettings") var developerSettings: Bool = false
     
     
     
@@ -265,8 +265,7 @@ struct CookiesSheetView: View {
                 .disabled(currentStep <= 0 || !buttonAllowed)
                 
                 Spacer()
-                Text("Details: T:\(waitingTime) P:\(currentStep)/\(totalSteps) B:\(buttonAllowed ? 1 : 0) G:\(goneWrong ? 1 : 0)")
-                    .foregroundStyle(.secondary)
+               
             }
             .padding()
             .onAppear {
@@ -301,8 +300,11 @@ struct CookiesSheetView: View {
                 HelpMeView()
                     .frame(minWidth: 1100, minHeight: 750) // Add minimum width and height here
             }
-
-    
+            Spacer()
+            if developerSettings == true {
+                Text("Details: WaitingTime: \(waitingTime) Division: \(currentStep)/\(totalSteps) ButtonAllowed: \(buttonAllowed) goneWrong: \(goneWrong)")
+                    .foregroundStyle(.secondary)
+            }
             Spacer()
             Button(action: {
                 showSheet = false
