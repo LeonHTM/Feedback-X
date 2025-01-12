@@ -119,7 +119,7 @@ def login(account: str, password: str,path_value:str) -> None:
             #print("Entered Password")
         except TimeoutException:
             print("Could not Find Password Box")
-    else: Print("Error path value" + path_value)
+    else: print("Error path value" + path_value)
         
 
 def logout(delay: int) -> None: 
@@ -191,7 +191,7 @@ def detail_feedback(path: str) -> None:
     #Area and Type Selection
     try:
         Area_Box = Select(WebDriverWait(driver,5).until(
-        expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".FormSelect-sc-13ke276-3.jSUKpU"))))
+        expected_conditions.presence_of_element_located((By.XPATH, "//select[@aria-label='Which area are you seeing an issue with?']"))))
         #print("Found Feedback Area Box")
         WebDriverWait(driver,1)
         Area_Box.select_by_index(int(Path_List[0]))
@@ -292,19 +292,20 @@ def identify_feedback() -> int:
     return int(Feedback_ID)
 
     
-def create_feedback(title: str, file: str) -> None:
+def create_feedback(title: str, file: str,area: str) -> None:
     """
     Creates a new feedback form with the given title and content.
     
     Args:
         title (str): The title of the feedback.
         file (str): The content of the feedback or a path to the content.
+        area(str): The area of the feedback
     
     Returns:
         None
     
     Example:
-        create_feedback("App Library Blur displayed wrong iOS 18.2 (22C151) ", "I like Potatoes" ))
+        create_feedback(title: "App Library Blur displayed wrong iOS 18.2 (22C151) ", file: "I like Potatoes", area: "iOS & iPadOS"))
     """
     #New Feedback
     try:
@@ -313,18 +314,29 @@ def create_feedback(title: str, file: str) -> None:
         #print("Found Feedback in URL")
     except TimeoutException:
         print("Couldnt find Feedback in URL")
-    try:
-        New_Feedback_Button = WebDriverWait(driver,5).until(
-        expected_conditions.presence_of_element_located((By.XPATH, "//button[.//span[text()='iOS & iPadOS']]")))
-        #print("Found iOS and iPadOS Feedback button")
-        New_Feedback_Button.click()
-        time.sleep(1)
-    except TimeoutException:
-        print("Could not Find iOS and iPadOS Feedback Button")
+
+
+
+
+    if area == "iOS & iPadOS" or area == "visionOS" or area == "watchOS" or area == "macOS" or area == "tvOS" or area == "HomePod" or area == "Developer Tools & Resources" or area == "Developer Technologies & SDKs" or area == "AirPods Beta Firmware" or area == "Enterprise & Education" or area == "MFi Technologies":
+        try:
+            New_Feedback_Button = WebDriverWait(driver,5).until(
+            expected_conditions.presence_of_element_located((By.XPATH, f"//button[.//span[text()='{area}']]")))
+            #print("Found iOS and iPadOS Feedback button")
+            New_Feedback_Button.click()
+            time.sleep(1)
+        except TimeoutException:
+            print("Could not Find area Feedback Button: Area: " + area)
+    else:
+        print("Area not valid therefore not entered " + area)
+
+
+
     #Fill Title and Issue
     try:
-        Title_Box = WebDriverWait(driver,5).until(
-        expected_conditions.presence_of_element_located((By.CSS_SELECTOR,".baseElements__Input-sc-18y8gd-8.dVgMTz.FormInput-sc-1iqn2wi-0.clIAZU")))
+        Title_Box = WebDriverWait(driver, 5).until(
+    expected_conditions.presence_of_element_located((By.XPATH, '//*[@aria-label="Please provide a descriptive title for your feedback:"]'))
+)
         #print("Found Title Field")
         Title_Box.send_keys(title)
     except TimeoutException:
@@ -333,7 +345,7 @@ def create_feedback(title: str, file: str) -> None:
     
     try:
         Issue_Box = WebDriverWait(driver,5).until(
-        expected_conditions.presence_of_element_located((By.CSS_SELECTOR,".baseElements__Textarea-sc-18y8gd-9.gVqitQ.FormTextArea-sc-bqtfhn-0.khwtsT")))
+        expected_conditions.presence_of_element_located((By.XPATH, '//*[@aria-label="Please describe the issue and what steps we can take to reproduce it:"]')))
         #print("Found Feedback Content Field")
         Issue_Box.send_keys(file)
     except TimeoutException:

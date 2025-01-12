@@ -32,7 +32,7 @@ struct SecureInputView: View {
             Button(action: {
                 isSecured.toggle()
             }) {
-                Image(systemName: self.isSecured ? "eye.slash" : "eye")
+                Image(systemName: self.isSecured ? "eye" : "eye.slash")
                     .accentColor(.gray)
             }
         }

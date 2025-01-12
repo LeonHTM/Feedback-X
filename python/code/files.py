@@ -29,7 +29,7 @@ def file_save(name: str,title: str, content: str, addon: bool, iteration: str,fe
         name +=  ".txt"
     name = "python/saves/" + name
     if addon == True:
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d")  # Format: YYYY-MM-DD
+        current_date = datetime.datetime.now().strftime("%d.%m.%Y")  
         current_time = datetime.datetime.now().strftime("%H:%M") 
         
        
