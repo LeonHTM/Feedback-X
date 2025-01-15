@@ -15,6 +15,7 @@ struct CreateFeedbackView: View {
     @State private var selectedOption = "Option 1"
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
+    @EnvironmentObject var accountLoader: AccountLoader
 
     var body: some View {
         VStack {
@@ -39,7 +40,7 @@ struct CreateFeedbackView: View {
             .padding(5)
             .sheet(isPresented: $showSheet) {
                 CreateFeedbackSheetView(showSheet : $showSheet)
-                    
+                    .environmentObject(accountLoader)
             }
         }
         .frame(minWidth: 500,maxWidth:700)

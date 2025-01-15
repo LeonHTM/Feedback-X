@@ -8,86 +8,12 @@
 
 import SwiftUI
 
-struct RecentActivityView: View {
-    let folderURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/saves")
-    @State private var fileData: [(name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)] = []
-    @Binding var selectedFile: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)?
-    
-    var body: some View {
-        VStack {
-           /* HStack {
-                Text("Recent Activity")
-                    .font(.headline)
-                    .padding([.leading], 10)
-                    .padding([.top, .bottom], 10)
-                Spacer()
-                Button(action: {})
-                { Image(systemName: "line.3.horizontal.decrease.circle") }
-                    .buttonStyle(.plain)
-                    .padding(.trailing, 10)
-            }*/
-            //Divider()
-            ScrollView {
-                VStack(alignment: .leading, spacing:0) {
-                    if fileData.isEmpty {
-                        Text("No files found or folder is empty.")
-                            .foregroundColor(.gray)
-                    } else {
-                        ForEach(fileData.indices, id: \.self) { index in
-                            let file = fileData[index]
-                            Button(action: {
-                                selectedFile = file
-                            }) {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack {
-                                        Text(file.title.isEmpty ? "Untitled" : file.title)
-                                            .foregroundStyle(selectedFile?.name == file.name ? Color.white : Color.primary)
-                                            .font(.headline)
-                                            .lineLimit(1)
-                                            
-                                        
-                                        Spacer()
-                                        Text(file.date.contains(":") ? String(file.date.dropLast(6)) : file.date)
-                                            .font(.subheadline)
-                                            .foregroundStyle(selectedFile?.name == file.name ? Color.white.opacity(0.7) : Color.secondary)
-                                    }
-                                    Text("FB\(file.name.prefix(file.name.count - 4))")
-                                        .font(.subheadline)
-                                        .foregroundStyle(selectedFile?.name == file.name ? Color.white.opacity(0.7) : Color.secondary)
-                                        .lineLimit(1)
-                                }
-                                .padding([.leading, .trailing], 20)
-                                .padding(.vertical, 5)
-                                .background(selectedFile?.name == file.name ? Color.accentColor : Color.clear)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .contentShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                            .buttonStyle(PlainButtonStyle())
-
-                            
-                            
-                            
-                            if index < fileData.count - 1 {
-                                Divider()
-                                    
-                            }
-                        }
-                    }
-                }.padding([.leading, .trailing],5)
-
-                .onAppear {
-                    fileData = FileLoader.loadFolderFiles(from: folderURL, fileLimit: nil)
-                }
-            }
-        }//.frame(width:300)
-    }
-}
-
 struct DetailActivityView: View {
     let fileToShow: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)
     @State private var filesList: [String] = []
     @State private var fdbList: [String] = []
     @State private var hoveredFile: String? = nil
+    @EnvironmentObject var accountLoader: AccountLoader
     
     var body: some View {
         ScrollView {
@@ -98,6 +24,12 @@ struct DetailActivityView: View {
                         .fontWeight(.bold)
                     Text("FB\(fileToShow.name.prefix(fileToShow.name.count - 4))")
                         .foregroundStyle(.secondary)
+                    
+                    
+                        .onChange(of:fileToShow.name) {
+                            filesList = stringToList(inputString: fileToShow.files)
+                            fdbList = stringToList(inputString: fileToShow.fdb)
+                        }
                     
                     VStack(alignment: .leading) {
                         HStack {
@@ -214,8 +146,8 @@ struct DetailActivityView: View {
                 .padding(.bottom, 10)
             }
         }
-        //.frame(minWidth:500,maxWidth:1000)
-        .onAppear {
+     
+        .onAppear{
             filesList = stringToList(inputString: fileToShow.files)
             fdbList = stringToList(inputString: fileToShow.fdb)
         }
@@ -223,28 +155,5 @@ struct DetailActivityView: View {
 }
 
 
-struct CombinedView: View {
-    @State private var selectedFile: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)? = nil
 
-    var body: some View {
-        HSplitView {
-            RecentActivityView(selectedFile: $selectedFile)
-                .frame(minWidth: 250, maxWidth: .infinity)
-                
-            if let file = selectedFile {
-                DetailActivityView(fileToShow: file)
-                    .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when a file is selected
-            } else {
-                CreateFeedbackView()
-                    .frame(minWidth: 500, maxWidth: 1250) // Fill remaining space when no file is selected
-            }
-        }
-        Spacer()
-    }
-}
-
-
-#Preview {
-    CombinedView()
-}
 

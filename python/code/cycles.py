@@ -9,7 +9,7 @@ from chill import chill
 
 class cycles():
 
-    def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value, upload_value: list[str], area_value: str) -> None:
+    def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value:bool, upload_value: list[str], area_value: str) -> None:
         """
         Handles the cycle for duplicating feedback submissions across multiple accounts.
 
@@ -19,7 +19,7 @@ class cycles():
             submit_value (str): Action for submitting feedback. Can be "submit", "Save", or "Delete".
             title_value(str): title of Feedback
             path_value(str): path of Feedback
-            headless_value(str): headless 
+            headless_value(bool): headless 
             upload_value(list[string]): list containing string of files to upload
             area_value(str): area of Feedback
 
@@ -36,7 +36,6 @@ class cycles():
         password_list = accounts_read("password", start_value,iteration_value, accounts_file_path)
         feedback_id_list = []
         error = ErrorListHandler(9,iteration_value)
-        isinCycle = False
         try:
             file_read(content_file_path)
             error.remove(0,10)

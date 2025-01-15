@@ -81,6 +81,7 @@ struct SidebarView: View {
                 switch selectedPage {
                 case "Recent Activity":
                     CombinedView()
+                        .environmentObject(accountLoader)
                 case "Accounts":
                     CombinedAccountsView()
                         .environmentObject(accountLoader)
@@ -124,7 +125,7 @@ struct SidebarView: View {
                     }
                     .sheet(isPresented: $showSheet) {
                         CreateFeedbackSheetView(showSheet : $showSheet)
-                        
+                            .environmentObject(accountLoader)
                     }
                 
                     

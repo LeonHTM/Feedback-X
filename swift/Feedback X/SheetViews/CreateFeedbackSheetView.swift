@@ -13,20 +13,26 @@ struct CreateFeedbackSheetView: View {
     @State private var feedbackTitle: String = ""
     @State private var feedbackPath: String = ""
     @State private var feedbackDescription: String = ""
-    @State private var selectedOption1 = ""
-    @State private var selectedOption2 = ""
+    @State private var areaSave = ""
+    @State private var typeSave = ""
     @State private var showFileImporter = false
     @State private var selectedFiles: [String] = []
     @State private var showAlert = false
     @State private var errorMessage: String = ""
     
+    @State private var iterationSave: Double = 1
+    @State private var sliderSave: Double = 1
+    
     @State private var shouldRewrite: Bool = false
     @State private var headless: Bool = false
-    @State private var iterationValue: Int = 2
+
+    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    
+    @EnvironmentObject var accountLoader: AccountLoader
     
     
     private var isSubmitEnabled: Bool {
-            return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !selectedOption1.isEmpty && !selectedOption2.isEmpty
+            return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !areaSave.isEmpty && !typeSave.isEmpty
         }
     @State private var showCloseAlert = false
     @State public var showHelpSheet = false
@@ -52,29 +58,29 @@ struct CreateFeedbackSheetView: View {
                 Text("Which area are you seeing an Issue with?")
                 
                 ZStack(alignment:.leading){
-                    if selectedOption1 == ""{
+                    if areaSave == ""{
                         Text("Please select the problem area").padding(.leading, 7)
                             .foregroundStyle(.secondary)
                             .opacity(0.5)
                     }
-                    Picker("", selection: $selectedOption1) {
-                        Text("Chocolate").tag("Chocolate1")
-                        Text("Vanila").tag("Vanila1")
-                        Text("Strawberry").tag("Strawberry1")
+                    Picker("", selection: $areaSave) {
+                        Text("your mom").tag("Chocolate1")
+                        Text("Performance Issue").tag("Vanila1")
+                        Text("Suggestion").tag("Strawberry1")
                     }.labelsHidden()
                 }
                 
                 Text("What type of feedback are you reporting?")
                 ZStack(alignment:.leading){
-                    if selectedOption2 == ""{
+                    if typeSave == ""{
                         Text("Please select the type of feedback").padding(.leading, 7)
                             .foregroundStyle(.secondary)
                             .opacity(0.5)
                     }
-                    Picker("", selection: $selectedOption2) {
-                        Text("Chocolate").tag("Chocolate")
-                        Text("Vanila").tag("Vanila")
-                        Text("Strawberry").tag("Strawberry")
+                    Picker("", selection: $typeSave) {
+                        ForEach(PublicSaves.feedbackAreasiOS, id: \.self) { type in
+                            Text(type)
+                        }
                     }.labelsHidden()
                 }
             
@@ -190,16 +196,29 @@ struct CreateFeedbackSheetView: View {
                     .font(.title)
                     .fontWeight(.bold)
                 Text("How many times is the Feedback supposed be sent?")
-                Text("Feedback will be sent \(iterationValue) times" ).padding(.vertical,-10)
-                Slider(
-                                value: Binding(
-                                    get: { Double(iterationValue) },
-                                    set: { iterationValue = Int($0) }
-                                ),
-                                in: 2...10, // Range of the slider
-                                step: 1 // Step size
-                            )
                 
+                
+                if iterationSave >= 2 {
+                    Text("Feedback will be sent \(Int(sliderSave)) times" ).padding(.vertical,-10)
+                    Slider(
+                        value: $sliderSave,
+                        in: 1...iterationSave,
+                        step: 1.0
+                    ).onAppear {
+                        accountLoader.loadAccounts(from: accountURL)
+                        iterationSave = max(1, Double(accountLoader.accounts.count)) // Ensure iterationSave is at least 2
+                        sliderSave = max(1, sliderSave) // Adjust sliderSave to be within range
+                    }
+                }else{
+                    if accountLoader.accounts.count == 0{
+                        Text("Please add more accounts. You currently have no account saved.")
+                    }else if accountLoader.accounts.count == 1{
+                        
+                        
+                        Text("Please add more accounts. You currently only have \(accountLoader.accounts.count) account")
+                    }
+                }
+           
                             
                 Text("This option is only available after having added at least two Apple Accounts (former Apple IDs) in Accounts")
                                             .foregroundColor(.gray)
@@ -229,6 +248,10 @@ struct CreateFeedbackSheetView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
+        }
+        .onAppear{
+            accountLoader.loadAccounts(from:accountURL)
+            iterationSave  = Double(accountLoader.accounts.count)
         }
         .alert("Error", isPresented: $showAlert) {
             Button("OK", role: .cancel) {}
@@ -291,8 +314,8 @@ struct CreateFeedbackSheetView: View {
 }
 
 #Preview {
-    
+    @Previewable @StateObject var accountLoader = AccountLoader()
     CreateFeedbackSheetView(showSheet: .constant(true))
-        
+        .environmentObject(accountLoader)
 }
 

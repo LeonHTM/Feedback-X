@@ -104,7 +104,7 @@ struct CreateAccountSheetView: View {
                             .opacity(0.5)
                     }
                     Picker("", selection: $countrySave) {
-                        ForEach(CountryList.countriesAndTerritories, id: \.self) { country in
+                        ForEach(PublicSaves.countriesAndTerritories, id: \.self) { country in
                             Text(country)
                         }
                     }.labelsHidden()

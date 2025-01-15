@@ -34,6 +34,8 @@ struct DetailAccountsView: View {
         @State private var currentIndex: Int = 0 // Track the current index
         
         @State private var yoffset: Int = -125
+    
+    
 
         
         let dateSaveNow = Date().formatted(Date.FormatStyle()
@@ -214,7 +216,7 @@ struct DetailAccountsView: View {
                                                 Spacer()
                                                 if editingMode {
                                                     Picker("", selection: $countrySave) {
-                                                        ForEach(CountryList.countriesAndTerritories, id: \.self) { country in
+                                                        ForEach(PublicSaves.countriesAndTerritories, id: \.self) { country in
                                                             Text(country)
                                                         }
                                                     }
