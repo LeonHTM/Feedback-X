@@ -33,7 +33,7 @@ struct CookiesSheetView: View {
     @Binding var selectedList: [Int]
     @Binding var waitingTime: Int
     
-    let cookies = CookiesPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py")
+    @EnvironmentObject var cookiesPython: CookiesPython
     
 
     @State private var currentStep: Int = 0
@@ -93,11 +93,11 @@ struct CookiesSheetView: View {
                     buttonAllowed = false
                     goneWrong = false
                     
-                    cookies.run(
-                        start_value: selectedList[currentStep] + 1,
-                        iteration_value: selectedList[currentStep] + 1,
-                        chill_value: waitingTime,
-                        headless_value: "False"
+                    cookiesPython.run(
+                        startValue: selectedList[currentStep] + 1,
+                        iterationValue: selectedList[currentStep] + 1,
+                        chillValue: waitingTime,
+                        headlessValue: "False"
                     ) { success, output, error in
                         if success {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -197,11 +197,11 @@ struct CookiesSheetView: View {
                     buttonAllowed.toggle()
                     goneWrong = false
                     
-                    cookies.run(
-                        start_value: selectedList[currentStep] + 1,
-                        iteration_value: selectedList[currentStep] + 1,
-                        chill_value: waitingTime,
-                        headless_value: "False"
+                    cookiesPython.run(
+                        startValue: selectedList[currentStep] + 1,
+                        iterationValue: selectedList[currentStep] + 1,
+                        chillValue: waitingTime,
+                        headlessValue: "False"
                     ) { success, output, error in
                         if success {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

@@ -16,6 +16,7 @@ struct SidebarView: View {
     
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
+    @EnvironmentObject var cookiesPython: CookiesPython
 
     
     var body: some View {
@@ -94,6 +95,7 @@ struct SidebarView: View {
                 case "Cookies":
                     CookiesView()
                         .environmentObject(accountLoader)
+                        .environmentObject(cookiesPython)
                 case "Rewrite Cycle":
                     TestRewriteView()
                 case "Login Cycle":

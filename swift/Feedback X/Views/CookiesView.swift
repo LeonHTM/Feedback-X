@@ -11,6 +11,8 @@ import SwiftUI
 struct CookiesView: View {
     @State public var showHelpSheet = false
     @EnvironmentObject var accountLoader: AccountLoader
+    @EnvironmentObject var cookiesPython: CookiesPython
+    
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var isEditing: Bool = false
     @State private var waitingTime = 30.0
@@ -225,9 +227,10 @@ struct CookiesView: View {
                                 Text("Start")
                             }
                             .disabled(!isButtonAllowed)
-                            .sheet(isPresented: $showSheet) {
+                            .sheet(isPresented: $showSheet, onDismiss: {cookiesPython.stop()}) {
                                 CookiesSheetView(showSheet: $showSheet,selectedList: $cookiesList, waitingTime: $waitingTimeInt )
                                     .environmentObject(accountLoader)
+                                    .environmentObject(cookiesPython)
                             }
                         }
                         .padding()

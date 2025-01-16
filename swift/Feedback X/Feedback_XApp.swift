@@ -11,6 +11,7 @@ struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
     @StateObject private var accountLoader = AccountLoader()
     @StateObject private var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
+    @StateObject private var cookiesPython = CookiesPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py")
     
     var fullDelete: Bool = true
 
@@ -26,6 +27,7 @@ struct Feedback_XApp: App {
             SidebarView()
                 .environmentObject(accountLoader)
                 .environmentObject(feedbackPython)
+                .environmentObject(cookiesPython)
                 
         }
         Settings {

@@ -1,14 +1,33 @@
+//
+//  CookiesPython.swift
+//  Feedback X
+//
+//  Created by Leon on 16.01.2025.
+//  Copyright © 2025 LeonHTM. All rights reserved.
+//
+
+
+
 import Foundation
 
-struct CookiesPython {
+class CookiesPython: ObservableObject {
     let scriptPath: String
-    let pythonPath: String = "/Users/leon/Desktop/Feedback-X/feedbackenv/bin/python3"
+    let pythonPath: String
+    private var process: Process?
+    
+    @Published var isRunning: Bool = false
+    @Published var output: String = ""
+    
+    init(scriptPath: String, pythonPath: String = "/Users/leon/Desktop/Feedback-X/feedbackenv/bin/python3") {
+        self.scriptPath = scriptPath
+        self.pythonPath = pythonPath
+    }
     
     func run(
-        start_value: Int,
-        iteration_value: Int,
-        chill_value: Int,
-        headless_value: String,
+        startValue: Int,
+        iterationValue: Int,
+        chillValue: Int,
+        headlessValue: String,
         completion: @escaping (Bool, String?, Error?) -> Void
     ) {
         guard !scriptPath.isEmpty else {
@@ -17,48 +36,58 @@ struct CookiesPython {
             return
         }
         
-        // Create the Process instance
         let process = Process()
+        self.process = process
         process.executableURL = URL(fileURLWithPath: pythonPath)
         
-        // Set up arguments for the Python script
         let arguments = [
-            "--start_value", "\(start_value)",
-            "--iteration_value", "\(iteration_value)",
-            "--chill_value", "\(chill_value)",
-            "--headless_value", headless_value
+            "--start_value", "\(startValue)",
+            "--iteration_value", "\(iterationValue)",
+            "--chill_value", "\(chillValue)",
+            "--headless_value", headlessValue
         ]
         process.arguments = [scriptPath] + arguments
         
-        // Set up a pipe to capture the output (both stdout and stderr)
         let pipe = Pipe()
         process.standardOutput = pipe
         process.standardError = pipe
         
+        isRunning = true
+        
         DispatchQueue.global(qos: .background).async {
             do {
-                // Run the process
                 try process.run()
                 process.waitUntilExit()
+                self.isRunning = false
                 
-                // Capture the output if needed
                 let outputData = pipe.fileHandleForReading.readDataToEndOfFile()
                 if let outputString = String(data: outputData, encoding: .utf8) {
+                    self.output = outputString
                     print("\(outputString)")
                     
-                    // If the process fails, we assume there's an error message in output
                     if process.terminationStatus != 0 {
-                        // Return output as an error message if the script fails
                         completion(false, outputString, nil)
                     } else {
-                        // If the script succeeds, return no error and an empty message
                         completion(true, outputString, nil)
                     }
                 }
             } catch {
+                self.isRunning = false
                 print("Error running Python script: \(error.localizedDescription)")
                 completion(false, error.localizedDescription, error)
             }
         }
     }
+    
+    func stop() {
+        if let process = process, process.isRunning {
+            process.terminate()
+            isRunning = false
+            print("Process terminated.")
+        } else {
+            print("No process is currently running.")
+        }
+    }
 }
+
+
