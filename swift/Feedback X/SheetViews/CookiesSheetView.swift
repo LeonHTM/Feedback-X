@@ -12,6 +12,9 @@ import Foundation
 struct CookiesSheetView: View {
     
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    
+
+     
     @EnvironmentObject var accountLoader: AccountLoader
     
     @State private var showAlert = false

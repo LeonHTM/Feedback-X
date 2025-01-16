@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State var SyncOpen: Bool = false
+    
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
@@ -18,7 +18,7 @@ struct SettingsView: View {
     @EnvironmentObject var accountLoader: AccountLoader
 
 
-    
+    @AppStorage("syncOpen") var syncOpen: Bool = false
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
     @AppStorage("rotationAngle") var rotationAngle: Double = 0
@@ -33,7 +33,7 @@ struct SettingsView: View {
                     VStack(alignment: .leading,spacing:10) {
                         Text("Synchronisation")
                             .fontWeight(.bold)
-                        Toggle(isOn: $SyncOpen) {
+                        Toggle(isOn: $syncOpen) {
                             Text("Sync to Open Feedback Repository")
                         }
                     
