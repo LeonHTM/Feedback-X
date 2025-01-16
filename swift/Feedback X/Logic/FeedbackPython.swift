@@ -2,16 +2,27 @@
 //  FeedbackPython.swift
 //  Feedback X
 //
-//  Created by Leon  on 16.01.2025.
+//  Created by Leon on 16.01.2025.
 //  Copyright © 2025 LeonHTM. All rights reserved.
 //
 
 import Foundation
 
-struct FeedbackPython {
+class FeedbackPython: ObservableObject {
     let scriptPath: String
     let pythonPath: String = "/Users/leon/Desktop/Feedback-X/feedbackenv/bin/python3"
     
+    // Published properties for observing changes
+    @Published var isRunning: Bool = false
+    @Published var output: String? = nil
+
+    // Shared variable to keep track of the running process
+    private var process: Process?
+
+    init(scriptPath: String) {
+        self.scriptPath = scriptPath
+    }
+
     func run(
         startValue: Int,
         iterationValue: Int,
@@ -24,20 +35,28 @@ struct FeedbackPython {
         completion: @escaping (Bool, String?, Error?) -> Void
     ) {
         guard !scriptPath.isEmpty else {
-            print("Error: scriptPath cannot be empty.")
-            completion(false, "Script path is empty.", NSError(domain: "FeedbackPython", code: 1, userInfo: nil))
+            completion(false, nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "scriptPath cannot be empty"]))
             return
         }
-        
-        // Create the Process instance
+
+        guard FileManager.default.fileExists(atPath: pythonPath) else {
+            completion(false, nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Python executable not found at \(pythonPath)"]))
+            return
+        }
+
+        guard FileManager.default.fileExists(atPath: scriptPath) else {
+            completion(false, nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Script file not found at \(scriptPath)"]))
+            return
+        }
+
         let process = Process()
         process.executableURL = URL(fileURLWithPath: pythonPath)
-        
-        // Convert `headlessValue` to a string representation
+
+        // Ensure unbuffered output by adding the `-u` flag
         let headlessString = headlessValue ? "True" : "False"
-        
-        // Set up arguments for the Python script
         var arguments = [
+            "-u", // Unbuffered output flag
+            scriptPath,
             "--start_value", "\(startValue)",
             "--iteration_value", "\(iterationValue)",
             "--submit_value", submitValue,
@@ -47,43 +66,83 @@ struct FeedbackPython {
             "--area_value", areaValue
         ]
         
-        // Add upload values as multiple arguments
+        // Append upload values as arguments
         for upload in uploadValue {
             arguments.append("--upload_value")
             arguments.append(upload)
         }
-        
-        process.arguments = [scriptPath] + arguments
-        
-        // Set up a pipe to capture the output (both stdout and stderr)
+
+        process.arguments = arguments
+
         let pipe = Pipe()
         process.standardOutput = pipe
         process.standardError = pipe
-        
+
+        self.process = process
+        self.isRunning = true
+
         DispatchQueue.global(qos: .background).async {
-            do {
-                // Run the process
-                try process.run()
-                process.waitUntilExit()
-                
-                // Capture the output
-                let outputData = pipe.fileHandleForReading.readDataToEndOfFile()
-                if let outputString = String(data: outputData, encoding: .utf8) {
-                    print("\(outputString)")
-                    
-                    // If the process fails, we assume there's an error message in output
-                    if process.terminationStatus != 0 {
-                        completion(false, outputString, nil)
-                    } else {
-                        completion(true, outputString, nil)
+            let handle = pipe.fileHandleForReading
+            handle.readabilityHandler = { fileHandle in
+                if let line = String(data: fileHandle.availableData, encoding: .utf8) {
+                    DispatchQueue.main.async {
+                        self.output = line // Always update with the most recent line
+                        print(line) // Optional: Log to Xcode console as well
                     }
                 }
+            }
+            
+            do {
+                try process.run()
+                
+                // Wait until the process finishes, and then call completion
+                process.waitUntilExit()
+                
+                // Ensure we stop reading output when the process completes
+                handle.readabilityHandler = nil
+                
+                // After the process completes, handle the success case
+                DispatchQueue.main.async {
+                    self.isRunning = false
+                    self.process = nil
+                    if process.terminationStatus == 0 {
+                        // Process completed successfully
+                        completion(true, self.output, nil)
+                    } else {
+                        // Process failed with non-zero exit code
+                        completion(false, self.output, NSError(domain: "", code: Int(process.terminationStatus), userInfo: [NSLocalizedDescriptionKey: "Process failed with exit code \(process.terminationStatus)"]))
+                    }
+                }
+                
             } catch {
-                print("Error running Python script: \(error.localizedDescription)")
-                completion(false, error.localizedDescription, error)
+                DispatchQueue.main.async {
+                    self.isRunning = false
+                    self.output = nil
+                    self.process = nil
+                    completion(false, nil, error)
+                }
             }
         }
     }
-}
 
+
+
+   
+
+
+
+    // Function to terminate the running Python process
+    func stop() {
+        if let process = self.process, process.isRunning {
+            process.terminate() // Terminates the process gracefully
+            print("Python script terminated.")
+            DispatchQueue.main.async {
+                self.isRunning = false // Update state to indicate the process has stopped
+                self.process = nil
+            }
+        } else {
+            print("No Python script is currently running.")
+        }
+    }
+}
 

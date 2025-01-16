@@ -90,8 +90,7 @@ class cycles():
                     error.remove(8,1)
                 except:
                     pass
-                if index == 0:
-                     isinCycle = True
+                print("Finished " + str(account_list[index]))
                 chill(1)
 
         for report_str in error.report():

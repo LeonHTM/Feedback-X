@@ -93,7 +93,7 @@ def login(account: str, password: str,path_value:str) -> None:
             driver.switch_to.frame(iframe)
             #print("Iframe localized and switched")
         except TimeoutException:
-            print("Could not localize iframe")
+            print("Failed: Could not localize iframe")
             
         #Account
         try:
@@ -152,7 +152,7 @@ def logout(delay: int) -> None:
         
         Logout_Tent.click()
     except TimeoutException:
-        print("Could not Find Log out Button UWU")
+        print("Could not Find Log out Button")
         
     except ValueError:
         print("delay has to bigger than 0 and and integer")
@@ -166,7 +166,7 @@ def logout(delay: int) -> None:
         Logout_Button.click()
         #print("Logged out")
     except TimeoutException:
-        print("Could not Find Log out Button inside thingy you know kuss JO")
+        print("Could not Find Log out Button")
     
     
 

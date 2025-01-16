@@ -15,6 +15,7 @@ struct SidebarView: View {
     @State private var showAccountSheet = false
     
     @EnvironmentObject var accountLoader: AccountLoader
+    @EnvironmentObject var feedbackPython: FeedbackPython
 
     
     var body: some View {
@@ -82,6 +83,7 @@ struct SidebarView: View {
                 case "Recent Activity":
                     CombinedView()
                         .environmentObject(accountLoader)
+                        .environmentObject(feedbackPython)
                 case "Accounts":
                     CombinedAccountsView()
                         .environmentObject(accountLoader)
@@ -123,9 +125,10 @@ struct SidebarView: View {
                             Image(systemName: "bubble.and.pencil")
                         }
                     }
-                    .sheet(isPresented: $showSheet) {
+                    .sheet(isPresented: $showSheet, onDismiss: { feedbackPython.stop() }) {
                         CreateFeedbackSheetView(showSheet : $showSheet)
                             .environmentObject(accountLoader)
+                            .environmentObject(feedbackPython)
                     }
                 
                     

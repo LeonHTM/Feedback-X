@@ -16,6 +16,7 @@ struct CreateFeedbackView: View {
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @EnvironmentObject var accountLoader: AccountLoader
+    @EnvironmentObject var feedbackPython: FeedbackPython
 
     var body: some View {
         VStack {
@@ -38,9 +39,10 @@ struct CreateFeedbackView: View {
             }
             .disabled(isRunning)
             .padding(5)
-            .sheet(isPresented: $showSheet) {
+            .sheet(isPresented: $showSheet, onDismiss: { feedbackPython.stop() }) {
                 CreateFeedbackSheetView(showSheet : $showSheet)
                     .environmentObject(accountLoader)
+                    .environmentObject(feedbackPython)
             }
         }
         .frame(minWidth: 500,maxWidth:700)

@@ -35,6 +35,7 @@ struct CreateFeedbackSheetView: View {
     @State private var feedbackURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt")
     
     @EnvironmentObject var accountLoader: AccountLoader
+    @EnvironmentObject var feedbackPython: FeedbackPython
     
     
     private var isSubmitEnabled: Bool {
@@ -50,12 +51,43 @@ struct CreateFeedbackSheetView: View {
     
     @State private var finalString: String = ""
     
-    // Usage Example:
-    let feedbackPython = FeedbackPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main.py")
-
+   
+    @State private var pythonOutPutString: String = ""
    
     @State private var buttonAllowed: Bool = true
+    @State private var goneWrong: Bool = false
     
+    func feedbackRun(){
+        
+        feedbackPython.run(
+            startValue: 1,
+            iterationValue: Int(sliderSave),
+            submitValue: submitSave,
+            titleValue: feedbackTitle,
+            pathValue: finalString,
+            headlessValue: !headless,
+            uploadValue: selectedFiles,
+            areaValue: topicSave
+        ) { success, output, error in
+            if success {
+                if ((feedbackPython.output?.contains("Failed")) == nil){
+                    buttonAllowed = true
+                    showSheet = false
+                    
+                }else{
+                    goneWrong = true
+                    
+                }
+            } else if let error = error {
+                pythonOutPutString = "Error: \(error.localizedDescription)"
+                buttonAllowed = true // Enable the button to let the user retry
+            } else {
+                pythonOutPutString = "Unknown error occurred while running the script."
+                buttonAllowed = true // Enable the button to let the user retry
+            }
+        }
+        
+    }
 
     var body: some View {
         
@@ -367,6 +399,7 @@ struct CreateFeedbackSheetView: View {
                         Text("You haven't filled every field yet")}
                     Button(action: {
                         showSheet = false
+                        feedbackPython.stop()
                     }) {
                         Text("Close")
                             .padding(5) // Add padding around the text
@@ -387,26 +420,7 @@ struct CreateFeedbackSheetView: View {
                         
                         finalString = "\(areaSave),\(typeSave),\(feedbackPath)"
                         
-                        
-                        feedbackPython.run(
-                            startValue: 1,
-                            iterationValue: Int(sliderSave),
-                            submitValue: submitSave,
-                            titleValue: feedbackTitle,
-                            pathValue: finalString,
-                            headlessValue: !headless,
-                            uploadValue: selectedFiles,
-                            areaValue: topicSave
-                        ) { success, output, error in
-                            if success {
-                                print(output ?? "No output")
-                                buttonAllowed = true
-                                showSheet = false
-                            } else {
-                                print(error?.localizedDescription ?? output ?? "Unknown error")
-                            }
-                        }
-                        
+                        feedbackRun()
                         
                         
                         
@@ -428,11 +442,52 @@ struct CreateFeedbackSheetView: View {
             }
             if buttonAllowed == false{
                 VStack{
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
-                        .scaleEffect(1.0, anchor: .center)
-                    Text("Duplicating Feedbacks")
+                    
+                    if goneWrong != true{
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
+                            .scaleEffect(1.0, anchor: .center)
+                        Text(feedbackPython.output ?? "Started Duplication Cycle")
+                    }else{
+                        
+                        Text("Something seems to have gone wrong. Do you wann try again?")
+                        Button(action:{
+                            goneWrong = false
+                            feedbackRun()
+                            
+                        }){
+                            
+                            Text("Try again")
+                            
+                        }
+                        if headless == false && goneWrong == true {
+                            Text("Tip: show the Browser Window running the automation to whats going wrong")
+                            Toggle(isOn: $headless){
+                                Text("Turn on Browser Window")
+                            }
+                        }
+                        Button(action:{
+                            
+                            showSheet = false
+                        }){
+                            
+                            Text("Quit")
+                        }
+                        
+                        
+                    }
                 }
+                .padding()
+                .background(Color.gray.opacity(0.5))
+                .clipShape(
+                    .rect(
+                        topLeadingRadius: 10,
+                        bottomLeadingRadius: 10,
+                        bottomTrailingRadius: 10,
+                        topTrailingRadius: 10
+                    )
+                )
+                
             }
         }
         
@@ -444,6 +499,7 @@ struct CreateFeedbackSheetView: View {
 
 #Preview {
     @Previewable @StateObject var accountLoader = AccountLoader()
+    @Previewable @StateObject var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
     CreateFeedbackSheetView(showSheet: .constant(true))
         .environmentObject(accountLoader)
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
     @StateObject private var accountLoader = AccountLoader()
+    @StateObject private var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
+    
     var fullDelete: Bool = true
 
 
@@ -23,6 +25,7 @@ struct Feedback_XApp: App {
         Window("", id: "FeedbackXMain") {
             SidebarView()
                 .environmentObject(accountLoader)
+                .environmentObject(feedbackPython)
                 
         }
         Settings {
