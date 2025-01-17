@@ -192,10 +192,10 @@ def detail_feedback(path: str) -> None:
     try:
         Area_Box = Select(WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//select[@aria-label='Which area are you seeing an issue with?']"))))
-        #print("Found Feedback Area Box")
+        print("Found Feedback Area Box")
         WebDriverWait(driver,1)
         Area_Box.select_by_index(int(Path_List[0]))
-        #print("Chosing Area " + Path_List[0] + " = " + Area_Options[int(Path_List[0])])
+        print("Chosing Area " + Path_List[0] + " = " + Area_Options[int(Path_List[0])])
     except TimeoutException:
         print("Could not Find Feedback Area Box")
         
@@ -206,10 +206,10 @@ def detail_feedback(path: str) -> None:
     try:
         Type_Box = Select(WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//select[@aria-label='What type of feedback are you reporting?']"))))
-        #print("Found Type Area Box")
+        print("Found Type Area Box")
         WebDriverWait(driver,1)
         Type_Box.select_by_index(int(Path_List[1]))
-        #print("Choosing Type: " + Type_Options[1])    
+        print("Choosing Type: " + Type_Options[1])    
     except TimeoutException:
         print("Could not Find Feedback Type Box")
         Path_List.pop(1)
@@ -353,17 +353,18 @@ def create_feedback(title: str, file: str,area: str) -> None:
 
     
 
-def finish_feedback(kind: str)-> None:
+def finish_feedback(kind: str,noFiles: bool)-> None:
     """
     Finishes Feedback: Either Saves, Submits or Deletes it.
     
     Args:
         kind (str): Defines the action to be taken. Can be "Save", "Submit", or "Delete". Both written with Capitalzed first Letter or not
+        noFiles (bool): If True, the feedback will be submitted without any files
     Returns:
         None
     
     Example:
-        finish_feedback("Submit")
+        finish_feedback(kind:"Submit", noFiles: True)
     """
 
     buttonvalue = "button"
@@ -395,12 +396,17 @@ def finish_feedback(kind: str)-> None:
             try:
                 Finish_Feedback_Button = WebDriverWait(driver,5).until(
                 expected_conditions.presence_of_element_located((By.XPATH, buttonvalue)))
+                chill(3)
                 Finish_Feedback_Button.click()
                 #print("chose submit button")
-                WebDriverWait(driver, 10).until(expected_conditions.alert_is_present())
-                alert2 = driver.switch_to.alert
-                alert2.accept()
-                #print("Alert handled successfully.")
+                if noFiles == True:
+                    SubmitwithoutFiles = WebDriverWait(driver,5).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Submit Without Files']")))
+                    SubmitwithoutFiles.click()
+                else:
+                    WebDriverWait(driver, 10).until(expected_conditions.alert_is_present())
+                    alert2 = driver.switch_to.alert
+                    alert2.accept()
+                    #print("Alert handled successfully.")
                 WebDriverWait(driver,120).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Close Feedback']")))
             except TimeoutException:
                 print("No alert appeared within the given timeframe.")

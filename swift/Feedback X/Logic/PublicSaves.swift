@@ -139,7 +139,7 @@ public struct PublicSaves {
         "Watch app",
         "Weather",
         "Wi-Fi",
-        "‌Something else not on this list"
+        "Something else not on this list"
     ]
     public static let feedbackTypes: [String] =  [
         "Incorrect/Unexpected Behavior",

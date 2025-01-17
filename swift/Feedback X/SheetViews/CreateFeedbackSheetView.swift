@@ -39,7 +39,7 @@ struct CreateFeedbackSheetView: View {
     
     
     private var isSubmitEnabled: Bool {
-        return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !areaSave.isEmpty && !typeSave.isEmpty && !submitSave.isEmpty && !topicSave.isEmpty
+        return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !areaSave.isEmpty && !typeSave.isEmpty && !submitSave.isEmpty && !topicSave.isEmpty && !selectedFiles.isEmpty
         }
     @State private var showCloseAlert = false
     @State public var showHelpSheet = false
@@ -268,6 +268,9 @@ struct CreateFeedbackSheetView: View {
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(10)
                         }
+                        Text("Apple requires at least on attachment. Stupid but true")
+                            .foregroundColor(.gray)
+                            .font(.system(size: 12))
                         Text("Automation")
                             .font(.title)
                             .fontWeight(.bold)
@@ -392,7 +395,7 @@ struct CreateFeedbackSheetView: View {
                     
                     Spacer()
                     if developerSettings == true{
-                        Text("Submit: \(submitSave), Title: \(feedbackTitle),Path: \(feedbackPath), Headless: \(headless), Selected Files: \(selectedFiles), areaSave: \(areaSave), Final: \(finalString), Iterations: \(sliderSave)").foregroundStyle(Color.secondary)
+                        Text("Submit: \(submitSave), Title: \(feedbackTitle),Path: \(feedbackPath), Headless: \(headless), Selected Files: \(selectedFiles), areaSave: \(areaSave), Final: \(finalString); Iterations: \(sliderSave)").foregroundStyle(Color.secondary)
                     }
                     Spacer()
                     if isSubmitEnabled == false{
@@ -417,8 +420,12 @@ struct CreateFeedbackSheetView: View {
                             
                             print("Failed to write file: \(error)")
                         }
-                        
-                        finalString = "\(areaSave),\(typeSave),\(feedbackPath)"
+                        if feedbackPath != ""{
+                            finalString = "\(areaSave),\(typeSave),\(feedbackPath)"
+                        }else{
+                            finalString = "\(areaSave),\(typeSave)"
+                            print(finalString)
+                        }
                         
                         feedbackRun()
                         

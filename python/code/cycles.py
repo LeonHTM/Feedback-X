@@ -27,7 +27,6 @@ class cycles():
             None
         """
         print("Started Duplication Cycle" )
-        
 
         accounts_file_path = file_path("../accounts/accounts.json")
         content_file_path = file_path("../current_fdb/content.txt")
@@ -38,7 +37,7 @@ class cycles():
         error = ErrorListHandler(9,iteration_value)
         try:
             file_read(content_file_path)
-            error.remove(0,10)
+            error.remove(0,iteration_value)
         except (FileNotFoundError, ValueError) as e:
             
             return  
@@ -69,7 +68,8 @@ class cycles():
                 if index == (iteration_value -1) and (submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save"):
                     try:
                         file_save(name =str(identify_feedback()),title = title_value, content = file_read(content_file_path), addon = True,iteration = iteration_value, feedback_id = feedback_id_list, path = path_value, upload = upload_value)
-                        error.remove(5,10)
+                        print("Saved Feedback in File")
+                        error.remove(5,iteration_value)
                     except:
                          pass
                         #file_clear("current_fdb/content.txt")
@@ -80,8 +80,14 @@ class cycles():
                 except:
                      pass
                 try:
-                     finish_feedback(submit_value)
-                     error.remove(7,1)
+                    if upload_value == None:
+                         print("No Files to Upload")
+                         finish_feedback(kind = submit_value, noFiles = True)
+                         error.remove(7,1)
+                    else:
+                        print("Uploading Files")   
+                        finish_feedback(kind = submit_value, noFiles = False)
+                        error.remove(7,1)
                 except:
                      pass
                 chill(2)

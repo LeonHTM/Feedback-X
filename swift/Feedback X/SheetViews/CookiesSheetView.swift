@@ -102,6 +102,7 @@ struct CookiesSheetView: View {
                         if success {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                                 buttonAllowed = true
+                                print("success")
                                
                                 
                           
@@ -136,7 +137,7 @@ struct CookiesSheetView: View {
                                         date: dateSave ?? "Unknown"
                                     )
                                     accountLoader.editAccount(at: selectedList[currentStep - 1], with: updatedAccount, to: accountURL)
-                                    print("Edited Account")
+                                    print("Edited Account \(dateSave)")
                                     
                                 }else{
                                     print("Couldnt edit Account")
@@ -232,7 +233,7 @@ struct CookiesSheetView: View {
                                         date: dateSave ?? "Unknown"
                                     )
                                     accountLoader.editAccount(at: selectedList[currentStep - 1], with: updatedAccount, to: accountURL)
-                                    print("Edited Account")
+                                    print("Edited Account \(dateSave)")
                                     
                                 }else{
                                     print("Couldnt edit Account")
@@ -282,6 +283,7 @@ struct CookiesSheetView: View {
                 
                 
             }
+            Text("Tip: The date when the cookies are going to expire is only updated if the accounts cookies are ❌")
         }
         
         Divider()
@@ -305,7 +307,7 @@ struct CookiesSheetView: View {
             }
             Spacer()
             if developerSettings == true {
-                Text("Details: WaitingTime: \(waitingTime) Division: \(currentStep)/\(totalSteps) ButtonAllowed: \(buttonAllowed) goneWrong: \(goneWrong)")
+                Text("Details: WaitingTime: \(waitingTime) Division: \(currentStep)/\(totalSteps) ButtonAllowed: \(buttonAllowed) goneWrong: \(goneWrong), dateSave: \(dateSave)")
                     .foregroundStyle(.secondary)
             }
             Spacer()

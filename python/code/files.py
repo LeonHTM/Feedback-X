@@ -27,7 +27,7 @@ def file_save(name: str,title: str, content: str, addon: bool, iteration: str,fe
     """
     if name[-4:] != ".txt":
         name +=  ".txt"
-    name = "python/saves/" + name
+    name = "/Users/leon/Desktop/Feedback-X/python/saves/" + name
     if addon == True:
         current_date = datetime.datetime.now().strftime("%d.%m.%Y")  
         current_time = datetime.datetime.now().strftime("%H:%M") 
