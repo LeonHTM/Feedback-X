@@ -38,19 +38,16 @@ struct DetailActivityView: View {
                                 .fontWeight(.bold)
                             Text(fileToShow.iteration).padding(-5)
                         }
-                        HStack {
+                        HStack(alignment: .top){
                             Text("FB on all Account:")
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
-                            ForEach(fdbList, id: \.self) { fdb in
-                                Text("FB\(fdb)")
-                                    .padding(.leading, -5)
-                                if fdb != fdbList.last {
-                                    Text(",")
-                                        .padding(-5)
-                                }
-                            }
+                            Text(fdbList.map { "FB\($0)" }.joined(separator: ", "))
+                                .lineLimit(3) // Allow wrapping to multiple lines
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading, 5)
                         }
+                        
                     }
                     
                     Divider()

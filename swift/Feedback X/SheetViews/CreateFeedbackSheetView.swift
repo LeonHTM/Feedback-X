@@ -39,7 +39,7 @@ struct CreateFeedbackSheetView: View {
     
     
     private var isSubmitEnabled: Bool {
-        return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !areaSave.isEmpty && !typeSave.isEmpty && !submitSave.isEmpty && !topicSave.isEmpty && !selectedFiles.isEmpty
+        return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !areaSave.isEmpty && !typeSave.isEmpty && !submitSave.isEmpty && !topicSave.isEmpty 
         }
     @State private var showCloseAlert = false
     @State public var showHelpSheet = false
@@ -268,9 +268,7 @@ struct CreateFeedbackSheetView: View {
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(10)
                         }
-                        Text("Apple requires at least on attachment. Stupid but true")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 12))
+                        
                         Text("Automation")
                             .font(.title)
                             .fontWeight(.bold)
