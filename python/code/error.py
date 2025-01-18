@@ -55,6 +55,11 @@ class ErrorListHandler:
             yield string
         yield "Runtime: " + str(round(round(time.time()-self.start_time)/60)) +  " Mins = " + str(round(time.time() - self.start_time))+ " Seconds"
 
-
+    def reportcheck(self) -> bool:
+        for element in self.error_list:
+            if element > 0:
+                return("Failed")
+        return("Success")
+        
 
 

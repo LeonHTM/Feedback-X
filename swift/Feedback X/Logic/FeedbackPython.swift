@@ -84,13 +84,14 @@ class FeedbackPython: ObservableObject {
         DispatchQueue.global(qos: .background).async {
             let handle = pipe.fileHandleForReading
             handle.readabilityHandler = { fileHandle in
-                if let line = String(data: fileHandle.availableData, encoding: .utf8) {
+                if let line = String(data: fileHandle.availableData, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines), !line.isEmpty {
                     DispatchQueue.main.async {
                         self.output = line // Always update with the most recent line
-                        print(line) // Optional: Log to Xcode console as well
+                        print(line) // Log to Xcode console only if the line is not empty
                     }
                 }
             }
+
             
             do {
                 try process.run()

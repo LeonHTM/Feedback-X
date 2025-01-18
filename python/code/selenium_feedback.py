@@ -106,7 +106,7 @@ def login(account: str, password: str,path_value:str) -> None:
             chill(1.5)
             #print("Entered Account Credentials")
         except TimeoutException:
-            print("Could not Find Account Box")
+            print("Failed: Couldn't find Account Box")
             
         #Password
         try:
@@ -118,8 +118,8 @@ def login(account: str, password: str,path_value:str) -> None:
             account_box.send_keys(Keys.RETURN)
             #print("Entered Password")
         except TimeoutException:
-            print("Could not Find Password Box")
-    else: print("Error path value" + path_value)
+            print("Failed: Couldn't find Password Box")
+    else: print("Failed: path_value doesn't match https://feedbackassistant.apple.com/ is " + path_value + " instead")
         
 
 def logout(delay: int) -> None: 
@@ -138,7 +138,7 @@ def logout(delay: int) -> None:
     try: 
         driver.switch_to.default_content()
     except TimeoutException:
-        print("Could not find Feedback in Name of Page")
+        print("Failed: Couldn't switch to default content from iframe")
         
 
     #SignOut
@@ -152,10 +152,10 @@ def logout(delay: int) -> None:
         
         Logout_Tent.click()
     except TimeoutException:
-        print("Could not Find Log out Button")
+        print("Failed: Couldn't find log out tent")
         
     except ValueError:
-        print("delay has to bigger than 0 and and integer")
+        print("Failed: Delay has to be bigger than 0 and an integer")
         
     
 
@@ -166,7 +166,7 @@ def logout(delay: int) -> None:
         Logout_Button.click()
         #print("Logged out")
     except TimeoutException:
-        print("Could not Find Log out Button")
+        print("Failed: Couldn't find Log out button")
     
     
 
@@ -192,31 +192,30 @@ def detail_feedback(path: str) -> None:
     try:
         Area_Box = Select(WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//select[@aria-label='Which area are you seeing an issue with?']"))))
-        print("Found Feedback Area Box")
+        #print("Found Feedback Area Box")
         WebDriverWait(driver,1)
         Area_Box.select_by_index(int(Path_List[0]))
-        print("Chosing Area " + Path_List[0] + " = " + Area_Options[int(Path_List[0])])
+        #print("Chosing Area " + Path_List[0] + " = " + Area_Options[int(Path_List[0])])
     except TimeoutException:
-        print("Could not Find Feedback Area Box")
-        
+        print("Failed: Couldn't find feedback area selector")
     except UnexpectedTagNameException:
-        print("Select of Area Failed")
+        print("Failed: Couldn't select Area")
     except NoSuchElementException:
-        print("Could not find provided Value in Area Drop Down list")
+        print("Failed: Couldn't find provided Value in area drop down")
     try:
         Type_Box = Select(WebDriverWait(driver,5).until(
         expected_conditions.presence_of_element_located((By.XPATH, "//select[@aria-label='What type of feedback are you reporting?']"))))
-        print("Found Type Area Box")
+        #print("Found Type Area Box")
         WebDriverWait(driver,1)
         Type_Box.select_by_index(int(Path_List[1]))
-        print("Choosing Type: " + Type_Options[1])    
+        #print("Choosing Type: " + Type_Options[1])    
     except TimeoutException:
-        print("Could not Find Feedback Type Box")
+        print("Failed: Couldn't find feedback type selector")
         Path_List.pop(1)
     except UnexpectedTagNameException:
-        print("Select of Type Failed")
+        print("Failed: Couldn't select Type")
     except NoSuchElementException:
-        print("Could not find provided Value in Type Drop Down list")
+        print("Failed: Couldn't find provided value in type drop down")
 
     #Work throgh All Elemnts, reload all elemenbts everytime
     index = 2  
@@ -236,7 +235,7 @@ def detail_feedback(path: str) -> None:
             elif index == len(Dropdown_List):
                 break
     except TimeoutException:
-        print("Could not locate the required dropdowns.")
+        print("Failed: Couldn't locate the required dropdowns with the given path")
     
     #Fill all Dropdown_List Present (
     
@@ -248,7 +247,7 @@ def detail_feedback(path: str) -> None:
         current_stuff = datetime.datetime.now()
         Time_Box.send_keys(str(current_stuff.time().strftime("%I:%M %p %Z") + " CET " + str(current_stuff.date().strftime("%m/%d/%Y"))))
     except TimeoutException:
-        print("Couldnt find Time Box")
+        print("Couldn't find Time Box")
 
 def upload_feedback(uploads: str) -> None:
     """
@@ -272,7 +271,7 @@ def upload_feedback(uploads: str) -> None:
 
         
     except TimeoutException:
-        print("Couldnt find Upload Button")
+        print("Failed: Couldn't find upload button")
    
 
 
@@ -313,7 +312,7 @@ def create_feedback(title: str, file: str,area: str) -> None:
         driver.get("https://feedbackassistant.apple.com/new")
         #print("Found Feedback in URL")
     except TimeoutException:
-        print("Couldnt find Feedback in URL")
+        print("Failed: Couldn't find feedbackassistant in URL")
 
 
 
@@ -326,9 +325,9 @@ def create_feedback(title: str, file: str,area: str) -> None:
             New_Feedback_Button.click()
             time.sleep(1)
         except TimeoutException:
-            print("Could not Find area Feedback Button: Area: " + area)
+            print("Failed: Couldn't find area topic: " + area)
     else:
-        print("Area not valid therefore not entered " + area)
+        print("Failed: Topic " + area + " not valid")
 
 
 
@@ -340,7 +339,7 @@ def create_feedback(title: str, file: str,area: str) -> None:
         #print("Found Title Field")
         Title_Box.send_keys(title)
     except TimeoutException:
-        print("Could not find Title Field")
+        print("Failed: Couldn't find feedback title field")
 
     
     try:
@@ -349,7 +348,7 @@ def create_feedback(title: str, file: str,area: str) -> None:
         #print("Found Feedback Content Field")
         Issue_Box.send_keys(file)
     except TimeoutException:
-        print("Could not find Issue Field")
+        print("Failed: Couldn't find describe issue field")
 
     
 
@@ -377,7 +376,7 @@ def finish_feedback(kind: str,noFiles: bool)-> None:
             
             #print("Finished Feedback with Action:  " +kind)
         except TimeoutException:
-            print("Could not finish with Action " + kind)
+            print("Failed: Couldn't finish with action " + kind)
             return
     #Submit or Delete
     elif kind == "Delete" or kind =="delete":
@@ -409,15 +408,15 @@ def finish_feedback(kind: str,noFiles: bool)-> None:
                     #print("Alert handled successfully.")
                 WebDriverWait(driver,120).until(expected_conditions.presence_of_element_located((By.XPATH, "//button[text()='Close Feedback']")))
             except TimeoutException:
-                print("No alert appeared within the given timeframe.")
+                print("Failed: No alert appeared within the given timeframe.")
             except NoAlertPresentException:
-                print("No alert was present to switch to.")
+                print("Failed: No alert was present to switch to.")
             
 
         time.sleep(2)
         #print("Finished Feedback with Action: " +kind)
     except TimeoutException:
-        print("Could not finish Feedback with Action: " + kind)
+        print("Failed: Couldn't finish Feedback with Action: " + kind)
     
 
 

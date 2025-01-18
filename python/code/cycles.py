@@ -29,7 +29,7 @@ class cycles():
         print("Started Duplication Cycle" )
 
         accounts_file_path = file_path("../accounts/accounts.json")
-        content_file_path = file_path("../current_fdb/content.txt")
+        content_file_path = "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt"
         
         account_list = accounts_read("icloudmail", start_value,iteration_value,accounts_file_path)
         password_list = accounts_read("password", start_value,iteration_value, accounts_file_path)
@@ -68,24 +68,28 @@ class cycles():
                 if index == (iteration_value -1) and (submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save"):
                     try:
                         file_save(name =str(identify_feedback()),title = title_value, content = file_read(content_file_path), addon = True,iteration = iteration_value, feedback_id = feedback_id_list, path = path_value, upload = upload_value)
-                        print("Saved Feedback in File")
+                        #print("Saved Feedback in File")
                         error.remove(5,iteration_value)
                     except:
+                         #print("Failed to Save Feedback in File")
                          pass
-                        #file_clear("current_fdb/content.txt")
+                         
                 try:
-                    for element in upload_value:
-                        upload_feedback(element)
-                    error.remove(6,1)
+                    if upload_value != None:
+                        for element in upload_value:
+                            upload_feedback(element)
+                        error.remove(6,1)
+                    else:
+                         error.remove(6,1)
                 except:
                      pass
                 try:
                     if upload_value == None:
-                         print("No Files to Upload")
+                         #print("No Files to Upload")
                          finish_feedback(kind = submit_value, noFiles = True)
                          error.remove(7,1)
                     else:
-                        print("Uploading Files")   
+                        #print("Uploading Files")   
                         finish_feedback(kind = submit_value, noFiles = False)
                         error.remove(7,1)
                 except:
@@ -98,7 +102,7 @@ class cycles():
                     pass
                 print("Finished " + str(account_list[index]))
                 chill(1)
-
+        #print(error.reportcheck())
         for report_str in error.report():
             print(report_str)
         

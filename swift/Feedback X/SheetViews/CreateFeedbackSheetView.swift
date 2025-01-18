@@ -57,8 +57,7 @@ struct CreateFeedbackSheetView: View {
     @State private var buttonAllowed: Bool = true
     @State private var goneWrong: Bool = false
     
-    func feedbackRun(){
-        
+    func feedbackRun() {
         feedbackPython.run(
             startValue: 1,
             iterationValue: Int(sliderSave),
@@ -70,24 +69,33 @@ struct CreateFeedbackSheetView: View {
             areaValue: topicSave
         ) { success, output, error in
             if success {
-                if ((feedbackPython.output?.contains("Failed")) == nil){
-                    buttonAllowed = true
-                    showSheet = false
-                    
-                }else{
-                    goneWrong = true
-                    
-                }
+                
+                if let outputpy = feedbackPython.output {
+                                    //print(outputpy)
+                                    if outputpy.range(of: "Failed") != nil {
+                                        print("goneWrong")
+                                        goneWrong = true
+                                    } else {
+                                        print("goneWell")
+                                        buttonAllowed = true
+                                        showSheet = false
+                                    }
+                                } else {
+                                    print("No output from feedbackPython.")
+                                    goneWrong = true
+                                }
+                
             } else if let error = error {
-                pythonOutPutString = "Error: \(error.localizedDescription)"
-                buttonAllowed = true // Enable the button to let the user retry
+                //print("Error: \(error.localizedDescription)")
+                //buttonAllowed = true // Enable the button to let the user retry
             } else {
-                pythonOutPutString = "Unknown error occurred while running the script."
-                buttonAllowed = true // Enable the button to let the user retry
+                print("Unknown error occurred while running the script.")
+                //buttonAllowed = true // Enable the button to let the user retry
             }
         }
-        
     }
+ 
+
 
     var body: some View {
         
@@ -422,7 +430,6 @@ struct CreateFeedbackSheetView: View {
                             finalString = "\(areaSave),\(typeSave),\(feedbackPath)"
                         }else{
                             finalString = "\(areaSave),\(typeSave)"
-                            print(finalString)
                         }
                         
                         feedbackRun()
@@ -449,10 +456,35 @@ struct CreateFeedbackSheetView: View {
                 VStack{
                     
                     if goneWrong != true{
+                       
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
                             .scaleEffect(1.0, anchor: .center)
                         Text(feedbackPython.output ?? "Started Duplication Cycle")
+                            .onChange(of:feedbackPython.output){
+                                
+                                if let outputpy = feedbackPython.output {
+                                    //print(outputpy)
+                                    if outputpy.range(of: "Failed") != nil {
+                                        print("goneWrong")
+                                        goneWrong = true
+                                        feedbackPython.stop()
+                                    }
+                                    
+                                }
+                                                
+
+                                
+                            }
+                       
+                           
+                     
+                    
+                            
+                        
+                        
+                        
+                        
                     }else{
                         
                         Text("Something seems to have gone wrong. Do you wann try again?")
@@ -466,7 +498,7 @@ struct CreateFeedbackSheetView: View {
                             
                         }
                         if headless == false && goneWrong == true {
-                            Text("Tip: show the Browser Window running the automation to whats going wrong")
+                            Text("Tip: show the Browser Window running the automation to show whats going wrong")
                             Toggle(isOn: $headless){
                                 Text("Turn on Browser Window")
                             }

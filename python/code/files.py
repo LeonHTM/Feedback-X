@@ -41,15 +41,18 @@ def file_save(name: str,title: str, content: str, addon: bool, iteration: str,fe
             file.write(element + ",")
         file.write("\n")
         file.write(path+ "\n")
-        for element in upload:
-            file.write(element + ",")
-        file.write("\n")
+        if upload != None:
+            for element in upload:
+                file.write(element + ",")
+            file.write("\n")
+        else:
+            file.write("No Uploads" + "\n")
         file.write("Content_Start" + "\n")
         file.write(content)
         file.write("\n" + "Content_Finish")
         
       
-        print("Filled Content in File: " + name)
+        #print("Filled Content in File: " + name)
         file.close
     except OSError:
         print("Failed to create file: " + name)
