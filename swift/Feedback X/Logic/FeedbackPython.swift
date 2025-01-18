@@ -31,7 +31,7 @@ class FeedbackPython: ObservableObject {
         pathValue: String,
         headlessValue: Bool,
         uploadValue: [String],
-        areaValue: String,
+        topicValue: String,
         completion: @escaping (Bool, String?, Error?) -> Void
     ) {
         guard !scriptPath.isEmpty else {
@@ -63,7 +63,7 @@ class FeedbackPython: ObservableObject {
             "--title_value", titleValue,
             "--path_value", pathValue,
             "--headless_value", headlessString,
-            "--area_value", areaValue
+            "--topic_value", topicValue
         ]
         
         // Append upload values as arguments

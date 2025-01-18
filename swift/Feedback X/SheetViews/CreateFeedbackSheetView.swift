@@ -66,7 +66,7 @@ struct CreateFeedbackSheetView: View {
             pathValue: finalString,
             headlessValue: !headless,
             uploadValue: selectedFiles,
-            areaValue: topicSave
+            topicValue: topicSave
         ) { success, output, error in
             if success {
                 
