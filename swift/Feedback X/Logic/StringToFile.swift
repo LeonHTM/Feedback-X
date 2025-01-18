@@ -13,9 +13,9 @@ struct StringToFile {
     static func writeToFile(input: String, filePath: URL) throws {
         do {
             try input.write(to: filePath, atomically: true, encoding: .utf8)
-            print("Successfully wrote to file at \(filePath.path)")
+            //print("Successfully wrote to file at \(filePath.path)")
         } catch {
-            print("Error writing to file: \(error.localizedDescription)")
+            //print("Error writing to file: \(error.localizedDescription)")
             throw error
         }
     }

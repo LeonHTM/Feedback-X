@@ -39,12 +39,12 @@ struct CombinedAccountsView: View {
                     }
                 )
                 .environmentObject(accountLoader)
-                .frame(minWidth: 575, maxWidth: 1250)
+                .frame(minWidth: 500, maxWidth: 1250)
             } else {
                 // Show CreateAccountView if no valid selectedIndex is available
                 CreateAccountView()
                     .environmentObject(accountLoader)
-                    .frame(minWidth: 575, maxWidth: 1250, maxHeight: .infinity)
+                    .frame(minWidth: 500, maxWidth: 1250, maxHeight: .infinity)
             }
         }
     }

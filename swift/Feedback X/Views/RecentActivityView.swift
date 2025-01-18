@@ -31,8 +31,9 @@ struct RecentActivityView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing:0) {
                     if fileData.isEmpty {
-                        Text("No files found or folder is empty.")
+                        Text("No files found or Directory is empty.")
                             .foregroundColor(.gray)
+                            .padding(10)
                     } else {
                         ForEach(fileData.indices, id: \.self) { index in
                             let file = fileData[index]

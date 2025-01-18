@@ -12,39 +12,28 @@ struct TestView: View {
     @State private var cookiesList: Set<String> = []
 
     var items = ["yo", "wallah yo", "antifa"]
+    @State var text:String = ""
 
     var body: some View {
-        List(items, id: \.self) { item in
-            HStack {
-                
-                
-                
-                
-                ZStack {
-                    Image(systemName: "circle")
-                        .font(.system(size: 20))
-                    Image(systemName: cookiesList.contains(item) ? "checkmark" : "")
-                        .foregroundStyle(Color.primary)
-                }
-                .background(
-                    Circle()
-                        .fill(cookiesList.contains(item) ? Color.accentColor : Color.clear)
-                )
-                .foregroundStyle(cookiesList.contains(item) ? Color.accentColor : Color.primary)
-                
-                
-                Text(item) // Item text
+        
+        Button(action:{
+            OnlineCheck.checkGoogle{isOnline in
+                if isOnline == true{
+            text = "Online"}else{
+                text = "Not Online"
             }
-            .contentShape(Rectangle()) // Makes the entire row tappable
-            .onTapGesture {
-                if cookiesList.contains(item) {
-                    cookiesList.remove(item) // Deselect
-                } else {
-                    cookiesList.insert(item) // Select
-                }
+                
+                
             }
-        }
+        })
+        {Text("Online Check")}
+            .padding(10)
+        Text(text)
+           
+            
+        
     }
+    
 }
 
 #Preview {

@@ -19,8 +19,7 @@ def file_save(name: str,title: str, content: str, addon: bool, iteration: str,fe
         None
 
     Example:
-        THIS EXAMPLE WILL HAVE TO BE REWRITTEN ahha
-        file_save(str(identify_feedback()), file_read("current_fdb/content.txt"), True, iteration_value, feedback_id_list)
+        file_save(name = "41928821",title = "Test Feedback", content = "Test Content", addon = True, iteration = "10", feedback_id = ["FB1234567"], path = "Lock Screen,1,3", upload = [/Users/leon/Desktop/Feedback-X/python/current_fdb/Video_01.mov,/Users/leon/Desktop/Feedback-X/python/current_fdb/Image_01.png,])
 
     Raises:
         OSError: If there is an issue creating or writing to the file.
@@ -57,6 +56,39 @@ def file_save(name: str,title: str, content: str, addon: bool, iteration: str,fe
     except OSError:
         print("Failed to create file: " + name)
    
+def file_append(report: str, name: str) -> None:
+    """
+    Appends error report to a file.
+
+    Args:
+        name (str): Name of the file to append report to. Can be given with or without a suffix.
+        report(str): Error report to append to the file.
+
+    Returns:
+        None
+
+    Example:
+        file_append(name = "41928821", report = "Worked in Area 1")
+
+    Raises:
+        OSError: If there is an issue creating or writing to the file.
+    """
+    if name[-4:] != ".txt":
+        name +=  ".txt"
+    name = "/Users/leon/Desktop/Feedback-X/python/saves/" + name
+
+    try:
+        file = open(name,"a")
+        file.write("\n"+ "Report_Start" + "\n")
+        file.write(report)
+        file.write("Report_Finish")
+        file.close
+    except OSError:
+        print("Failed to add " + report + " to file: " + name)
+
+
+
+
 def file_read(path: str) -> None:
     """
     Reads content from a file.

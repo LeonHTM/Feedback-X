@@ -116,24 +116,28 @@ struct DetailActivityView: View {
                     
                     // Files section with ForEach implementation
                     VStack(alignment: .leading) {
-                        ForEach(filesList, id: \.self) { fileName in
-                            HStack {
-                                Image(systemName: "document")  // Document icon
-                                Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
-                                    .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
+                        if fileToShow.files != "No Uploads"{
+                            ForEach(filesList, id: \.self) { fileName in
+                                HStack {
+                                    Image(systemName: "document")  // Document icon
+                                    Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
+                                        .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
                                     //.foregroundColor(hoveredFile == fileName ? .accentColor : .primary)
-                                    .onHover {hovering in
-                                        if hovering {
-                                            hoveredFile = fileName
-                                        }else{
-                                            hoveredFile = nil
+                                        .onHover {hovering in
+                                            if hovering {
+                                                hoveredFile = fileName
+                                            }else{
+                                                hoveredFile = nil
+                                            }
+                                            
+                                            
+                                            
                                         }
-                                        
-                                        
-                                        
-                                    }
+                                }
+                                
                             }
-                            
+                        }else{
+                            Text("No files were uploaded in this feedback")
                         }
                     }
                                             

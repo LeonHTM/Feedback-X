@@ -13,8 +13,7 @@ struct TestRewriteView: View {
     @State private var isLoading: Bool = false
     @State private var errorMessage: String? = nil
     @State private var showAlert: Bool = false
-    @State private var selectedFilePath: String? = "/Users/leon/Desktop/Feedback-x/python/code/rewrite.py"
-
+    @State private var selectedFilePath: String? = "/Users/leon/Desktop/Feedback-X/python/code/rewrite.py"
     var body: some View {
         VStack {
             

@@ -1,9 +1,13 @@
 import time
 
 class ErrorListHandler:
-    def __init__(self, size,startvalue):
+    def __init__(self, size, startvalue):
         self.error_list = [startvalue] * size
         self.start_time = time.time()
+        """
+        Creates an error list of a given size with a starting value. The starting value should be how many times a script is supposed to run without errors. The size should be the maximal possible failure points.
+
+        """
 
     def add(self, position: int, value_to_add:int) -> None:
         """
@@ -46,16 +50,39 @@ class ErrorListHandler:
         """
         return self.error_list
         
-    def report(self) -> None:
+    def report(self) -> str: # type: ignore
+        """
+        Returns a report of the error list.
+
+        Returns:
+            For every element in the error list, it returns a string with the number of errors in that part. If there are no errors it returns "Worked in Part" + index. At the end it returns the runtime of the script. Time is mesuared from when object was created.
+        Example:
+            Worked in Part 0
+            Failed in Part 1 -> 1 times
+            Failed in Part 2 -> 1 times
+            Failed in Part 3 -> 1 times
+            Failed in Part 4 -> 1 times
+            Failed in Part 5 -> 2 times
+            Failed in Part 6 -> 1 times
+            Failed in Part 7 -> 1 times
+            Failed in Part 8 -> 1 times
+            Runtime: 1 Mins = 31 Seconds
+        """
         for index, element in enumerate(self.error_list):
             if element > 0:
-                string = "Failed in Part " + str(index) + " " + str(element) + " times"
+                string = "Failed in Part " + str(index) + " -> " + str(element) + " times"
             else:
                 string = "Worked in Part " + str(index)
             yield string
         yield "Runtime: " + str(round(round(time.time()-self.start_time)/60)) +  " Mins = " + str(round(time.time() - self.start_time))+ " Seconds"
 
-    def reportcheck(self) -> bool:
+    def reportcheck(self) -> str:
+        """
+        Simpler Version of the report function, returns "Failed" if there are any errors in the list. If everything workd it returns "Success"
+
+        Returns:
+            "Failed" or "Success"
+        """
         for element in self.error_list:
             if element > 0:
                 return("Failed")

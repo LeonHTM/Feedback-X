@@ -13,6 +13,7 @@ struct CreateFeedbackView: View {
     @State public var showSheet = false
     @State private var feedbackTitle: String = ""
     @State private var selectedOption = "Option 1"
+    @State private var showAccountAlert: Bool = false
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @EnvironmentObject var accountLoader: AccountLoader
@@ -32,13 +33,26 @@ struct CreateFeedbackView: View {
                 }
 
             Button(action: {
-                showSheet = true
+                if accountLoader.accounts.count >= 2{
+                    showSheet = true
+                }else{
+                    showAccountAlert = true
+                }
             }) {
                 Text(isRunning ? "Creating New Feedback" : "New Feedback")
                     .padding(1)
             }
             .disabled(isRunning)
             .padding(5)
+            .alert("Not enough Accounts", isPresented: $showAccountAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                if accountLoader.accounts.count == 0 {
+                    Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) accounts.")}else{
+                        
+                        Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) account.")
+                    }
+            }
             .sheet(isPresented: $showSheet, onDismiss: { feedbackPython.stop() }) {
                 CreateFeedbackSheetView(showSheet : $showSheet)
                     .environmentObject(accountLoader)

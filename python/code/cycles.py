@@ -30,11 +30,12 @@ class cycles():
 
         accounts_file_path = file_path("../accounts/accounts.json")
         content_file_path = "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt"
-        
+        id = ""
+        final_report: str = ""
         account_list = accounts_read("icloudmail", start_value,iteration_value,accounts_file_path)
         password_list = accounts_read("password", start_value,iteration_value, accounts_file_path)
         feedback_id_list = []
-        error = ErrorListHandler(9,iteration_value)
+        error = ErrorListHandler(10,iteration_value)
         try:
             file_read(content_file_path)
             error.remove(0,iteration_value)
@@ -64,16 +65,11 @@ class cycles():
                      error.remove(4,1)
                 except:
                      pass
-                    
-                if index == (iteration_value -1) and (submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save"):
-                    try:
-                        file_save(name =str(identify_feedback()),title = title_value, content = file_read(content_file_path), addon = True,iteration = iteration_value, feedback_id = feedback_id_list, path = path_value, upload = upload_value)
-                        #print("Saved Feedback in File")
-                        error.remove(5,iteration_value)
-                    except:
-                         #print("Failed to Save Feedback in File")
-                         pass
-                         
+                try:
+                     id = str(identify_feedback())
+                     error.remove(5,1)
+                except:
+                        pass
                 try:
                     if upload_value != None:
                         for element in upload_value:
@@ -102,10 +98,28 @@ class cycles():
                     pass
                 print("Finished " + str(account_list[index]))
                 chill(1)
-        #print(error.reportcheck())
+
+        if submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save":
+                    try:
+                        file_save(name = id,title = title_value, content = file_read(content_file_path), addon = True,iteration = iteration_value, feedback_id = feedback_id_list, path = path_value, upload = upload_value)
+                        #print("Saved Feedback in File")
+                        error.remove(9,iteration_value)
+                    except:
+                         #print("Failed to Save Feedback in File")
+                         pass
         for report_str in error.report():
             print(report_str)
-        
+            final_report += report_str + "\n"
+
+        if submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save":
+             try:
+                    file_append(name = id, report = final_report)
+                    #print("Saved Report in File")
+             except:
+                  print("Couldn't save Report in File")
+            
+
+
             
                 
             
@@ -135,7 +149,7 @@ class cycles():
         startup(headless_value)
         for index in range(0, iteration_value):
                 try: 
-                    login(account_list[index], password_list[index],path_value="https://feedbackassistant.apple.com/")
+                    login(account_list[index], password_list[index],path="https://feedbackassistant.apple.com/")
                     error1 = False
                 except:
                      continue

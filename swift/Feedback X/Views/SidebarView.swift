@@ -13,6 +13,7 @@ struct SidebarView: View {
     @State public var selectedPage: String? = "Recent Activity"
     @State private var showSheet =  false
     @State private var showAccountSheet = false
+    @State private var showAccountAlert: Bool = false
     
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
@@ -119,13 +120,25 @@ struct SidebarView: View {
             ToolbarItem(placement: .automatic) {
                     
                     Button(action:{
-                        showSheet = true
+                        if accountLoader.accounts.count >= 2{
+                            showSheet = true}else{
+                                showAccountAlert = true
+                            }
                         
                     }){
                         HStack{
                             Text("New Feedback")
                             Image(systemName: "bubble.and.pencil")
                         }
+                    }
+                    .alert("Not enough Accounts", isPresented: $showAccountAlert) {
+                        Button("OK", role: .cancel) {}
+                    } message: {
+                        if accountLoader.accounts.count == 0 {
+                            Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) accounts.")}else{
+                                
+                                Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) account.")
+                            }
                     }
                     .sheet(isPresented: $showSheet, onDismiss: { feedbackPython.stop() }) {
                         CreateFeedbackSheetView(showSheet : $showSheet)

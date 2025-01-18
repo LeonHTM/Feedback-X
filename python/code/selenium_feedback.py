@@ -110,7 +110,7 @@ def login(account: str, password: str,path:str) -> None:
             #print("Entered Password")
         except TimeoutException:
             print("Failed: Couldn't find Password Box")
-    else: print("Failed: path_value doesn't match https://feedbackassistant.apple.com/ is " + path_value + " instead")
+    else: print("Failed: path doesn't match https://feedbackassistant.apple.com/ is " + path + " instead")
         
 
 def logout(delay: int) -> None: 
@@ -235,7 +235,9 @@ def detail_feedback(path: str) -> None:
         current_stuff = datetime.datetime.now()
         Time_Box.send_keys(str(current_stuff.time().strftime("%I:%M %p %Z") + " CET " + str(current_stuff.date().strftime("%m/%d/%Y"))))
     except TimeoutException:
-        print("Couldn't find Time Box")
+        #print("Couldn't find Time Box")
+        pass
+        
 
 
 def upload_feedback(uploads: str) -> None:

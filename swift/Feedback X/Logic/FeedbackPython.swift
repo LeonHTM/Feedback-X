@@ -126,12 +126,6 @@ class FeedbackPython: ObservableObject {
         }
     }
 
-
-
-   
-
-
-
     // Function to terminate the running Python process
     func stop() {
         if let process = self.process, process.isRunning {
@@ -141,8 +135,6 @@ class FeedbackPython: ObservableObject {
                 self.isRunning = false // Update state to indicate the process has stopped
                 self.process = nil
             }
-        } else {
-            print("No Python script is currently running.")
         }
     }
 }
