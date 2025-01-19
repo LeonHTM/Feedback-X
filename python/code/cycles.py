@@ -8,7 +8,6 @@ from chill import chill
 
 
 class cycles():
-
     def duplication_cycle(self,start_value: int,iteration_value: int ,submit_value :str,title_value : str,path_value:str,headless_value:bool, upload_value: list[str], topic_value: str) -> None:
         """
         Handles the cycle for duplicating feedback submissions across multiple accounts.
@@ -96,7 +95,7 @@ class cycles():
                     error.remove(8,1)
                 except:
                     pass
-                print("Finished " + str(account_list[index]))
+                print("Finished " + str(account_list[index] + " " + str(index + 1) + "/" + str(iteration_value)))
                 chill(1)
 
         if submit_value == "submit" or submit_value =="Submit" or submit_value == "save" or submit_value == "Save":

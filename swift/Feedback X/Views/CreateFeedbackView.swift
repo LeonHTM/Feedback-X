@@ -18,6 +18,7 @@ struct CreateFeedbackView: View {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
+    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
 
     var body: some View {
         VStack {
@@ -33,6 +34,7 @@ struct CreateFeedbackView: View {
                 }
 
             Button(action: {
+                accountLoader.loadAccounts(from: accountURL)
                 if accountLoader.accounts.count >= 2{
                     showSheet = true
                 }else{

@@ -39,6 +39,14 @@ struct CreateFeedbackSheetView: View {
     @State private var goneWrong: Bool = false
     @State private var shouldSync: Bool = false
     
+    @State private var currentStep: Int = 0
+    @State private var totalSteps: Int = 0
+    
+    var progress: Double {
+            Double(currentStep) / Double(totalSteps)
+        }
+    
+    
     @State private var showCloseAlert: Bool = false
     @State public var showHelpSheet: Bool = false
     
@@ -422,6 +430,7 @@ struct CreateFeedbackSheetView: View {
             if !buttonAllowed {
                 VStack {
                     if !goneWrong {
+                        ProgressView(value: progress)
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
                             .scaleEffect(1.0, anchor: .center)
@@ -432,6 +441,11 @@ struct CreateFeedbackSheetView: View {
                                     //print(feedbackPython.output)
                                     goneWrong = true
                                     feedbackPython.stop()
+                                }else if let outputpy = feedbackPython.output, outputpy.range(of: "Finished") != nil {
+                                    
+                                    if currentStep < totalSteps {
+                                        currentStep += 1
+                                    }
                                 }
                             }
                     } else {
@@ -459,6 +473,9 @@ struct CreateFeedbackSheetView: View {
                 .padding()
                 .background(Color.gray.opacity(0.9))
                 .cornerRadius(10)
+                .onAppear{
+                    totalSteps = Int(sliderSave)
+                }
             }
         }
     }

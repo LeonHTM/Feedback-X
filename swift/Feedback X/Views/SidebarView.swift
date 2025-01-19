@@ -18,6 +18,8 @@ struct SidebarView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var cookiesPython: CookiesPython
+    
+    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
 
     
     var body: some View {
@@ -120,6 +122,7 @@ struct SidebarView: View {
             ToolbarItem(placement: .automatic) {
                     
                     Button(action:{
+                        accountLoader.loadAccounts(from: accountURL)
                         if accountLoader.accounts.count >= 2{
                             showSheet = true}else{
                                 showAccountAlert = true
