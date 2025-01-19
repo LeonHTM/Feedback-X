@@ -18,6 +18,7 @@ struct SidebarView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var cookiesPython: CookiesPython
+    @EnvironmentObject var fileLoader: FileLoader
     
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
 
@@ -88,6 +89,7 @@ struct SidebarView: View {
                     CombinedView()
                         .environmentObject(accountLoader)
                         .environmentObject(feedbackPython)
+                        .environmentObject(fileLoader)
                 case "Accounts":
                     CombinedAccountsView()
                         .environmentObject(accountLoader)
@@ -147,6 +149,7 @@ struct SidebarView: View {
                         CreateFeedbackSheetView(showSheet : $showSheet)
                             .environmentObject(accountLoader)
                             .environmentObject(feedbackPython)
+                            .environmentObject(fileLoader)
                     }
                 
                     

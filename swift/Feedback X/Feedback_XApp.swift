@@ -12,7 +12,7 @@ struct Feedback_XApp: App {
     @StateObject private var accountLoader = AccountLoader()
     @StateObject private var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
     @StateObject private var cookiesPython = CookiesPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py")
-    
+    @StateObject private var fileLoader = FileLoader(folderURL: URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/saves"))
     var fullDelete: Bool = true
 
 
@@ -28,6 +28,7 @@ struct Feedback_XApp: App {
                 .environmentObject(accountLoader)
                 .environmentObject(feedbackPython)
                 .environmentObject(cookiesPython)
+                .environmentObject(fileLoader)
                 
         }
         Settings {

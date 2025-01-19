@@ -1,5 +1,5 @@
 //
-//  RecentActivity.swift
+//  DetailActivityView.swift
 //  Feedback X
 //
 //  Created by LeonHTM on 20.12.2024.
@@ -10,11 +10,23 @@ import SwiftUI
 
 struct DetailActivityView: View {
     let fileToShow: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)
-    @State private var filesList: [String] = []
-    @State private var fdbList: [String] = []
     @State private var hoveredFile: String? = nil
     @EnvironmentObject var accountLoader: AccountLoader
+    @EnvironmentObject var fileLoader: FileLoader
+    @State private var showDeleteAlert: Bool = false
+    @Binding var index: Int?
+    public let onDeleteActivity: () -> Void
     
+
+    // Computed properties for derived lists
+    private var filesList: [String] {
+        stringToList(inputString: fileToShow.files)
+    }
+
+    private var fdbList: [String] {
+        stringToList(inputString: fileToShow.fdb)
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -22,15 +34,10 @@ struct DetailActivityView: View {
                     Text(fileToShow.title)
                         .font(.title)
                         .fontWeight(.bold)
+                    
                     Text("FB\(fileToShow.name.prefix(fileToShow.name.count - 4))")
                         .foregroundStyle(.secondary)
-                    
-                    
-                        .onChange(of:fileToShow.name) {
-                            filesList = stringToList(inputString: fileToShow.files)
-                            fdbList = stringToList(inputString: fileToShow.fdb)
-                        }
-                    
+
                     VStack(alignment: .leading) {
                         HStack {
                             Text("Iterations:")
@@ -38,59 +45,60 @@ struct DetailActivityView: View {
                                 .fontWeight(.bold)
                             Text(fileToShow.iteration).padding(-5)
                         }
-                        HStack(alignment: .top){
+                        HStack(alignment: .top) {
                             Text("FB on all Account:")
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
                             Text(fdbList.map { "FB\($0)" }.joined(separator: ", "))
-                                .lineLimit(3) // Allow wrapping to multiple lines
+                                .lineLimit(3)
                                 .multilineTextAlignment(.leading)
                                 .padding(.leading, 5)
                         }
-                        
                     }
                     
                     Divider()
                     Text("Basic Information")
                         .font(.title2)
                         .foregroundStyle(.secondary)
-                    
-                    VStack (alignment: .leading) {
+
+                    VStack(alignment: .leading) {
                         Text("Please provide a descriptive title for your feedback")
                             .fontWeight(.bold)
                         Text(fileToShow.title)
                     }
-                    VStack (alignment: .leading) {
+
+                    VStack(alignment: .leading) {
                         Text("What area are you seeing an issue with?")
                             .fontWeight(.bold)
                         Text(fileToShow.path.prefix(while: { $0 != "," }))
                     }
-                    VStack (alignment: .leading) {
+
+                    VStack(alignment: .leading) {
                         Text("What type of Feedback are you reporting?")
                             .fontWeight(.bold)
-                        if fileToShow.path.split(separator: ",").dropFirst().first == "1" {
-                            Text("Incorrect/Unexpected Behavior")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "2" {
-                            Text("Application Crash")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "3" {
-                            Text("Application Slow/Unresponsive")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "4" {
-                            Text("Battery Life")
-                        } else if fileToShow.path.split(separator: ",").dropFirst().first == "5" {
-                            Text("Suggestion")
-                        }
+                        let feedbackType = fileToShow.path.split(separator: ",").dropFirst().first
+                        Text(
+                            feedbackType == "1" ? "Incorrect/Unexpected Behavior" :
+                            feedbackType == "2" ? "Application Crash" :
+                            feedbackType == "3" ? "Application Slow/Unresponsive" :
+                            feedbackType == "4" ? "Battery Life" :
+                            feedbackType == "5" ? "Suggestion" :
+                            "Unknown"
+                        )
                     }
+                    
                     Divider()
                     Text("Details")
                         .font(.title2)
                         .foregroundStyle(.secondary)
-                    
-                    VStack (alignment: .leading) {
+
+                    VStack(alignment: .leading) {
                         Text("What is the path to your Issue?")
                             .fontWeight(.bold)
                         Text(fileToShow.path.split(separator: ",").dropFirst(2).joined(separator: ","))
                     }
-                    VStack (alignment: .leading) {
+
+                    VStack(alignment: .leading) {
                         Text("What time was it when this last occurred?")
                             .fontWeight(.bold)
                         HStack {
@@ -98,63 +106,80 @@ struct DetailActivityView: View {
                             Text(fileToShow.time)
                         }
                     }
+
                     Divider()
                     Text("Description")
                         .font(.title2)
                         .foregroundStyle(.secondary)
-                    
-                    VStack (alignment: .leading) {
+
+                    VStack(alignment: .leading) {
                         Text("Please describe your Issue and what one can take to reproduce it:")
                             .fontWeight(.bold)
                         Text(fileToShow.content)
                     }
-                    
+
                     Divider()
                     Text("Files")
                         .font(.title2)
                         .foregroundStyle(.secondary)
-                    
-                    // Files section with ForEach implementation
+
                     VStack(alignment: .leading) {
-                        if fileToShow.files != "No Uploads"{
+                        if fileToShow.files != "No Uploads" {
                             ForEach(filesList, id: \.self) { fileName in
                                 HStack {
-                                    Image(systemName: "document")  // Document icon
+                                    Image(systemName: "document") // Document icon
                                     Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
                                         .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
-                                    //.foregroundColor(hoveredFile == fileName ? .accentColor : .primary)
-                                        .onHover {hovering in
-                                            if hovering {
-                                                hoveredFile = fileName
-                                            }else{
-                                                hoveredFile = nil
-                                            }
-                                            
-                                            
-                                            
+                                        .onHover { hovering in
+                                            hoveredFile = hovering ? fileName : nil
                                         }
                                 }
-                                
                             }
-                        }else{
+                        } else {
                             Text("No files were uploaded in this feedback")
                         }
                     }
-                                            
+                    HStack{
+                        Spacer()
+                        Button(action:{
+                            
+                            showDeleteAlert = true
+                        }){
+                            
+                            HStack{
+                                Text("Delete Feedback")
+                                Image(systemName: "trash")
+                            }
+                            .foregroundStyle(Color.red)
+                        }
+                        .padding(20)
+                        Spacer()
+                    }.alert(isPresented: $showDeleteAlert) {
+                        Alert(
+                            title: Text("Delete \(fileToShow.title)?"),
+                            message: Text("Are you sure you want to delete Account \(fileToShow.name)?"),
+                            primaryButton: .destructive(Text("Confirm")) {
+                                
+                                fileLoader.deleteFile(named:fileToShow.name)
+                                onDeleteActivity()
+                                
+                                
+                                
+
+                                
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
+
+                    
+                    
+                    
                     
                 }
                 .padding()
                 .padding(.bottom, 10)
             }
         }
-     
-        .onAppear{
-            filesList = stringToList(inputString: fileToShow.files)
-            fdbList = stringToList(inputString: fileToShow.fdb)
-        }
     }
 }
-
-
-
-

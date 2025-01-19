@@ -18,6 +18,7 @@ struct CreateFeedbackView: View {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
+    @EnvironmentObject var fileLoader : FileLoader
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
 
     var body: some View {
@@ -59,6 +60,7 @@ struct CreateFeedbackView: View {
                 CreateFeedbackSheetView(showSheet : $showSheet)
                     .environmentObject(accountLoader)
                     .environmentObject(feedbackPython)
+                    .environmentObject(fileLoader)
             }
         }
         .frame(minWidth: 500,maxWidth:700)

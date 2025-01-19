@@ -56,6 +56,7 @@ struct CreateFeedbackSheetView: View {
     
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
+    @EnvironmentObject var fileLoader: FileLoader
 
     // MARK: - Computed Properties
     private var isSubmitEnabled: Bool {
@@ -75,6 +76,7 @@ struct CreateFeedbackSheetView: View {
             topicValue: topicSave
         ) { success, output, error in
             if success {
+                fileLoader.loadFolderFiles()
                 if let outputpy = feedbackPython.output {
                     if outputpy.range(of: "Failed") != nil {
                         goneWrong = true
@@ -465,7 +467,12 @@ struct CreateFeedbackSheetView: View {
                             }
                         }
 
-                        Button(action: { showSheet = false }) {
+                        Button(action: {
+                            showSheet = false
+                            fileLoader.loadFolderFiles()
+                            
+                            
+                        }) {
                             Text("Quit")
                         }
                     }

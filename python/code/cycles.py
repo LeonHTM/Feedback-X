@@ -63,7 +63,7 @@ class cycles():
                      detail_feedback(path_value)
                      error.remove(4,1)
                 except:
-                     pass
+                        pass
                 try:
                      id = str(identify_feedback())
                      error.remove(5,1)

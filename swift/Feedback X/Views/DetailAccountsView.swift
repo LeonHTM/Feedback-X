@@ -461,7 +461,7 @@ struct DetailAccountsView: View {
                                     }
                                     .alert(isPresented: $showDeleteAlert) {
                                         Alert(
-                                            title: Text("Attention"),
+                                            title: Text("Delete \(accountToShow.icloudmail)?"),
                                             message: Text("Are you sure you want to delete Account \(accountToShow.icloudmail)?"),
                                             primaryButton: .destructive(Text("Confirm")) {
                                                 accountLoader.deleteAccount(by: accountToShow.icloudmail, to: accountURL)

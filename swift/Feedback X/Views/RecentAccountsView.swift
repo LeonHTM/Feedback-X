@@ -13,6 +13,7 @@ struct RecentAccountsView: View {
         
         @State private var showSheet = false
         @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+        @State private var showDeleteAlert: Bool = false
         
         @EnvironmentObject var accountLoader: AccountLoader
         @Binding var selectedAccount: Account?
@@ -147,6 +148,43 @@ struct RecentAccountsView: View {
                                         .contentShape(RoundedRectangle(cornerRadius: 8))
                                     }
                                     .buttonStyle(PlainButtonStyle())
+                                    .alert(isPresented: $showDeleteAlert) {
+                                        Alert(
+                                            title: Text("Delete \(selectedAccount?.icloudmail ?? "Unknown")?"),
+                                            message: Text("Are you sure you want to delete feedback ?"),
+                                            primaryButton: .destructive(Text("Confirm")) {
+                                                
+                                                accountLoader.deleteAccount(by: selectedAccount?.icloudmail ?? "Unknown", to: accountURL)
+                                                
+                                                if let currentIndex = selectedIndex {
+                                                    if currentIndex > 0 {
+                                                        self.selectedIndex = currentIndex - 1
+                                                        self.selectedAccount = accountLoader.accounts[self.selectedIndex!]
+                                                    } else {
+                                                        self.selectedIndex = nil
+                                                        self.selectedAccount = nil
+                                                    }
+                                                }
+                                                
+
+                                               
+                                                
+                                            },
+                                            secondaryButton: .cancel()
+                                        )
+                                    }
+                                    .contextMenu {
+                                        
+                                        
+                                        Button(role: .destructive) {
+                                            showDeleteAlert = true
+                                            selectedAccount = account
+                                            selectedIndex = index
+                                           
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }
                                     
                                     if index < accountLoader.accounts.count - 1 {
                                         Divider()

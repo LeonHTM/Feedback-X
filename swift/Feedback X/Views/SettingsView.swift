@@ -76,7 +76,7 @@ struct SettingsView: View {
                         Button(action: {
                             // Configure alert details for "Reset Feedbacks"
                             alertTitle = "Reset Feedbacks"
-                            alertMessage = "Are you sure you want to forget all sent feedbacks? This cannot be undone."
+                            alertMessage = "Are you sure you want to delete all sent feedbacks? This cannot be undone."
                             showAlert = true
                         }) {
                             Text("Reset Feedbacks")

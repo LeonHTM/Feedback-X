@@ -2,43 +2,33 @@
 //  RecentActivityView.swift
 //  Feedback X
 //
-//  Created by Leon  on 13.01.2025.
+//  Created by Leon on 13.01.2025.
 //  Copyright © 2025 LeonHTM. All rights reserved.
 //
 
 import SwiftUI
 
 struct RecentActivityView: View {
-    let folderURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/saves")
-    @State private var fileData: [(name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)] = []
     @Binding var selectedFile: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)?
+    @Binding var selectedIndex: Int?
     @EnvironmentObject var accountLoader: AccountLoader
-    
+    @EnvironmentObject var fileLoader: FileLoader
+    @State private var showDeleteAlert: Bool = false
+
     var body: some View {
         VStack {
-           /* HStack {
-                Text("Recent Activity")
-                    .font(.headline)
-                    .padding([.leading], 10)
-                    .padding([.top, .bottom], 10)
-                Spacer()
-                Button(action: {})
-                { Image(systemName: "line.3.horizontal.decrease.circle") }
-                    .buttonStyle(.plain)
-                    .padding(.trailing, 10)
-            }*/
-            //Divider()
             ScrollView {
-                VStack(alignment: .leading, spacing:0) {
-                    if fileData.isEmpty {
-                        Text("No files found or Directory is empty.")
+                VStack(alignment: .leading, spacing: 0) {
+                    if fileLoader.files.isEmpty {
+                        Text("No files found or directory is empty.")
                             .foregroundColor(.gray)
                             .padding(10)
                     } else {
-                        ForEach(fileData.indices, id: \.self) { index in
-                            let file = fileData[index]
+                        ForEach(fileLoader.files.indices, id: \.self) { index in
+                            let file = fileLoader.files[index]
                             Button(action: {
                                 selectedFile = file
+                                selectedIndex = index
                             }) {
                                 VStack(alignment: .leading, spacing: 8) {
                                     HStack {
@@ -46,7 +36,6 @@ struct RecentActivityView: View {
                                             .foregroundStyle(selectedFile?.name == file.name ? Color.white : Color.primary)
                                             .font(.headline)
                                             .lineLimit(1)
-                                            
                                         
                                         Spacer()
                                         Text(file.date.contains(":") ? String(file.date.dropLast(6)) : file.date)
@@ -65,22 +54,53 @@ struct RecentActivityView: View {
                                 .contentShape(RoundedRectangle(cornerRadius: 8))
                             }
                             .buttonStyle(PlainButtonStyle())
+                            .alert(isPresented: $showDeleteAlert) {
+                                Alert(
+                                    title: Text("Delete \(selectedFile?.title ?? "Unknown")?"),
+                                    message: Text("Are you sure you want to delete feedback \(selectedFile?.name ?? "Unknown")?"),
+                                    primaryButton: .destructive(Text("Confirm")) {
+                                        
+                                        fileLoader.deleteFile(named:selectedFile?.name ?? "yo")
+                                        if index + 1 < fileLoader.files.count{
+                                            
+                                            
+                                            selectedFile = fileLoader.files[index+1]
+                                        }else{
+                                            
+                                            selectedFile = nil
+                                        }
 
-                            
-                            
-                            
-                            if index < fileData.count - 1 {
-                                Divider()
+                                       
+                                        
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
+                            .contextMenu {
+                                
+                                
+                                Button(role: .destructive) {
                                     
+                                    showDeleteAlert = true
+                                    selectedFile = file
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                            
+
+                            if index < fileLoader.files.count - 1 {
+                                Divider()
                             }
                         }
                     }
-                }.padding([.leading, .trailing],5)
-
-                .onAppear {
-                    fileData = FileLoader.loadFolderFiles(from: folderURL, fileLimit: nil)
                 }
+                .padding([.leading, .trailing], 5)
             }
-        }//.frame(width:300)
+        }
+        .onAppear {
+            fileLoader.loadFolderFiles()
+        }
     }
 }
+
