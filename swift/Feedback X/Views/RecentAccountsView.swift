@@ -151,7 +151,7 @@ struct RecentAccountsView: View {
                                     .alert(isPresented: $showDeleteAlert) {
                                         Alert(
                                             title: Text("Delete \(selectedAccount?.icloudmail ?? "Unknown")?"),
-                                            message: Text("Are you sure you want to delete feedback ?"),
+                                            message: Text("Are you sure you want to delete \(selectedAccount?.icloudmail ?? "Unknown") ?"),
                                             primaryButton: .destructive(Text("Confirm")) {
                                                 
                                                 accountLoader.deleteAccount(by: selectedAccount?.icloudmail ?? "Unknown", to: accountURL)

@@ -19,6 +19,9 @@ struct CreateAccountSheetView: View {
     @State private var cookiesSave = "n"
     @State private var appledevSave = ""
     @State private var countrySave: String = ""
+    @State private var isEmailInvalid = false
+    @State private var debounceWorkItem: DispatchWorkItem?
+    @State private var alreadyClicked: Bool = false
     
     @State var dateSave = Calendar.current.date(byAdding: .day, value: 30, to: Date())?
         .formatted(Date.FormatStyle()
@@ -46,14 +49,58 @@ struct CreateAccountSheetView: View {
                 Text("Basic Information")
                     .font(.title)
                     .fontWeight(.bold)
-                
+              
+                    
                 Text("Please provide the icloud login credentials")
-                TextField("Mail", text: $icloudmailSave)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-                SecureInputView("Password", text: $passwordSave)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.top,-10)
+                    .padding(.bottom,-10)
+                    .offset(x:3)
+                
+               
+                    
+                HStack(spacing:0){
+                    if alreadyClicked == true && icloudmailSave.isEmpty{
+                        Image(systemName:"arrow.right.circle.fill")
+                            .foregroundStyle(Color.red)
+                            .padding(.horizontal,-17)
+                    }
+                    TextField("Mail", text: $icloudmailSave)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onChange(of: icloudmailSave) {
+                            debounceWorkItem?.cancel() // Cancel the previous work item
+                            debounceWorkItem = DispatchWorkItem {
+                                let emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
+                                let isValid = icloudmailSave.range(of: emailRegex, options: [.regularExpression, .caseInsensitive]) != nil
+                                isEmailInvalid = !isValid && !icloudmailSave.isEmpty
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: debounceWorkItem!)
+                        }
+                }
+                    
+                
+                if isEmailInvalid{
+                    HStack {
+                        Image(systemName: "exclamationmark.circle")
+                        Text("Enter a valid email address")
+                    }
+                    .foregroundStyle(Color.red)
+                    .padding(.vertical,-15)
+                    .offset(x:3,y:3)
+                }
+
+
+                
+                HStack(alignment:.center,spacing:0){
+                    if alreadyClicked == true && passwordSave.isEmpty{
+                        Image(systemName:"arrow.right.circle.fill")
+                            .foregroundStyle(Color.red)
+                            .padding(.horizontal,-17)
+                            .padding(.vertical,0)
+                            .offset(y:-5)
+                    }
+                    SecureInputView("Password", text: $passwordSave)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.top,-10)
+                }
                 VStack(alignment: .leading, spacing: 10) {
                   
                     Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files. If you dont use passwords and or icloud accounts you use elsewhere, this isn't a issue. Therefore please never use data you use in other places.")
@@ -68,9 +115,21 @@ struct CreateAccountSheetView: View {
                     .fontWeight(.bold)
                 
                 
-                
-                Text("Does the Account have Apple Developer?")
-                
+                HStack(spacing:0){
+                    if alreadyClicked == true && appledevSave.isEmpty{
+                        Image(systemName:"arrow.right.circle.fill")
+                            .foregroundStyle(Color.red)
+                            .padding(.horizontal,-17)
+                            .offset(y:5)
+                    }
+                    
+                    Text("Does the Account have Apple Developer?")
+                        .padding(.bottom,-10)
+                        .offset(x:3)
+                        
+                }
+               
+                    
                 ZStack(alignment:.leading){
                     if appledevSave == ""{
                         Text("Apple Developer").padding(.leading, 7)
@@ -82,6 +141,7 @@ struct CreateAccountSheetView: View {
                         Text("Not set up").tag("n")
                     }.labelsHidden()
                 }
+                
                 /*
                 Text("Does the account have stored cookies?")
                 ZStack(alignment:.leading){
@@ -95,8 +155,21 @@ struct CreateAccountSheetView: View {
                         Text("Doesn't have stored cookies").tag("n")
                     }.labelsHidden()
                 }*/
-                
-                Text("Please select the country of origin")
+                HStack(spacing:0){
+                    if alreadyClicked == true && countrySave.isEmpty{
+                        
+                        
+                        Image(systemName:"arrow.right.circle.fill")
+                            .foregroundStyle(Color.red)
+                            .padding(.horizontal,-17)
+                            .offset(y:5)
+                    }
+                    Text("Please select the country of origin")
+                        .padding(.bottom,-10)
+                        .offset(x:3)
+                }
+           
+                    
                 ZStack(alignment:.leading){
                     if countrySave == ""{
                         Text("Country").padding(.leading, 7)
@@ -109,6 +182,7 @@ struct CreateAccountSheetView: View {
                         }
                     }.labelsHidden()
                 }
+                
             
                 
                 
@@ -116,6 +190,7 @@ struct CreateAccountSheetView: View {
                 // Description Section
                 
                 Text("Add note")
+                    .padding(.bottom,-10)
 
                 TextEditor(text: $noteSave)
                     .frame(height: 100)
@@ -166,8 +241,6 @@ struct CreateAccountSheetView: View {
 
     
             Spacer()
-            if isSubmitEnabled == false{
-                Text("You haven't filled every field yet")}
             Button(action: {
                 showSheet = false
             }) {
@@ -181,34 +254,41 @@ struct CreateAccountSheetView: View {
             
             Button(action: {
                 
-                if cookiesSave != "y"{
-                    
-                    dateSave = nil
-                    
-                }
                 
-                let newAccount = Account(
-                    account: icloudmailSave,
-                    icloudmail: icloudmailSave,
-                    password: passwordSave,
-                    relay: icloudmailSave,
-                    country: countrySave,
-                    appledev: appledevSave,
-                    cookies: "n",
-                    note: noteSave,
-                    date: dateSave ?? "No cookies added yet"
-                )
+                alreadyClicked = true
                 
-                if accountLoader.addAccount(newAccount, to: accountURL) == false {
-                    showDuplicateAlert = true
-                } else {
-                    showSheet = false
+                if isSubmitEnabled == true{
+                    
+                    if cookiesSave != "y"{
+                        
+                        dateSave = nil
+                        
+                    }
+                    
+                    
+                    let newAccount = Account(
+                        account: icloudmailSave,
+                        icloudmail: icloudmailSave,
+                        password: passwordSave,
+                        relay: icloudmailSave,
+                        country: countrySave,
+                        appledev: appledevSave,
+                        cookies: "n",
+                        note: noteSave,
+                        date: dateSave ?? "No cookies added yet"
+                    )
+                    
+                    if accountLoader.addAccount(newAccount, to: accountURL) == false {
+                        showDuplicateAlert = true
+                    } else {
+                        showSheet = false
+                    }
                 }
             }) {
                 Text("Submit")
                     .padding(5) // Add padding around the text
             }
-            .disabled(!isSubmitEnabled)
+            //.disabled(!isSubmitEnabled)
             .alert("Account already exists", isPresented: $showDuplicateAlert) {
                 
                 Button("Quit Add Account", role: .cancel) {
@@ -221,7 +301,7 @@ struct CreateAccountSheetView: View {
             } message: {
                 Text("The account you tried to add already exists.")
             }
-            .background(isSubmitEnabled ? Color.accentColor: Color.gray)
+            .background(Color.accentColor)
             .foregroundColor(.white)
             .cornerRadius(5)
             .padding([.trailing,])
@@ -235,4 +315,7 @@ struct CreateAccountSheetView: View {
 }
 
 
-
+#Preview{
+    @Previewable @StateObject var accountLoader = AccountLoader()
+    CreateAccountSheetView(showSheet: .constant(true)).environmentObject(accountLoader)
+}

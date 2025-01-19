@@ -53,7 +53,25 @@ class FileLoader: ObservableObject {
                 print("Error deleting file \(fileName): \(error.localizedDescription)")
             }
         }
-
+    
+    func deleteAllFiles() {
+            do {
+                let fileURLs = try FileManager.default.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+                for fileURL in fileURLs {
+                    if fileURL.lastPathComponent != "example.txt" && fileURL.lastPathComponent != "rewrite.txt" {
+                        try FileManager.default.removeItem(at: fileURL)
+                        print("Deleted file: \(fileURL.lastPathComponent)")
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.files.removeAll()
+                }
+                print("All eligible files have been successfully deleted.")
+            } catch {
+                print("Error deleting files: \(error.localizedDescription)")
+            }
+        }
+    
     static func splitFile(content: String, filename: String) -> (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)? {
         let lines = content.split(separator: "\n", omittingEmptySubsequences: false)
 
@@ -73,7 +91,7 @@ class FileLoader: ObservableObject {
         guard let contentStartIndex = lines.firstIndex(of: "Content_Start"),
               let contentFinishIndex = lines.firstIndex(of: "Content_Finish"),
               contentStartIndex < contentFinishIndex else {
-                  print("File \(filename) doesn't have the expected 'Content_Start' and 'Content_Finish'. Skipping.")
+                  //print("File \(filename) doesn't have the expected 'Content_Start' and 'Content_Finish'. Skipping.")
                   return nil
               }
 

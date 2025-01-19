@@ -16,6 +16,7 @@ struct SettingsView: View {
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     
     @EnvironmentObject var accountLoader: AccountLoader
+    @EnvironmentObject var fileLoader: FileLoader
 
 
     @AppStorage("syncOpen") var syncOpen: Bool = false
@@ -109,6 +110,15 @@ struct SettingsView: View {
                                 accountLoader.loadAccounts(from:accountURL)
                                 accountLoader.deleteAll(from:accountURL)
                                
+                                
+                                
+                                
+                                
+                            }
+                            if alertTitle == "Reset Feedbacks"{
+                                
+                                
+                                fileLoader.deleteAllFiles()
                                 
                                 
                                 

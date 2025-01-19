@@ -22,6 +22,7 @@ struct CreateFeedbackSheetView: View {
     @State private var errorMessage: String = ""
     @State private var isOnline: Bool = false
     @State private var onlineAlert: Bool = false
+    @State private var alreadyClicked: Bool = false
 
     @State private var submitSave: String = ""
     @State private var iterationSave: Double = 1
@@ -29,6 +30,8 @@ struct CreateFeedbackSheetView: View {
     @State private var sliderSave2: Double = 1
     @State private var shouldRewrite: Bool = false
     @State private var headless: Bool = false
+    @State private var showAccountsAlertOne: Bool = false
+    @State private var showAccountsAlertTwo: Bool = false
 
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var feedbackURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt")
@@ -60,7 +63,7 @@ struct CreateFeedbackSheetView: View {
 
     // MARK: - Computed Properties
     private var isSubmitEnabled: Bool {
-        return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !areaSave.isEmpty && !typeSave.isEmpty && !submitSave.isEmpty && !topicSave.isEmpty
+        return !feedbackTitle.isEmpty && !feedbackDescription.isEmpty && !areaSave.isEmpty && !typeSave.isEmpty && !submitSave.isEmpty && !topicSave.isEmpty && feedbackPath.range(of: "^(\\d(,\\d){0,14})?$", options: [.regularExpression, .caseInsensitive]) != nil
     }
 
     // MARK: - Functions
@@ -101,7 +104,17 @@ struct CreateFeedbackSheetView: View {
                         Text("Topic")
                             .font(.title)
                             .fontWeight(.bold)
-                        Text("What is your Feedback Topic?")
+                        HStack(spacing:0){
+                            if alreadyClicked == true && topicSave.isEmpty {
+                                Image(systemName:"arrow.right.circle.fill")
+                                    .foregroundStyle(Color.red)
+                                    .padding(.horizontal,-17)
+                                    .offset(y:5)
+                            }
+                            Text("What is your Feedback Topic?")
+                                .padding(.bottom,-10)
+                                .offset(x:3)
+                        }
 
                         ZStack(alignment: .leading) {
                             if topicSave.isEmpty {
@@ -113,21 +126,46 @@ struct CreateFeedbackSheetView: View {
                                 Text("iOS & iPadOS").tag("iOS & iPadOS")
                             }.labelsHidden()
                         }
+                        Text("Other Topics may be added in the future")
+                            .foregroundColor(.gray)
+                            .font(.system(size: 12))
+                            .padding(.top,-10)
+                            .offset(x: 3)
 
                         // Basic Information Section
                         Text("Basic Information")
                             .font(.title)
                             .fontWeight(.bold)
-
-                        Text("Please provide a descriptive title for your feedback")
+                        HStack(spacing:0){
+                            if alreadyClicked == true && feedbackTitle.isEmpty {
+                                Image(systemName:"arrow.right.circle.fill")
+                                    .foregroundStyle(Color.red)
+                                    .padding(.horizontal,-17)
+                                    .offset(y:5)
+                            }
+                            Text("Please provide a descriptive title for your feedback:")
+                                .padding(.bottom,-10)
+                                .offset(x:3)
+                        }
                         TextField("", text: $feedbackTitle)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
 
                         Text("Example: Unable to make phone calls from lock screen in iOS 18.2 (22C152)")
                             .foregroundColor(.gray)
                             .font(.system(size: 12))
-
-                        Text("Which area are you seeing an Issue with?")
+                            .padding(.top,-10)
+                            .offset(x: 3)
+                        HStack(spacing:0){
+                            if alreadyClicked == true && areaSave.isEmpty {
+                                Image(systemName:"arrow.right.circle.fill")
+                                    .foregroundStyle(Color.red)
+                                    .padding(.horizontal,-17)
+                                    .offset(y:5)
+                            }
+                            Text("Which area are you seeing an Issue with?")
+                                .padding(.bottom,-10)
+                                .offset(x:3)
+                        }
                         ZStack(alignment: .leading) {
                             if areaSave.isEmpty {
                                 Text("Please select the feedback area").padding(.leading, 7)
@@ -142,7 +180,17 @@ struct CreateFeedbackSheetView: View {
                         }
 
                         // Feedback Type Section
-                        Text("What type is the Feedback?")
+                        HStack(spacing:0){
+                            if alreadyClicked == true && typeSave.isEmpty {
+                                Image(systemName:"arrow.right.circle.fill")
+                                    .foregroundStyle(Color.red)
+                                    .padding(.horizontal,-17)
+                                    .offset(y:5)
+                            }
+                            Text("What type is the Feedback?")
+                                .padding(.bottom,-10)
+                                .offset(x:3)
+                        }
                         ZStack(alignment: .leading) {
                             if typeSave.isEmpty {
                                 Text("Please select the feedback type").padding(.leading, 7)
@@ -160,18 +208,41 @@ struct CreateFeedbackSheetView: View {
 
                         // Feedback Path Section
                         Text("What is your feedback path?")
+                            .padding(.bottom,-10)
+                            .offset(x:3)
                         TextField("", text: $feedbackPath)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
-
+                        
+                        if feedbackPath.range(of: "^(\\d(,\\d){0,14})?$", options: [.regularExpression, .caseInsensitive]) == nil {
+                            HStack {
+                                Image(systemName: "exclamationmark.circle")
+                                Text("Enter a valid path")
+                            }
+                            .foregroundStyle(Color.red)
+                            .offset(x:3)
+                            .padding(.top,-10)
+                        }
                         Text("Example: 5,3,4,5 (Options you chose after area and type)")
                             .foregroundColor(.gray)
                             .font(.system(size: 12))
+                            .padding(.top,-10)
+                            .offset(x:3)
 
                         // Description Section
                         Text("Description")
                             .font(.title)
                             .fontWeight(.bold)
-                        Text("Please describe the issue and what steps one can take to reproduce it:")
+                        HStack(spacing:0){
+                            if alreadyClicked == true && feedbackDescription.isEmpty{
+                                Image(systemName:"arrow.right.circle.fill")
+                                    .foregroundStyle(Color.red)
+                                    .padding(.horizontal,-17)
+                                    .offset(y:5)
+                            }
+                            Text("Please describe the issue and what steps one can take to reproduce it:")
+                                .padding(.bottom,-10)
+                                
+                        }
 
                         TextEditor(text: $feedbackDescription)
                             .frame(height: 100)
@@ -180,6 +251,8 @@ struct CreateFeedbackSheetView: View {
                         Text("You should include:\n - A clear description of the Problem \n - Steps to reproduce \n - What Results you expect \n - What results you actually saw")
                             .foregroundColor(.gray)
                             .font(.system(size: 12))
+                            .padding(.top,-10)
+                            .offset(x:3)
 
                         // Attachments Section
                         HStack {
@@ -256,23 +329,56 @@ struct CreateFeedbackSheetView: View {
                                 Spacer()
                             }
                             .padding(10)
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(10)
+                            .background(Color.accentColor.opacity(0.1))
+                            .cornerRadius(5)
                         }
 
                         // Automation Section
                         Text("Automation")
                             .font(.title)
                             .fontWeight(.bold)
-                        Text("How many times is the Feedback supposed to be sent?")
+                        HStack(spacing:0){
+                            if alreadyClicked == true && iterationSave < 2 {
+                                Image(systemName:"arrow.right.circle.fill")
+                                    .foregroundStyle(Color.red)
+                                    .padding(.horizontal,-17)
+                                    .offset(y:5)
+                            }
+                            Text("How many times is the Feedback supposed to be sent?")
+                                .padding(.bottom,-10)
+                                .offset(x:3)
+                               
+                        }
 
                         if iterationSave >= 2 {
-                            Text("Feedback will be sent \(Int(sliderSave)) times").padding(.vertical, -10)
+                            /*Text("Feedback will be sent \(Int(sliderSave)) times").padding(.vertical, -10)
+                                .padding(.bottom,-10)*/
                             Slider(
                                 value: $sliderSave,
                                 in: 2...iterationSave,
                                 step: 1.0
                             )
+                            HStack{
+                                Text("2")
+                                Spacer()
+                                Text("3").offset(x:1)
+                                Spacer()
+                                Text("4").offset(x:1)
+                                Spacer()
+                                Text("5").offset(x:2)
+                                Spacer()
+                                Text("6").offset(x:3)
+                                Spacer()
+                                Text("7").offset(x:5)
+                                Spacer()
+                                Text("8").offset(x:6)
+                                Spacer()
+                                Text("9").offset(x:6)
+                                Spacer()
+                                Text("10").offset(x:4)
+                            }
+                            .foregroundStyle(Color.secondary)
+                            .padding(.top,-10)
                             .onAppear {
                                 accountLoader.loadAccounts(from: accountURL)
                                 iterationSave = max(1, Double(accountLoader.accounts.count))
@@ -286,8 +392,17 @@ struct CreateFeedbackSheetView: View {
                                 .font(.system(size: 12))
                                 .padding(.top, -10)
                         }
-
-                        Text("What action do you want to take with the feedback?")
+                        HStack(spacing:0){
+                            if alreadyClicked == true && submitSave.isEmpty {
+                                Image(systemName:"arrow.right.circle.fill")
+                                    .foregroundStyle(Color.red)
+                                    .padding(.horizontal,-17)
+                                    .offset(y:5)
+                            }
+                            Text("What action do you want to take with the feedback?")
+                                .padding(.bottom,-10)
+                                .offset(x:3)
+                        }
                         ZStack(alignment: .leading) {
                             if submitSave.isEmpty {
                                 Text("Please select the action you want to take with the feedback").padding(.leading, 7)
@@ -369,16 +484,13 @@ struct CreateFeedbackSheetView: View {
 
                     Spacer()
 
-                    if !isSubmitEnabled {
-                        Text("You haven't filled every field yet")
-                        
-                    }else if isSubmitEnabled && iterationSave < 2 {
+                   /*if isSubmitEnabled && iterationSave < 2 {
                         if iterationSave == 0{
                             Text("You currently have \(Int(iterationSave)) Accounts. Please add at least 2 Accounts.")}else{
                                 
                                 Text("You currently have \(Int(iterationSave)) Account. Please add at least 2 Accounts.")
                             }
-                    }
+                    }*/
 
                     Button(action: {
                         showSheet = false
@@ -390,22 +502,26 @@ struct CreateFeedbackSheetView: View {
 
                     Button(action: {
                         
-                        do {
-                            try StringToFile.writeToFile(input: feedbackDescription, filePath: feedbackURL)
-                        } catch {
-                            print("Failed to write file: \(error)")
-                        }
-                        finalString = feedbackPath.isEmpty ? "\(areaSave),\(typeSave)" : "\(areaSave),\(typeSave),\(feedbackPath)"
+                        alreadyClicked = true
                         
-                        OnlineCheck.checkGoogle{isOnline in
-                            if isOnline == true{
-                                feedbackRun()
-                                buttonAllowed = false
-                            }else{
-                                
-                                onlineAlert = true
+                        if isSubmitEnabled{
+                            do {
+                                try StringToFile.writeToFile(input: feedbackDescription, filePath: feedbackURL)
+                            } catch {
+                                print("Failed to write file: \(error)")
                             }
+                            finalString = feedbackPath.isEmpty ? "\(areaSave),\(typeSave)" : "\(areaSave),\(typeSave),\(feedbackPath)"
                             
+                            OnlineCheck.checkGoogle{isOnline in
+                                if isOnline == true{
+                                    feedbackRun()
+                                    buttonAllowed = false
+                                }else{
+                                    
+                                    onlineAlert = true
+                                }
+                                
+                            }
                         }
                         
                         
@@ -414,8 +530,8 @@ struct CreateFeedbackSheetView: View {
                         Text("Submit")
                             .padding(5)
                     }
-                    .disabled(!isSubmitEnabled || !buttonAllowed || iterationSave < 2)
-                    .background(isSubmitEnabled && buttonAllowed ? Color.accentColor : Color.gray)
+                    .disabled(!buttonAllowed || iterationSave < 2)
+                    .background(buttonAllowed ? Color.accentColor : Color.gray)
                     .foregroundColor(.white)
                     .cornerRadius(5)
                     .padding(.trailing)

@@ -34,6 +34,7 @@ struct Feedback_XApp: App {
         Settings {
             SettingsView()
                 .environmentObject(accountLoader)
+                .environmentObject(fileLoader)
                 
         }
     }

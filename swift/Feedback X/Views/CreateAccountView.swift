@@ -27,11 +27,12 @@ struct CreateAccountView: View {
                     .padding(1)
             }
             .disabled(isRunning)
+            .padding(5)
             .sheet(isPresented: $showSheet) {
                 CreateAccountSheetView(showSheet: $showSheet)
                     .environmentObject(accountLoader)
             }
-        }
+        }.frame(minWidth: 500,maxWidth:700)
     }
 }
 
