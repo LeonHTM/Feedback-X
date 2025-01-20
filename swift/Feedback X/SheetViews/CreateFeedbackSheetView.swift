@@ -52,7 +52,7 @@ struct CreateFeedbackSheetView: View {
     
     
     @State private var showCloseAlert: Bool = false
-    @State public var showHelpSheet: Bool = false
+    
     
     @Binding var showSheet: Bool
     @AppStorage("DeveloperSettings") var developerSettings: Bool = false
@@ -474,17 +474,14 @@ struct CreateFeedbackSheetView: View {
 
                 // Footer Buttons
                 HStack {
-                    Button(action: { showHelpSheet = true }) {
+                    Button(action: { OpenHelpWindow.open() }) {
                         Image(systemName: "questionmark.circle.fill")
                             .font(.system(.title2))
                             .foregroundColor(.gray)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding()
-                    .sheet(isPresented: $showHelpSheet) {
-                        HelpMeView()
-                            .frame(minWidth: 1100, minHeight: 750)
-                    }
+                    
 
                     Spacer()
 

@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct CookiesView: View {
-    @State public var showHelpSheet = false
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var cookiesPython: CookiesPython
     
@@ -28,6 +27,8 @@ struct CookiesView: View {
     private var isButtonAllowed: Bool {
             return !cookiesList.isEmpty
         }
+    
+    
     @AppStorage("DeveloperSettings") var developerSettings: Bool = false
     
     var body: some View {
@@ -265,7 +266,7 @@ struct CookiesView: View {
             
             HStack {
                 Button(action: {
-                    showHelpSheet = true
+                    OpenHelpWindow.open()
                 }) {
                     Image(systemName: "questionmark.circle.fill")
                         .font(.system(.title2))
@@ -274,10 +275,7 @@ struct CookiesView: View {
                 .buttonStyle(PlainButtonStyle())
                 .padding([.leading, .trailing, .bottom], 7)
                 .padding(.top,5)
-                .sheet(isPresented: $showHelpSheet) {
-                    HelpMeView()
-                        .frame(minWidth: 1100, minHeight: 750)
-                }
+                
                 Spacer()
                 if developerSettings == true{
                     

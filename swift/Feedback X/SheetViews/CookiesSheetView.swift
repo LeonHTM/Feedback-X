@@ -21,7 +21,7 @@ struct CookiesSheetView: View {
     @State private var isSubmitEnabled = false
     
     @State private var showCloseAlert = false
-    @State public var showHelpSheet = false
+    
     @State private var showDuplicateAlert = false
     
     //@State private var progress: Double = 0
@@ -289,7 +289,7 @@ struct CookiesSheetView: View {
         Divider()
         HStack{
             Button(action: {
-                showHelpSheet = true
+                OpenHelpWindow.open()
                 
             }) {
                 Image(systemName: "questionmark.circle.fill")
@@ -301,10 +301,7 @@ struct CookiesSheetView: View {
             .buttonStyle(PlainButtonStyle())
             .padding(.top,1)
             .padding([.leading,.trailing,.bottom],10)
-            .sheet(isPresented: $showHelpSheet) {
-                HelpMeView()
-                    .frame(minWidth: 1100, minHeight: 750) // Add minimum width and height here
-            }
+            
             Spacer()
             if developerSettings == true {
                 Text("Details: WaitingTime: \(waitingTime) Division: \(currentStep)/\(totalSteps) ButtonAllowed: \(buttonAllowed) goneWrong: \(goneWrong), dateSave: \(dateSave)")

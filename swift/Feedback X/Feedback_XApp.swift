@@ -23,13 +23,20 @@ struct Feedback_XApp: App {
     }
     
     var body: some Scene {
-        Window("", id: "FeedbackXMain") {
+        WindowGroup("", id: "FeedbackXMain") {
             SidebarView()
                 .environmentObject(accountLoader)
                 .environmentObject(feedbackPython)
                 .environmentObject(cookiesPython)
                 .environmentObject(fileLoader)
+                .onAppear {
+                    NSWindow.allowsAutomaticWindowTabbing = false
+                  
+                    
+                }
                 
+        }.commands {
+            CommandGroup(replacing: .newItem, addition: { })
         }
         Settings {
             SettingsView()

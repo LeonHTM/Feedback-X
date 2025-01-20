@@ -35,7 +35,6 @@ struct CreateAccountSheetView: View {
     @State private var errorMessage: String = ""
     
     @State private var showCloseAlert = false
-    @State public var showHelpSheet = false
     @State private var showDuplicateAlert = false
     @Binding var showSheet: Bool
     
@@ -222,7 +221,7 @@ struct CreateAccountSheetView: View {
         Divider()
         HStack{
             Button(action: {
-                showHelpSheet = true
+                OpenHelpWindow.open()
                 
                 
             }) {
@@ -234,10 +233,7 @@ struct CreateAccountSheetView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .padding()
-            .sheet(isPresented: $showHelpSheet) {
-                HelpMeView()
-                    .frame(minWidth: 1100, minHeight: 750) // Add minimum width and height here
-            }
+            
 
     
             Spacer()
