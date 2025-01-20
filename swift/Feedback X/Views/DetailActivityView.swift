@@ -14,7 +14,10 @@ struct DetailActivityView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var fileLoader: FileLoader
     @State private var showDeleteAlert: Bool = false
+    @State private var noFileAlert: Bool = false
     @Binding var index: Int?
+    
+    
     public let onDeleteActivity: () -> Void
     
 
@@ -126,19 +129,49 @@ struct DetailActivityView: View {
                     VStack(alignment: .leading) {
                         if fileToShow.files != "No Uploads" {
                             ForEach(filesList, id: \.self) { fileName in
-                                HStack {
-                                    Image(systemName: "document") // Document icon
+                                HStack{
+                                    let absoluteFilePath = (fileName)
+                                    if FileManager.default.fileExists(atPath: absoluteFilePath) {
+                                        let nsImage = NSWorkspace.shared.icon(forFile: absoluteFilePath)
+                                        Image(nsImage: nsImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 16, height: 16)
+                                    }else{
+                                        
+                                        Image("custom.document.2.badge.questionmark")
+                                            
+                                    }
                                     Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
                                         .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
                                         .onHover { hovering in
                                             hoveredFile = hovering ? fileName : nil
                                         }
-                                }
+                                    Button(action: {
+                                        
+                                        let fileURL = URL(fileURLWithPath: absoluteFilePath)
+                                        if FileManager.default.fileExists(atPath: absoluteFilePath) {
+                                            NSWorkspace.shared.activateFileViewerSelecting([fileURL])}
+                                        else{
+                                            
+                                            noFileAlert = true
+                                        }
+                                        
+                                        
+                                    }) {
+                                        Image(systemName: "magnifyingglass")
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .foregroundStyle(Color.secondary)
+                                }.padding(.bottom,-5)
                             }
+
+
                         } else {
                             Text("No files were uploaded in this feedback")
                         }
                     }
+                    Divider()
                     HStack{
                         Spacer()
                         Button(action:{
@@ -171,6 +204,14 @@ struct DetailActivityView: View {
                             secondaryButton: .cancel()
                         )
                     }
+                    .alert(isPresented: $noFileAlert) {
+                        Alert(
+                            title: Text("This file doesn't exist"),
+                            message: Text("The file must have been deleted or moved since the feedback was created."),
+                            dismissButton: .cancel()
+                        )
+                    }
+
 
                     
                     

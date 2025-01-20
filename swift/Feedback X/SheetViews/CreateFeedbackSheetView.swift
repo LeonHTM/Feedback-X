@@ -23,7 +23,7 @@ struct CreateFeedbackSheetView: View {
     @State private var isOnline: Bool = false
     @State private var onlineAlert: Bool = false
     @State private var alreadyClicked: Bool = false
-
+    
     @State private var submitSave: String = ""
     @State private var iterationSave: Double = 1
     @State private var sliderSave: Double = 2
@@ -292,9 +292,18 @@ struct CreateFeedbackSheetView: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 ForEach(selectedFiles, id: \.self) { file in
                                     HStack {
-                                        Image(systemName: "document")
+                                        let absoluteFilePath = (file)
+                                                                            if FileManager.default.fileExists(atPath: absoluteFilePath) {
+                                                                                let nsImage = NSWorkspace.shared.icon(forFile: absoluteFilePath)
+                                                                                Image(nsImage: nsImage)
+                                                                                    .resizable()
+                                                                                    .scaledToFit()
+                                                                                    .frame(width: 16, height: 16)
+                                                                            }else{
+                                                                                
+                                                                                Image("custom.document.2.badge.questionmark")
+                                                                            }
                                         Text(URL(fileURLWithPath: file).lastPathComponent)
-                                            .foregroundColor(.gray)
                                         Spacer()
                                         Button(action: {
                                             let fileURL = URL(fileURLWithPath: file)
@@ -320,7 +329,7 @@ struct CreateFeedbackSheetView: View {
                                 }
                             }
                             .padding(10)
-                            .background(Color.gray.opacity(0.2))
+                            .background(Color.accentColor.opacity(0.1))
                             .cornerRadius(10)
                         } else {
                             HStack {
