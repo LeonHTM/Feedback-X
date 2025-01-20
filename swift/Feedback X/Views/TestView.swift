@@ -13,14 +13,15 @@ struct TestView: View {
 
     var items = ["yo", "wallah yo", "antifa"]
     @State var text:String = ""
+    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
 
     var body: some View {
         
         Button(action:{
-            OnlineCheck.checkGoogle{isOnline in
+            CookiesCheck.check(iterations:3, accountURL: accountURL ){isOnline in
                 if isOnline == true{
-            text = "Online"}else{
-                text = "Not Online"
+            text = "Cookies Good"}else{
+                text = "Cookies Bad"
             }
                 
                 

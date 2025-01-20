@@ -23,6 +23,7 @@ struct CreateFeedbackSheetView: View {
     @State private var isOnline: Bool = false
     @State private var onlineAlert: Bool = false
     @State private var alreadyClicked: Bool = false
+    @State private var showCookiesAlert: Bool = false
     
     @State private var submitSave: String = ""
     @State private var iterationSave: Double = 1
@@ -523,8 +524,20 @@ struct CreateFeedbackSheetView: View {
                             
                             OnlineCheck.checkGoogle{isOnline in
                                 if isOnline == true{
-                                    feedbackRun()
-                                    buttonAllowed = false
+                                    CookiesCheck.check(iterations:Int(sliderSave), accountURL: accountURL ){isCookies in
+                                        if isCookies == true{
+                                            
+                                            feedbackRun()
+                                            buttonAllowed = false
+                                    
+                                        }else{
+                                            
+                                            showCookiesAlert = true
+                                        }
+                                        
+                                        
+                                    }
+                                    
                                 }else{
                                     
                                     onlineAlert = true
@@ -548,6 +561,11 @@ struct CreateFeedbackSheetView: View {
                         Button("OK", role: .cancel) {}
                     } message: {
                         Text("Your Device is offline. Please check your internet connection and try again.")
+                    }
+                    .alert("Accounts don't have Cookies set up", isPresented: $showCookiesAlert) {
+                        Button("OK", role: .cancel) {}
+                    } message: {
+                        Text("You try to iterate over \(Int(sliderSave)) Accounts. One or multiple of these Accounts don't have cookies saved. Please set up cookies for all accounts.")
                     }
                 }
                 .frame(width: 1000)

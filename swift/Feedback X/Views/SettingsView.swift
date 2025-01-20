@@ -31,7 +31,7 @@ struct SettingsView: View {
             Tab("Main", systemImage: "gear") {
                 Form {
                     // Synchronisation Section
-                    VStack(alignment: .leading,spacing:10) {
+                    /*VStack(alignment: .leading,spacing:10) {
                         Text("Synchronisation")
                             .fontWeight(.bold)
                         Toggle(isOn: $syncOpen) {
@@ -39,7 +39,7 @@ struct SettingsView: View {
                         }
                     
                         .padding(.leading, 10)
-                    }
+                    }*/
                     
                     // Resets Section
                     VStack(alignment: .leading,spacing:10) {
@@ -71,7 +71,7 @@ struct SettingsView: View {
               
                         .padding(.leading, 10)
                         
-                        Text("All Accounts will be reset. The App will have no Accounts saved")
+                        Text("All Accounts will be deleted.")
                             .padding(.leading, 10)
                         
                         Button(action: {
@@ -85,9 +85,20 @@ struct SettingsView: View {
  
                         .padding(.leading, 10)
                         
-                        Text("The App will forget all Feedbacks sent")
+                        Text("All sent Feedbacks will be deleted from the App. (Only from the App).")
                             .padding(.leading, 10)
                     }
+                    VStack(alignment:.leading) {
+                        Text("Developer Details")
+                            .fontWeight(.bold)
+                            .offset(x:-5)
+                        Toggle(isOn: $developerSettings) {
+                            Text("Show Developer Details")
+                        }.padding(.horizontal, 5)
+                        Spacer()
+                        
+                    }.padding(10)
+                    
                     
                     Spacer()
                 }
@@ -131,28 +142,7 @@ struct SettingsView: View {
                     )
                 }
             }
-            Tab("Developer",systemImage: "gear"){
-                
-                Form{
-                    HStack{
-                        // Synchronisation Section
-                        VStack(alignment:.leading) {
-                            Text("Developer Details")
-                                .fontWeight(.bold)
-                            Toggle(isOn: $developerSettings) {
-                                Text("Show Developer Details")
-                            }.padding(.horizontal, 10)
-                            Spacer()
-                            
-                        }.padding(10)
-                        Spacer()
-                    }
-                
-              
-                    
-                  
-                }
-            }
+            
         }
     }
 }

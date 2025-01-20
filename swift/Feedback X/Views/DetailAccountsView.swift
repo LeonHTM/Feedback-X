@@ -260,7 +260,7 @@ struct DetailAccountsView: View {
                                                             
                                                             Spacer()
                                                             Link("Set up Apple Developer",
-                                                                 destination: URL(string: "https://developer.apple.com/account/")!)
+                                                                 destination: URL(string: "https://developer.apple.com/account/")!).underline()
                                                             
                                                             Spacer()
                                                             

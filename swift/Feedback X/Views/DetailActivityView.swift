@@ -142,11 +142,24 @@ struct DetailActivityView: View {
                                         Image("custom.document.2.badge.questionmark")
                                             
                                     }
-                                    Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
-                                        .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
-                                        .onHover { hovering in
-                                            hoveredFile = hovering ? fileName : nil
+                                    Button(action:{
+                                        
+                                        let fileURL = URL(fileURLWithPath: absoluteFilePath)
+                                        if FileManager.default.fileExists(atPath: absoluteFilePath) {
+                                            NSWorkspace.shared.activateFileViewerSelecting([fileURL])}
+                                        else{
+                                            
+                                            noFileAlert = true
                                         }
+                                        
+                                    })
+                                    {
+                                        Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
+                                            .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
+                                            .onHover { hovering in
+                                                hoveredFile = hovering ? fileName : nil
+                                            }
+                                    }.buttonStyle(PlainButtonStyle())
                                     Button(action: {
                                         
                                         let fileURL = URL(fileURLWithPath: absoluteFilePath)
