@@ -23,6 +23,28 @@ class FeedbackPython: ObservableObject {
         self.scriptPath = scriptPath
     }
 
+    func preventSleep() {
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        task.arguments = ["pmset", "noidle"]
+        do {
+            try task.run()
+        } catch {
+            print("Failed to prevent sleep: \(error)")
+        }
+    }
+
+    func allowSleep() {
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        task.arguments = ["pmset", "sleepnow"]
+        do {
+            try task.run()
+        } catch {
+            print("Failed to allow sleep: \(error)")
+        }
+    }
+
     func run(
         startValue: Int,
         iterationValue: Int,
@@ -81,6 +103,9 @@ class FeedbackPython: ObservableObject {
         self.process = process
         self.isRunning = true
 
+        // Prevent sleep before starting the Python process
+        preventSleep()
+
         DispatchQueue.global(qos: .background).async {
             let handle = pipe.fileHandleForReading
             handle.readabilityHandler = { fileHandle in
@@ -92,7 +117,6 @@ class FeedbackPython: ObservableObject {
                 }
             }
 
-            
             do {
                 try process.run()
                 
@@ -102,10 +126,11 @@ class FeedbackPython: ObservableObject {
                 // Ensure we stop reading output when the process completes
                 handle.readabilityHandler = nil
                 
-                // After the process completes, handle the success case
+                // After the process completes, allow sleep
                 DispatchQueue.main.async {
                     self.isRunning = false
                     self.process = nil
+                    self.allowSleep() // Allow the system to sleep after the process completes
                     if process.terminationStatus == 0 {
                         // Process completed successfully
                         completion(true, self.output, nil)
@@ -120,6 +145,7 @@ class FeedbackPython: ObservableObject {
                     self.isRunning = false
                     self.output = nil
                     self.process = nil
+                    self.allowSleep() // Allow sleep even if an error occurs
                     completion(false, nil, error)
                 }
             }
@@ -134,8 +160,8 @@ class FeedbackPython: ObservableObject {
             DispatchQueue.main.async {
                 self.isRunning = false // Update state to indicate the process has stopped
                 self.process = nil
+                self.allowSleep() // Allow sleep when stopping the process manually
             }
         }
     }
 }
-
