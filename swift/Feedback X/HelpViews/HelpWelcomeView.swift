@@ -26,10 +26,12 @@ struct HelpWelcomeView: View {
                             .font(.title)
                             .fontWeight(.bold)
                         Button(action:{
-                            if visibility == .all{
-                                visibility = .detailOnly
-                            }else if visibility == .detailOnly{
-                                visibility = .all
+                            withAnimation{
+                                if visibility == .all{
+                                    visibility = .detailOnly
+                                }else if visibility == .detailOnly{
+                                    visibility = .all
+                                }
                             }
                         }){
                             HStack{

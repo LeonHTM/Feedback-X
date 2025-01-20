@@ -17,16 +17,38 @@ public struct OpenHelpWindow {
     static func open() {
         // Check if the window has already been opened
         if hasLaunched {
+            print("Help window is already open.")
             return
         }
         
         // Create the Help window
         let helpWindow = NSWindow(
-            contentViewController: NSHostingController(rootView: HelpView().frame(minWidth: 1100, minHeight: 750))
+            contentViewController: NSHostingController(rootView: HelpView())
         )
+        
         helpWindow.title = "Feedback X User Guide"
+        helpWindow.styleMask.insert(.fullSizeContentView)
+        //helpWindow.titlebarAppearsTransparent = true
+        
+       
+        
+        
+        // Position window in the center of the primary screen
+        if let screen = NSScreen.main {
+            let screenFrame = screen.frame
+            let windowWidth: CGFloat = 1100
+            let windowHeight: CGFloat = 750
+            
+            // Calculate the center point
+            let xPosition = (screenFrame.width - windowWidth) / 2
+            let yPosition = (screenFrame.height - windowHeight) / 2
+            
+            // Set the window's frame to the calculated position
+            helpWindow.setFrame(CGRect(x: xPosition, y: yPosition, width: windowWidth, height: windowHeight), display: true)
+        }
+        
+        // Show the window
         helpWindow.makeKeyAndOrderFront(nil)
-        helpWindow.isReleasedWhenClosed = false // Keeps window open until closed manually
         
         // Mark the window as launched
         hasLaunched = true
@@ -37,3 +59,5 @@ public struct OpenHelpWindow {
         hasLaunched = false
     }
 }
+
+

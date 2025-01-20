@@ -6,13 +6,7 @@
 //  Copyright © 2024 LeonHTM. All rights reserved.
 //
 
-//
-//  SidebarView.swift
-//  Feedback X
-//
-//  Created by LeonHTM on 15.12.2024.
-//  Copyright © 2024 LeonHTM. All rights reserved.
-//
+
 import SwiftUI
 
 struct HelpView: View {
@@ -62,7 +56,7 @@ struct HelpView: View {
                                     .foregroundStyle(Color.secondary)
                                     .font(.system(size: 10))
                                 Text(item.name)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    //.frame(maxWidth: .infinity, alignment: .leading)
                                 
                             }
                             
@@ -74,7 +68,7 @@ struct HelpView: View {
                                 NavigationLink(value: child.name) {
                                     Text(child.name)
                                         .offset(x:25)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        //.frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
                         }
@@ -82,7 +76,7 @@ struct HelpView: View {
                         // Leaf node (no children), just a NavigationLink
                         NavigationLink(value: item.name) {
                             Text(item.name)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                //.frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                 }
@@ -113,6 +107,37 @@ struct HelpView: View {
             
         }
         .frame(alignment: .leading)
+        .toolbar {
+          
+                
+            ToolbarItem(placement: .navigation) {
+                    
+                    Button(action:{
+                        
+                        withAnimation{
+                            if visibility == .all{
+                                visibility = .detailOnly
+                            }else if visibility == .detailOnly{
+                                visibility = .all
+                            }
+                        }
+                       
+                    }){
+                        
+                  
+                        Image(systemName: "sidebar.left")
+                        
+                    }
+                   
+                    
+                    
+                
+            }
+        
+        }
+        
+        
+        
     }
 }
 
