@@ -11,7 +11,7 @@ import SwiftUI
 struct CreateAccountView: View {
     @State private var isRunning: Bool = false
     @State private var showAlert: Bool = false
-    @AppStorage("showSheet") var showSheet: Bool = false
+    @AppStorage("CreateshowSheet") var showSheet: Bool = false
     @EnvironmentObject var accountLoader: AccountLoader
     
     var body: some View {

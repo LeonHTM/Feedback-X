@@ -31,7 +31,7 @@ struct HelpView: View {
             SidebarItem(name: "Add Accounts", children: nil),
             SidebarItem(name: "Set up Cookies", children: nil)
         ]),
-        SidebarItem(name: "Create Feedback", children: [
+        SidebarItem(name: "Feedbacks", children: [
             SidebarItem(name: "Create Feedback", children: nil),
             SidebarItem(name: "Feedback Failed", children: nil)
         ])
@@ -51,10 +51,14 @@ struct HelpView: View {
                
             }){
                 
-          
-                Image(systemName: "sidebar.left")
-                    .font(.system(size: 17))
-                
+                HStack{
+                    Image(systemName: "sidebar.left")
+                        .font(.system(size: 18))
+                        .padding(.leading,75)
+                    Spacer()
+                }
+
+                    
             }
             .buttonStyle(PlainButtonStyle())
             .offset(x:20,y:-35)
@@ -81,7 +85,27 @@ struct HelpView: View {
                                 
                             }
                             
+                            
                         }.buttonStyle(PlainButtonStyle())
+                            .onChange(of: selectedPage) {
+                                func findParent(of page: String, in items: [SidebarItem], parentName: String? = nil) -> String? {
+                                    for item in items {
+                                        if item.name == page {
+                                            return parentName
+                                        }
+                                        if let children = item.children {
+                                            if let parent = findParent(of: page, in: children, parentName: item.name) {
+                                                return parent
+                                            }
+                                        }
+                                    }
+                                    return nil
+                                }
+                                
+                                if let parent = findParent(of: selectedPage, in: items) {
+                                    expandedParents.insert(parent)
+                                }
+                            }
                         
                         // Show children if expanded
                         if expandedParents.contains(item.name) {
@@ -137,34 +161,33 @@ struct HelpView: View {
         .toolbar{
           
             
-                ToolbarItem(placement: .navigation) {
-                    if visibility == .detailOnly{
-                        Button(action:{
-                            
-                            withAnimation{
-                                if visibility == .all{
-                                    visibility = .detailOnly
-                                }else if visibility == .detailOnly{
-                                    visibility = .all
-                                }
+            ToolbarItem(placement: .navigation) {
+                if visibility == .detailOnly {
+                    Button(action: {
+                        // Add a delay before updating the visibility
+                        // Adjust the delay as needed (0.5 seconds here)
+                            withAnimation {
+                                //DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    if visibility == .all {
+                                        visibility = .detailOnly
+                                    } else if visibility == .detailOnly {
+                                        visibility = .all
+                                    }
+                                //}
                             }
+                        
+                    }) {
+                        
+                            Image(systemName: "sidebar.left")
                             
-                        }){
-                        
-                        
-                        Image(systemName: "sidebar.left")
+                            
                         
                     }
-                    }else{
-                        
-                        Text("")
-                    }
-                    
-                    
-                    
-                    
-                
+                } else {
+                    Text("")
+                }
             }
+
         
         }
         

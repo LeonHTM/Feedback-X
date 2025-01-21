@@ -74,7 +74,7 @@ struct HelpGetStartedView: View {
                     .offset(x:15)
                 Button(action:{
                     
-                    selectedPage = "Set Up Cookies"
+                    selectedPage = "Set up Cookies"
                 }){
                     HStack{
                         
@@ -112,7 +112,7 @@ struct HelpGetStartedView: View {
                 
                 Button(action:{
                     
-                    selectedPage = "Something has gone wrong"
+                    selectedPage = "Feedback Failed"
                 }){
                     HStack{
                         

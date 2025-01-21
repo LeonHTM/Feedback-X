@@ -9,7 +9,9 @@ import SwiftUI
 @main
 struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
-    @AppStorage("showSheet") var showSheet: Bool = false
+    @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
+    @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
+    @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @StateObject private var accountLoader = AccountLoader()
     @StateObject private var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
     @StateObject private var cookiesPython = CookiesPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py")
@@ -32,13 +34,17 @@ struct Feedback_XApp: App {
                 .environmentObject(fileLoader)
                 .onAppear {
                     //NSWindow.allowsAutomaticWindowTabbing = false
-                    showSheet = false
+                    CreateshowSheet = false
+                    AccountshowSheet = false
+                    CookiesshowSheet = false
                   
                     
                 }
                 .onDisappear{
                     
-                    showSheet = false
+                    CreateshowSheet = false
+                    AccountshowSheet = false
+                    CookiesshowSheet = false
                 }
                 
         }/*.commands {

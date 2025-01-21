@@ -20,7 +20,7 @@ struct CookiesView: View {
     @State private var maxSlider: Double = 60
     @State private var stepSlider:Double = 1
     @State private var buttonActive: Bool = false
-    @AppStorage("showSheet") var showSheet: Bool = false
+    @AppStorage("CookiesshowSheet") var showSheet: Bool = false
     
     @State private var cookiesList: [Int] = []
     
@@ -262,31 +262,26 @@ struct CookiesView: View {
                 
             }
             
-            Divider()
+            
             
             HStack {
-                Button(action: {
-                    OpenHelpWindow.open()
-                }) {
-                    Image(systemName: "questionmark.circle.fill")
-                        .font(.system(.title2))
-                        .foregroundColor(.gray)
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding([.leading, .trailing, .bottom], 7)
-                .padding(.top,5)
-                
                 Spacer()
+                
+                
+                
                 if developerSettings == true{
                     
                     Text("DevDetails: List: \(cookiesList.map { String($0) }.joined(separator: ", ")), WaitingTime: \(String(waitingTimeInt))")
                         .foregroundStyle(Color.secondary)
-                        
-                        
+                    
+                    Spacer()
+                    
+                    
                     
                 }
-                Spacer()
             }
+              
+            
           
             
         }

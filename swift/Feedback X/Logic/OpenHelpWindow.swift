@@ -27,8 +27,12 @@ public struct OpenHelpWindow {
         )
 
         helpWindow.title = "Feedback X User Guide"
-        helpWindow.styleMask.insert(.fullSizeContentView)
+        helpWindow.styleMask = [.resizable, .titled, .closable, .miniaturizable, .fullSizeContentView]
         helpWindow.titlebarAppearsTransparent = true
+        helpWindow.titleVisibility = .hidden
+        
+
+        
         
        
         

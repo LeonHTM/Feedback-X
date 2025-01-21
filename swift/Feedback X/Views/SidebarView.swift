@@ -11,7 +11,7 @@ import SwiftUI
 
 struct SidebarView: View {
     @AppStorage("SideBarPage") var selectedPage: String = "Recent Activity"
-    @AppStorage("showSheet") var showSheet: Bool = false
+    @AppStorage("CreateshowSheet") var showSheet: Bool = false
     @State private var showAccountSheet = false
     @State private var showAccountAlert: Bool = false
     
@@ -65,7 +65,22 @@ struct SidebarView: View {
             }
             .listStyle(SidebarListStyle())
             .frame(minWidth:175)
-            
+            Spacer()
+            HStack{
+                Button(action: {
+                    OpenHelpWindow.open()
+                }) {
+                    
+                    Image(systemName: "questionmark.circle.fill")
+                        .font(.system(.title2))
+                        .foregroundColor(.gray)
+                    Text("Help me")
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding([.leading, .trailing, .bottom], 7)
+                .padding(.top,5)
+                Spacer()
+            }
         } detail: {
             // Display the appropriate view based on the selected page
             
