@@ -20,7 +20,7 @@ struct CookiesView: View {
     @State private var maxSlider: Double = 60
     @State private var stepSlider:Double = 1
     @State private var buttonActive: Bool = false
-    @State private var showSheet: Bool = false
+    @AppStorage("showSheet") var showSheet: Bool = false
     
     @State private var cookiesList: [Int] = []
     

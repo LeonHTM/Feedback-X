@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct HelpView: View {
-    @State public var selectedPage: String = "Recent Activity"
+    @State public var selectedPage: String = "Welcome"
     @State private var expandedParents: Set<String> = []
     @State private var visibility: NavigationSplitViewVisibility = .all
 
@@ -39,6 +39,27 @@ struct HelpView: View {
 
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility) {
+            Button(action:{
+                
+                withAnimation{
+                    if visibility == .all{
+                        visibility = .detailOnly
+                    }else if visibility == .detailOnly{
+                        visibility = .all
+                    }
+                }
+               
+            }){
+                
+          
+                Image(systemName: "sidebar.left")
+                    .font(.system(size: 17))
+                
+            }
+            .buttonStyle(PlainButtonStyle())
+            .offset(x:20,y:-35)
+            .foregroundStyle(.secondary)
+            
             List(selection: $selectedPage) {
                 ForEach(items) { item in
                     if let children = item.children, !children.isEmpty {
@@ -56,7 +77,7 @@ struct HelpView: View {
                                     .foregroundStyle(Color.secondary)
                                     .font(.system(size: 10))
                                 Text(item.name)
-                                    //.frame(maxWidth: .infinity, alignment: .leading)
+                                //.frame(maxWidth: .infinity, alignment: .leading)
                                 
                             }
                             
@@ -68,7 +89,7 @@ struct HelpView: View {
                                 NavigationLink(value: child.name) {
                                     Text(child.name)
                                         .offset(x:25)
-                                        //.frame(maxWidth: .infinity, alignment: .leading)
+                                    //.frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
                         }
@@ -76,7 +97,7 @@ struct HelpView: View {
                         // Leaf node (no children), just a NavigationLink
                         NavigationLink(value: item.name) {
                             Text(item.name)
-                                //.frame(maxWidth: .infinity, alignment: .leading)
+                            //.frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                 }
@@ -86,49 +107,60 @@ struct HelpView: View {
         } detail: {
             // Display the appropriate view based on the selected page
             
-                switch selectedPage {
-                case "Welcome":
-                    HelpWelcomeView(selectedPage: $selectedPage, visibility: $visibility)
-                case "Get Started":
-                    HelpGetStartedView(selectedPage: $selectedPage)
-                case "Create Accounts":
-                    HelpCreateAccountView(selectedPage: $selectedPage)
-                case "Add Accounts":
-                    HelpAddAccountView(selectedPage: $selectedPage)
-                case "Set up Cookies":
-                    HelpSetUpCookiesView(selectedPage: $selectedPage)
-                case "Create Feedback":
-                    HelpCreateAccountView(selectedPage: $selectedPage)
-                case "Feedback Failed":
-                    HelpFeedbackFailedView(selectedPage: $selectedPage)
-                default:
-                    HelpWelcomeView(selectedPage: $selectedPage, visibility: $visibility)
-                }
+            switch selectedPage {
+            case "Welcome":
+                HelpWelcomeView(selectedPage: $selectedPage, visibility: $visibility)
+            case "Get Started":
+                HelpGetStartedView(selectedPage: $selectedPage)
+            case "Create Accounts":
+                HelpCreateAccountView(selectedPage: $selectedPage)
+            case "Add Accounts":
+                HelpAddAccountView(selectedPage: $selectedPage)
+            case "Set up Cookies":
+                HelpSetUpCookiesView(selectedPage: $selectedPage)
+            case "Create Feedback":
+                HelpCreateAccountView(selectedPage: $selectedPage)
+            case "Feedback Failed":
+                HelpFeedbackFailedView(selectedPage: $selectedPage)
+            default:
+                HelpWelcomeView(selectedPage: $selectedPage, visibility: $visibility)
+            }
             
         }
+        .onDisappear{
+            
+            OpenHelpWindow.resetLaunchStatus()
+        }
+        .navigationSplitViewStyle(.automatic)
         .frame(alignment: .leading)
-        .toolbar {
+        
+        .toolbar{
           
-                
-            ToolbarItem(placement: .navigation) {
-                    
-                    Button(action:{
-                        
-                        withAnimation{
-                            if visibility == .all{
-                                visibility = .detailOnly
-                            }else if visibility == .detailOnly{
-                                visibility = .all
+            
+                ToolbarItem(placement: .navigation) {
+                    if visibility == .detailOnly{
+                        Button(action:{
+                            
+                            withAnimation{
+                                if visibility == .all{
+                                    visibility = .detailOnly
+                                }else if visibility == .detailOnly{
+                                    visibility = .all
+                                }
                             }
-                        }
-                       
-                    }){
+                            
+                        }){
                         
-                  
+                        
                         Image(systemName: "sidebar.left")
                         
                     }
-                   
+                    }else{
+                        
+                        Text("")
+                    }
+                    
+                    
                     
                     
                 

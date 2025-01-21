@@ -25,10 +25,10 @@ public struct OpenHelpWindow {
         let helpWindow = NSWindow(
             contentViewController: NSHostingController(rootView: HelpView())
         )
-        
+
         helpWindow.title = "Feedback X User Guide"
         helpWindow.styleMask.insert(.fullSizeContentView)
-        //helpWindow.titlebarAppearsTransparent = true
+        helpWindow.titlebarAppearsTransparent = true
         
        
         

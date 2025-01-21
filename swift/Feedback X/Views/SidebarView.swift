@@ -10,8 +10,8 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @State public var selectedPage: String? = "Recent Activity"
-    @State private var showSheet =  false
+    @AppStorage("SideBarPage") var selectedPage: String = "Recent Activity"
+    @AppStorage("showSheet") var showSheet: Bool = false
     @State private var showAccountSheet = false
     @State private var showAccountAlert: Bool = false
     
@@ -68,7 +68,7 @@ struct SidebarView: View {
             
         } detail: {
             // Display the appropriate view based on the selected page
-            if let selectedPage = selectedPage {
+            
                 switch selectedPage {
                 case "Recent Activity":
                     CombinedView()
@@ -93,9 +93,7 @@ struct SidebarView: View {
                 default:
                     CombinedView()
                 }
-            } else {
-                CombinedView()
-            }
+            
         }
         .frame(alignment: .leading)
         .toolbar {

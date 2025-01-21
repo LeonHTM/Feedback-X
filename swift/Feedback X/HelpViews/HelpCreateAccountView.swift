@@ -11,8 +11,24 @@ import SwiftUI
 struct HelpCreateAccountView: View {
     @Binding var selectedPage: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            VStack{
+                HStack{
+                    Image("FeedbackX256.png")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .shadow(radius: 5)
+                    Text("Create Account")
+                        .font(.title)
+                        .fontWeight(.bold)
+                }.padding(.bottom,20)
+                
+            }.padding()
+            
+        }
     }
+    
 }
 
 #Preview {
