@@ -143,7 +143,7 @@ struct HelpView: View {
             case "Set up Cookies":
                 HelpSetUpCookiesView(selectedPage: $selectedPage)
             case "Create Feedback":
-                HelpCreateAccountView(selectedPage: $selectedPage)
+                HelpCreateFeedbackView(selectedPage: $selectedPage)
             case "Feedback Failed":
                 HelpFeedbackFailedView(selectedPage: $selectedPage)
             default:

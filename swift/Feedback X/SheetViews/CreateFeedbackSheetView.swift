@@ -425,7 +425,7 @@ struct CreateFeedbackSheetView: View {
                             }.labelsHidden()
                         }
 
-                        Toggle(isOn: $shouldRewrite) {
+                        /*Toggle(isOn: $shouldRewrite) {
                             Text("Rewrite Details with AI on every iteration")
                         }.disabled(true)
 
@@ -446,7 +446,7 @@ struct CreateFeedbackSheetView: View {
                                 .foregroundColor(.gray)
                                 .font(.system(size: 12))
                                 .padding(.top, -10)
-                        }
+                        }*/
 
                         Toggle(isOn: $headless) {
                             Text("Show Browser Window that automates Feedback")

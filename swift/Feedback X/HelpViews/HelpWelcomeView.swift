@@ -13,6 +13,7 @@ struct HelpWelcomeView: View {
     @Binding var visibility: NavigationSplitViewVisibility
     @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
     @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
+    @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("SideBarPage") var selectedPageSideBar: String = "Recent Activity"
     var body: some View {
@@ -82,6 +83,7 @@ struct HelpWelcomeView: View {
                         selectedPageSideBar = "About"
                         CreateshowSheet = false
                         AccountshowSheet = false
+                        AccountshowSheet2 = false
                         CookiesshowSheet = false
                     }){
                         HStack{
@@ -101,6 +103,22 @@ struct HelpWelcomeView: View {
                      This app is provided as is, without any guarantees or warranties. The developer does not accept any responsibility for any actions taken by users of this app. By using this app, you agree to use it at your own risk. You acknowledge and agree that you are solely responsible for any actions taken using this program. The developer and any associated parties are not liable for any consequences arising from the use of this program. Your use of the program indicates your acceptance of these terms.
                      """)
                     .lineLimit(nil)
+                    Button(action:{
+                        
+                        selectedPageSideBar = "About"
+                        CreateshowSheet = false
+                        AccountshowSheet = false
+                        AccountshowSheet2 = false
+                        CookiesshowSheet = false
+                    }){
+                        HStack{
+                            
+                            Text("Check out the legal statement")
+                            Image(systemName:"chevron.right")
+                            
+                        }.foregroundStyle(Color.accentColor)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                     
                     
                     

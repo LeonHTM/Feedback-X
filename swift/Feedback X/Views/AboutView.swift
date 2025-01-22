@@ -57,6 +57,8 @@ struct AboutView: View {
                                     .fill(Color.gray.opacity(0.1))
                             )
                     
+                   
+                    
                     // Centering the GitHub link
                     HStack {
                         Spacer()
@@ -86,6 +88,21 @@ struct AboutView: View {
                                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                     .fill(Color.gray.opacity(0.1))
                             )
+                    
+                    Text("Privacy")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    HStack{
+                        Text("Feedback X doesn't collect any personal data of any sort. In fact the Application doesn't collect any data at all. (Partly becuase I have no idea to set stuff like this up).")
+                        Spacer()
+                    }
+                        .padding(10)
+                        .background(
+                                RoundedRectangle(cornerRadius: 7)
+                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                    .fill(Color.gray.opacity(0.1))
+                            )
                 }
                 .padding(.horizontal)
                 
@@ -99,7 +116,7 @@ struct AboutView: View {
                     This app is provided as is, without any guarantees or warranties. The developer does not accept any responsibility for any actions taken by users of this app. By using this app, you agree to use it at your own risk. You acknowledge and agree that you are solely responsible for any actions taken using this program. The developer and any associated parties are not liable for any consequences arising from the use of this program. Your use of the program indicates your acceptance of these terms.
                     """)
                     .font(.body)
-                    .lineSpacing(5)
+          
                     .padding(10)
                     .background(
                             RoundedRectangle(cornerRadius: 7)

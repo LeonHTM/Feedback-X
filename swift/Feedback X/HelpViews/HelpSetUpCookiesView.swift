@@ -11,7 +11,25 @@ import SwiftUI
 struct HelpSetUpCookiesView: View {
     @Binding var selectedPage: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Divider()
+                .foregroundStyle(Color.black)
+                .offset(y:8)
+            ScrollView{
+                HStack{
+                    Image("FeedbackX256.png")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .shadow(radius: 5)
+                    Text("Set Up Cookies")
+                        .font(.title)
+                        .fontWeight(.bold)
+                }.padding(.bottom,20)
+                Divider()
+                
+            }
+        }
     }
 }
 

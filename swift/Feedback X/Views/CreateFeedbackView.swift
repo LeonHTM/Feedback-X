@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateFeedbackView: View {
     @State private var isRunning = false
     @State private var showAlert = false
-    @State public var showSheet = false
+    @AppStorage("CreateshowSheet") var showSheet: Bool = false
     @State private var feedbackTitle: String = ""
     @State private var selectedOption = "Option 1"
     @State private var showAccountAlert: Bool = false

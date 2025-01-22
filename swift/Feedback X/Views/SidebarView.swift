@@ -11,7 +11,7 @@ import SwiftUI
 
 struct SidebarView: View {
     @AppStorage("SideBarPage") var selectedPage: String = "Recent Activity"
-    @AppStorage("CreateshowSheet") var showSheet: Bool = false
+    @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
     @State private var showAccountSheet = false
     @State private var showAccountAlert: Bool = false
     
@@ -67,6 +67,7 @@ struct SidebarView: View {
             .frame(minWidth:175)
             Spacer()
             HStack{
+                Spacer()
                 Button(action: {
                     OpenHelpWindow.open()
                 }) {
@@ -77,7 +78,7 @@ struct SidebarView: View {
                     Text("Help me")
                 }
                 .buttonStyle(PlainButtonStyle())
-                .padding([.leading, .trailing, .bottom], 7)
+                .padding([.bottom], 7)
                 .padding(.top,5)
                 Spacer()
             }
@@ -124,7 +125,7 @@ struct SidebarView: View {
                     Button(action:{
                         accountLoader.loadAccounts(from: accountURL)
                         if accountLoader.accounts.count >= 2{
-                            showSheet = true}else{
+                            CreateshowSheet = true}else{
                                 showAccountAlert = true
                             }
                         
@@ -143,8 +144,8 @@ struct SidebarView: View {
                                 Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) account.")
                             }
                     }
-                    .sheet(isPresented: $showSheet, onDismiss: { feedbackPython.stop() }) {
-                        CreateFeedbackSheetView(showSheet : $showSheet)
+                    .sheet(isPresented: $CreateshowSheet, onDismiss: { feedbackPython.stop() }) {
+                        CreateFeedbackSheetView(showSheet : $CreateshowSheet)
                             .environmentObject(accountLoader)
                             .environmentObject(feedbackPython)
                             .environmentObject(fileLoader)

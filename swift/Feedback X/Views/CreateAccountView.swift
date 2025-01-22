@@ -11,7 +11,7 @@ import SwiftUI
 struct CreateAccountView: View {
     @State private var isRunning: Bool = false
     @State private var showAlert: Bool = false
-    @AppStorage("CreateshowSheet") var showSheet: Bool = false
+    @AppStorage("AccountshowSheet2") var AccountshowSheet: Bool = false
     @EnvironmentObject var accountLoader: AccountLoader
     
     var body: some View {
@@ -21,15 +21,15 @@ struct CreateAccountView: View {
                 .foregroundStyle(Color.secondary)
             
             Button(action: {
-                showSheet.toggle() // Toggle the correct state
+                AccountshowSheet.toggle() // Toggle the correct state
             }) {
                 Text(isRunning ? "Adding New Account" : "Add Account")
                     .padding(1)
             }
             .disabled(isRunning)
             .padding(5)
-            .sheet(isPresented: $showSheet) {
-                CreateAccountSheetView(showSheet: $showSheet)
+            .sheet(isPresented: $AccountshowSheet) {
+                CreateAccountSheetView(showSheet: $AccountshowSheet)
                     .environmentObject(accountLoader)
             }
         }.frame(minWidth: 500,maxWidth:700)

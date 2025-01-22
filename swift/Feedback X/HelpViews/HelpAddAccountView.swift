@@ -11,21 +11,26 @@ import SwiftUI
 struct HelpAddAccountView: View {
     @Binding var selectedPage: String
     var body: some View {
-        ScrollView{
-            VStack{
-                HStack{
-                    Image("FeedbackX256.png")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .shadow(radius: 5)
-                    Text("Add Account to Feedback X")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }.padding(.bottom,20)
+        VStack{
+            Divider()
+                            .foregroundStyle(Color.black)
+                            .offset(y:8)
+            ScrollView{
+                VStack{
+                    HStack{
+                        Image("FeedbackX256.png")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                            .shadow(radius: 5)
+                        Text("Add Account to Feedback X")
+                            .font(.title)
+                            .fontWeight(.bold)
+                    }.padding(.bottom,20)
+                    
+                }.padding()
                 
-            }.padding()
-            
+            }
         }
     }
 }
