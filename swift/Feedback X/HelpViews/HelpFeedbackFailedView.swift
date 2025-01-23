@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HelpFeedbackFailedView: View {
     @Binding var selectedPage: String
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         VStack{
             Divider()
@@ -29,7 +30,7 @@ struct HelpFeedbackFailedView: View {
                 Divider()
                 
             }
-        }
+        }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }
 }
 

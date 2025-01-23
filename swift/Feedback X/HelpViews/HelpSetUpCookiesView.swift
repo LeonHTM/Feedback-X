@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HelpSetUpCookiesView: View {
     @Binding var selectedPage: String
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         VStack{
             Divider()
@@ -26,10 +27,10 @@ struct HelpSetUpCookiesView: View {
                         .font(.title)
                         .fontWeight(.bold)
                 }.padding(.bottom,20)
-                Divider()
+              
                 
             }
-        }
+        }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }
 }
 

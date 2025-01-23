@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HelpCreateFeedbackView: View {
     @Binding var selectedPage: String
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         VStack{
             Divider()
@@ -17,21 +18,22 @@ struct HelpCreateFeedbackView: View {
                             .offset(y:8)
             
             ScrollView{
-                
-                HStack{
-                                    Image("FeedbackX256.png")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 40, height: 40)
-                                        .shadow(radius: 5)
-                                    Text("Create Account")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                }.padding(.bottom,20)
-                Divider()
+                VStack(alignment:.leading,spacing:15){
+                    HStack{
+                        Image("FeedbackX256.png")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                            .shadow(radius: 5)
+                        Text("Create Account")
+                            .font(.title)
+                            .fontWeight(.bold)
+                    }.padding(.bottom,20)
+                }
+              
             }
             
-        }
+        }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }
 }
 

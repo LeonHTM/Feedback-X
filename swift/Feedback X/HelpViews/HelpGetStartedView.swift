@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HelpGetStartedView: View {
     @Binding var selectedPage: String
+    @Environment(\.colorScheme) var colorScheme
     @AppStorage("showSheet") var showSheet: Bool = false
     var body: some View {
         VStack{
@@ -40,7 +41,7 @@ struct HelpGetStartedView: View {
                             Text("To send duplicated Feedback you have to add Accounts to the Application first. These Accounts have to be created manually on account.apple.com. After having been created log into develeoper.apple.com with them to give them access to Feedback Assistant.").lineLimit(nil)
                             Button(action:{
                                 
-                                selectedPage = "Create Accounts"
+                                selectedPage = "Create Account"
                             }){
                                 HStack{
                                     
@@ -109,7 +110,7 @@ struct HelpGetStartedView: View {
                             }){
                                 HStack{
                                     
-                                    Text("Duplicate Feeddbacks with Feedback X")
+                                    Text("Duplicate Feedbacks with Feedback X")
                                     Image(systemName:"chevron.right")
                                     
                                 }.foregroundStyle(Color.accentColor)
@@ -127,6 +128,10 @@ struct HelpGetStartedView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
                         .clipShape(RoundedRectangle(cornerRadius:7))
+                        .overlay(
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                    )
                     Text("Image: Feedback duplication failed")
                         .foregroundStyle(Color.secondary).padding(.top,-10)
                         
@@ -152,7 +157,7 @@ struct HelpGetStartedView: View {
                         selectedPage = "Create Accounts"
                     }){
                         Text("Create Apple Developer Accounts")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }
                     .padding(.vertical,-5)
                     .buttonStyle(PlainButtonStyle())
@@ -160,13 +165,13 @@ struct HelpGetStartedView: View {
                         selectedPage = "Add Accounts"
                     }){
                         Text("Add Accounts to Feedback X")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }.buttonStyle(PlainButtonStyle())
                     Button(action:{
                         selectedPage = "Set up Cookies"
                     }){
                         Text("Set up Cookies")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.vertical,-5)
@@ -174,13 +179,13 @@ struct HelpGetStartedView: View {
                         selectedPage = "Create Feedback"
                     }){
                         Text("Duplicate Feedback")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }.buttonStyle(PlainButtonStyle())
                     Button(action:{
                         selectedPage = "Feedback Failed"
                     }){
                         Text("Feedback Failed")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.top,-5)
@@ -188,7 +193,7 @@ struct HelpGetStartedView: View {
                 }.padding()
     
                 }
-            }
+            }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
         }
     
 }

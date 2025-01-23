@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HelpWelcomeView: View {
     @Binding var selectedPage: String
+    @Environment(\.colorScheme) var colorScheme
     @Binding var visibility: NavigationSplitViewVisibility
     @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
     @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
@@ -130,7 +131,7 @@ struct HelpWelcomeView: View {
                 }.padding()
                 Spacer()
             }
-        }
+        }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }
 }
 

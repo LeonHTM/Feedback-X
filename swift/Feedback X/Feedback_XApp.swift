@@ -11,6 +11,7 @@ struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
     @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
     @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
+    @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @StateObject private var accountLoader = AccountLoader()
     @StateObject private var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
@@ -37,6 +38,8 @@ struct Feedback_XApp: App {
                     CreateshowSheet = false
                     AccountshowSheet = false
                     CookiesshowSheet = false
+                    AccountshowSheet2 = false
+                    
                   
                     
                 }
@@ -45,6 +48,7 @@ struct Feedback_XApp: App {
                     CreateshowSheet = false
                     AccountshowSheet = false
                     CookiesshowSheet = false
+                    AccountshowSheet2 = false
                 }
                 
         }/*.commands {

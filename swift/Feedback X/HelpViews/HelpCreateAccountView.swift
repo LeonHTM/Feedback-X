@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HelpCreateAccountView: View {
     @Binding var selectedPage: String
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         VStack{
             Divider()
@@ -44,6 +45,10 @@ struct HelpCreateAccountView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
                         .clipShape(RoundedRectangle(cornerRadius:7))
+                        .overlay(
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                    )
                     Text("Image: account.apple.com")
                         .foregroundStyle(Color.secondary)
                         .padding(.top,-10)
@@ -75,7 +80,11 @@ struct HelpCreateAccountView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
                         .clipShape(RoundedRectangle(cornerRadius:7))
-                    Text("Image: System Settings on iPhone")
+                        .overlay(
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                    )
+                    Text("Image: Settings App on iPhone")
                         .foregroundStyle(Color.secondary)
                         .padding(.top,-10)
                     HStack(alignment:.top,spacing:2){
@@ -92,11 +101,12 @@ struct HelpCreateAccountView: View {
                     HStack(alignment:.top,spacing:0){
                         
                         Text("2.  ")
-                        Text("Head to ")
-                        Image("SystemSettingsHabibi")
+                        Text("Head to System Settings ")
+                        Image("SettingsIcon")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 20, height: 20)
+                            .frame(width: 14, height: 14)
+                            .offset(y: 2)
                             
                         Text(" > Apple Account > Don't have an Apple Account?")
                     }
@@ -125,7 +135,7 @@ struct HelpCreateAccountView: View {
                         selectedPage = "Get Started"
                     }){
                         Text("Get Started with Feedback X")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }
                     .padding(.vertical,-5)
                     .buttonStyle(PlainButtonStyle())
@@ -133,13 +143,13 @@ struct HelpCreateAccountView: View {
                         selectedPage = "Add Accounts"
                     }){
                         Text("Add Accounts to Feedback X")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }.buttonStyle(PlainButtonStyle())
                     Button(action:{
                         selectedPage = "Set up Cookies"
                     }){
                         Text("Set up Cookies")
-                            .foregroundStyle(Color.blue)
+                            .foregroundStyle(Color.accentColor)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.vertical,-5)
@@ -148,7 +158,7 @@ struct HelpCreateAccountView: View {
                     
                 }.padding()
             }
-        }
+        }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }
     
 }
