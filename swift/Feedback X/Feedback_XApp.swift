@@ -10,6 +10,7 @@ import SwiftUI
 struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
     @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
+    @AppStorage("CreateshowSheet1") var CreateshowSheet1: Bool = false
     @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
@@ -36,6 +37,7 @@ struct Feedback_XApp: App {
                 .onAppear {
                     //NSWindow.allowsAutomaticWindowTabbing = false
                     CreateshowSheet = false
+                    CreateshowSheet1 = false
                     AccountshowSheet = false
                     CookiesshowSheet = false
                     AccountshowSheet2 = false
@@ -46,6 +48,7 @@ struct Feedback_XApp: App {
                 .onDisappear{
                     
                     CreateshowSheet = false
+                    CreateshowSheet1 = false
                     AccountshowSheet = false
                     CookiesshowSheet = false
                     AccountshowSheet2 = false

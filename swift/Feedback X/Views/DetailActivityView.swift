@@ -183,12 +183,17 @@ struct DetailActivityView: View {
                         } else {
                             Text("No files were uploaded in this feedback")
                         }
+                    }.alert(isPresented: $noFileAlert) {
+                        Alert(
+                            title: Text("This file doesn't exist"),
+                            message: Text("The file must have been deleted or moved since the feedback was created."),
+                            dismissButton: .cancel()
+                        )
                     }
                     Divider()
                     HStack{
                         Spacer()
                         Button(action:{
-                            
                             showDeleteAlert = true
                         }){
                             
@@ -199,31 +204,27 @@ struct DetailActivityView: View {
                             .foregroundStyle(Color.red)
                         }
                         .padding(20)
+                        
                         Spacer()
-                    }.alert(isPresented: $showDeleteAlert) {
-                        Alert(
-                            title: Text("Delete \(fileToShow.title)?"),
-                            message: Text("Are you sure you want to delete Account \(fileToShow.name)?"),
-                            primaryButton: .destructive(Text("Confirm")) {
-                                
-                                fileLoader.deleteFile(named:fileToShow.name)
-                                onDeleteActivity()
-                                
-                                
-                                
+                    }
+                    .alert(isPresented: $showDeleteAlert) {
+                                            Alert(
+                                                title: Text("Delete \(fileToShow.title)?"),
+                                                message: Text("Are you sure you want to delete Account \(fileToShow.name)?"),
+                                                primaryButton: .destructive(Text("Confirm")) {
+                                                    
+                                                    fileLoader.deleteFile(named:fileToShow.name)
+                                                    onDeleteActivity()
+                                                    
+                                                    
+                                                    
 
-                                
-                            },
-                            secondaryButton: .cancel()
-                        )
-                    }
-                    .alert(isPresented: $noFileAlert) {
-                        Alert(
-                            title: Text("This file doesn't exist"),
-                            message: Text("The file must have been deleted or moved since the feedback was created."),
-                            dismissButton: .cancel()
-                        )
-                    }
+                                                    
+                                                },
+                                                secondaryButton: .cancel()
+                                            )
+                                        }
+                    
 
 
                     

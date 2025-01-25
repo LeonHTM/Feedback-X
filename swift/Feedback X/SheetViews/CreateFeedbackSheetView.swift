@@ -61,6 +61,7 @@ struct CreateFeedbackSheetView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var fileLoader: FileLoader
+    @Environment(\.colorScheme) var colorScheme
 
     // MARK: - Computed Properties
     private var isSubmitEnabled: Bool {
@@ -168,16 +169,17 @@ struct CreateFeedbackSheetView: View {
                                 .offset(x:3)
                         }
                         ZStack(alignment: .leading) {
-                            if areaSave.isEmpty {
-                                Text("Please select the feedback area").padding(.leading, 7)
-                                    .foregroundStyle(.secondary)
-                                    .opacity(0.5)
-                            }
+                            
                             Picker("", selection: $areaSave) {
                                 ForEach(PublicSaves.feedbackAreasiOS, id: \.self) { type in
                                     Text(type)
                                 }
                             }.labelsHidden()
+                            if areaSave.isEmpty {
+                                Text("Please select the feedback area").padding(.leading, 7)
+                                    .foregroundStyle(Color.secondary).opacity(0.5)
+                                    
+                            }
                         }
 
                         // Feedback Type Section
@@ -193,11 +195,7 @@ struct CreateFeedbackSheetView: View {
                                 .offset(x:3)
                         }
                         ZStack(alignment: .leading) {
-                            if typeSave.isEmpty {
-                                Text("Please select the feedback type").padding(.leading, 7)
-                                    .foregroundStyle(.secondary)
-                                    .opacity(0.5)
-                            }
+                            
                             Picker("", selection: $typeSave) {
                                 Text("Incorrect/Unexpected Behavior").tag("1")
                                 Text("Application Crash").tag("2")
@@ -205,6 +203,11 @@ struct CreateFeedbackSheetView: View {
                                 Text("Battery Life").tag("4")
                                 Text("Suggestion").tag("5")
                             }.labelsHidden()
+                            if typeSave.isEmpty {
+                                Text("Please select the feedback type").padding(.leading, 7)
+                                    .foregroundStyle(.secondary)
+                                    .opacity(0.5)
+                            }
                         }
 
                         // Feedback Path Section
@@ -414,15 +417,16 @@ struct CreateFeedbackSheetView: View {
                                 .offset(x:3)
                         }
                         ZStack(alignment: .leading) {
+                           
+                            Picker("", selection: $submitSave) {
+                                Text("Submit Feedback").tag("submit")
+                                Text("Save Feedback").tag("save")
+                            }.labelsHidden()
                             if submitSave.isEmpty {
                                 Text("Please select the action you want to take with the feedback").padding(.leading, 7)
                                     .foregroundStyle(.secondary)
                                     .opacity(0.5)
                             }
-                            Picker("", selection: $submitSave) {
-                                Text("Submit Feedback").tag("submit")
-                                Text("Save Feedback").tag("save")
-                            }.labelsHidden()
                         }
 
                         /*Toggle(isOn: $shouldRewrite) {
@@ -474,7 +478,7 @@ struct CreateFeedbackSheetView: View {
 
                 // Footer Buttons
                 HStack {
-                    Button(action: { OpenHelpWindow.open() }) {
+                    Button(action: { OpenHelpWindow.open(selectedPage: "Duplicate Feedback") }) {
                         Image(systemName: "questionmark.circle.fill")
                             .font(.system(.title2))
                             .foregroundColor(.gray)
@@ -547,12 +551,15 @@ struct CreateFeedbackSheetView: View {
                         
                     }) {
                         Text("Submit")
-                            .padding(5)
+                            .padding(.vertical,6.3)
+                            .padding(.horizontal,10)
                     }
+                    .buttonStyle(PlainButtonStyle())
                     .disabled(!buttonAllowed || iterationSave < 2)
                     .background(buttonAllowed ? Color.accentColor : Color.gray)
                     .foregroundColor(.white)
                     .cornerRadius(5)
+                                            
                     .padding(.trailing)
                     .alert("No Internet Connection", isPresented: $onlineAlert) {
                         Button("OK", role: .cancel) {}

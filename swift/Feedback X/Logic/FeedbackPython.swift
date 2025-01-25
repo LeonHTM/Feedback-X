@@ -15,6 +15,7 @@ class FeedbackPython: ObservableObject {
     // Published properties for observing changes
     @Published var isRunning: Bool = false
     @Published var output: String? = nil
+    var sleepTask: Process?
 
     // Shared variable to keep track of the running process
     private var process: Process?
@@ -24,25 +25,21 @@ class FeedbackPython: ObservableObject {
     }
 
     func preventSleep() {
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
-        task.arguments = ["pmset", "noidle"]
+        sleepTask = Process()
+        sleepTask?.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
+        sleepTask?.arguments = ["noidle"]
+
         do {
-            try task.run()
+            try sleepTask?.run()
+            print("Sleep prevention started (pmset noidle).")
         } catch {
             print("Failed to prevent sleep: \(error)")
         }
     }
 
     func allowSleep() {
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
-        task.arguments = ["pmset", "sleepnow"]
-        do {
-            try task.run()
-        } catch {
-            print("Failed to allow sleep: \(error)")
-        }
+        sleepTask?.terminate()
+        print("Sleep prevention stopped.")
     }
 
     func run(

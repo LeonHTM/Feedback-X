@@ -37,6 +37,7 @@ struct CreateAccountSheetView: View {
     @State private var showCloseAlert = false
     @State private var showDuplicateAlert = false
     @Binding var showSheet: Bool
+    @Environment(\.colorScheme) var colorScheme
     
     private var isSubmitEnabled: Bool {
         return !icloudmailSave.isEmpty && !passwordSave.isEmpty && !cookiesSave.isEmpty && !appledevSave.isEmpty && !countrySave.isEmpty
@@ -130,15 +131,16 @@ struct CreateAccountSheetView: View {
                
                     
                 ZStack(alignment:.leading){
+                    
+                    Picker("", selection: $appledevSave) {
+                        Text("Set up").tag("y")
+                        Text("Not set up").tag("n")
+                    }.labelsHidden()
                     if appledevSave == ""{
                         Text("Apple Developer").padding(.leading, 7)
                             .foregroundStyle(.primary.opacity(0.7))
                             .opacity(0.5)
                     }
-                    Picker("", selection: $appledevSave) {
-                        Text("Set up").tag("y")
-                        Text("Not set up").tag("n")
-                    }.labelsHidden()
                 }
                 
                 /*
@@ -170,16 +172,17 @@ struct CreateAccountSheetView: View {
            
                     
                 ZStack(alignment:.leading){
-                    if countrySave == ""{
-                        Text("Country").padding(.leading, 7)
-                            .foregroundStyle(.primary.opacity(0.5))
-                            .opacity(0.5)
-                    }
+                    
                     Picker("", selection: $countrySave) {
                         ForEach(PublicSaves.countriesAndTerritories, id: \.self) { country in
                             Text(country)
                         }
                     }.labelsHidden()
+                    if countrySave == ""{
+                        Text("Country").padding(.leading, 7)
+                            .foregroundStyle(.primary.opacity(0.5))
+                            .opacity(0.5)
+                    }
                 }
                 
             
@@ -221,7 +224,7 @@ struct CreateAccountSheetView: View {
         Divider()
         HStack{
             Button(action: {
-                OpenHelpWindow.open()
+                OpenHelpWindow.open(selectedPage: "Create Account")
                 
                 
             }) {
@@ -282,7 +285,8 @@ struct CreateAccountSheetView: View {
                 }
             }) {
                 Text("Save")
-                    .padding(5) // Add padding around the text
+                    .padding(.vertical,6.3)
+                    .padding(.horizontal,10) // Add padding around the text
             }
             //.disabled(!isSubmitEnabled)
             .alert("Account already exists", isPresented: $showDuplicateAlert) {
@@ -297,6 +301,7 @@ struct CreateAccountSheetView: View {
             } message: {
                 Text("The account you tried to add already exists.")
             }
+            .buttonStyle(PlainButtonStyle())
             .background(Color.accentColor)
             .foregroundColor(.white)
             .cornerRadius(5)

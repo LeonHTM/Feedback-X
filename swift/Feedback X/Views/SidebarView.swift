@@ -11,7 +11,7 @@ import SwiftUI
 
 struct SidebarView: View {
     @AppStorage("SideBarPage") var selectedPage: String = "Recent Activity"
-    @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
+    @AppStorage("CreateshowSheet1") var CreateshowSheet: Bool = false
     @State private var showAccountSheet = false
     @State private var showAccountAlert: Bool = false
     
@@ -69,7 +69,7 @@ struct SidebarView: View {
             HStack{
                 Spacer()
                 Button(action: {
-                    OpenHelpWindow.open()
+                    OpenHelpWindow.open(selectedPage: "Welome")
                 }) {
                     
                     Image(systemName: "questionmark.circle.fill")
@@ -145,7 +145,7 @@ struct SidebarView: View {
                             }
                     }
                     .sheet(isPresented: $CreateshowSheet, onDismiss: { feedbackPython.stop() }) {
-                        CreateFeedbackSheetView(showSheet : $CreateshowSheet)
+                        TopicSheetView(showSheet : $CreateshowSheet)
                             .environmentObject(accountLoader)
                             .environmentObject(feedbackPython)
                             .environmentObject(fileLoader)

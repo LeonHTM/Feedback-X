@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct HelpView: View {
-    @State public var selectedPage: String = "Welcome"
+    @State private var selectedPage: String = "Welcome"
     @State private var expandedParents: Set<String> = []
     @State private var visibility: NavigationSplitViewVisibility = .all
 
@@ -32,7 +32,7 @@ struct HelpView: View {
             SidebarItem(name: "Set up Cookies", children: nil)
         ]),
         SidebarItem(name: "Feedbacks", children: [
-            SidebarItem(name: "Create Feedback", children: nil),
+            SidebarItem(name: "Duplicate Feedback", children: nil),
             SidebarItem(name: "Feedback Failed", children: nil)
         ])
     ]
@@ -142,7 +142,7 @@ struct HelpView: View {
                 HelpAddAccountView(selectedPage: $selectedPage)
             case "Set up Cookies":
                 HelpSetUpCookiesView(selectedPage: $selectedPage)
-            case "Create Feedback":
+            case "Duplicate Feedback":
                 HelpCreateFeedbackView(selectedPage: $selectedPage)
             case "Feedback Failed":
                 HelpFeedbackFailedView(selectedPage: $selectedPage)
@@ -197,5 +197,6 @@ struct HelpView: View {
 }
 
 #Preview {
+    @Previewable @State var text = "Welcome"
     HelpView()
 }

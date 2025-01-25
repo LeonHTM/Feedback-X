@@ -453,7 +453,10 @@ struct DetailAccountsView: View {
                             HStack {
                                 Spacer()
                                 VStack(alignment: .center, spacing: 10) {
-                                    Button(action: { showDeleteAlert.toggle() }) {
+                                    Button(action: {
+                                        showDeleteAlert = true
+                                        
+                                    }) {
                                         HStack {
                                             Image(systemName: "trash")
                                             Text("Delete Account")

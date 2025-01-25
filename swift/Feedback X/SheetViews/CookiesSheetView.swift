@@ -24,6 +24,8 @@ struct CookiesSheetView: View {
     
     @State private var showDuplicateAlert = false
     
+    @State public var selectedHelpPage:String = "Set up Cookies"
+    
     //@State private var progress: Double = 0
     @State private var step: Double = 0
     @State private var buttonAllowed: Bool = true
@@ -289,7 +291,7 @@ struct CookiesSheetView: View {
         Divider()
         HStack{
             Button(action: {
-                OpenHelpWindow.open()
+                OpenHelpWindow.open(selectedPage: "Set up Cookies")
                 
             }) {
                 Image(systemName: "questionmark.circle.fill")

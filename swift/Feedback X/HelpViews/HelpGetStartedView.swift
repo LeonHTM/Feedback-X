@@ -106,7 +106,7 @@ struct HelpGetStartedView: View {
                             
                             Button(action:{
                                 
-                                selectedPage = "Create Feedback"
+                                selectedPage = "Duplicate Feedback"
                             }){
                                 HStack{
                                     
@@ -176,7 +176,7 @@ struct HelpGetStartedView: View {
                     .buttonStyle(PlainButtonStyle())
                     .padding(.vertical,-5)
                     Button(action:{
-                        selectedPage = "Create Feedback"
+                        selectedPage = "Duplicate Feedback"
                     }){
                         Text("Duplicate Feedback")
                             .foregroundStyle(Color.accentColor)

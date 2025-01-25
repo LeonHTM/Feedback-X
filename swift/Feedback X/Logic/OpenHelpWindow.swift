@@ -13,14 +13,16 @@ public struct OpenHelpWindow {
     
     // Static variable to track if the Help window has been opened
     private static var hasLaunched: Bool = false
+    @State private static var selectedPage1: String = ""
     
-    static func open() {
+    static func open(selectedPage: String) {
         // Check if the window has already been opened
         if hasLaunched {
             print("Help window is already open.")
             return
         }
         
+        selectedPage1 = selectedPage
         // Create the Help window
         let helpWindow = NSWindow(
             contentViewController: NSHostingController(rootView: HelpView())

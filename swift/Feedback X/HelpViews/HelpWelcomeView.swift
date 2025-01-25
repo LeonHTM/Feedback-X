@@ -13,6 +13,7 @@ struct HelpWelcomeView: View {
     @Environment(\.colorScheme) var colorScheme
     @Binding var visibility: NavigationSplitViewVisibility
     @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
+    @AppStorage("CreateshowSheet1") var CreateshowSheet1: Bool = false
     @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
@@ -86,6 +87,7 @@ struct HelpWelcomeView: View {
                         AccountshowSheet = false
                         AccountshowSheet2 = false
                         CookiesshowSheet = false
+                        CreateshowSheet1 = false
                     }){
                         HStack{
                             
@@ -108,6 +110,7 @@ struct HelpWelcomeView: View {
                         
                         selectedPageSideBar = "About"
                         CreateshowSheet = false
+                        CreateshowSheet1 = false
                         AccountshowSheet = false
                         AccountshowSheet2 = false
                         CookiesshowSheet = false

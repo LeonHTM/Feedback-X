@@ -88,7 +88,7 @@ struct CookiesView: View {
                                                 Image(systemName: "circle")
                                                     .font(.system(size: 20))
                                                 Image(systemName: cookiesList.contains(index) ? "checkmark" : "")
-                                                    .foregroundStyle(Color.primary)
+                                                    .foregroundStyle(Color.white)
                                             }
                                             .background(
                                                 Circle()
