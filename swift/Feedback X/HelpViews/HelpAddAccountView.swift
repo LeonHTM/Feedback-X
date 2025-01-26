@@ -34,7 +34,7 @@ struct HelpAddAccountView: View {
                     Text("Add an Accounts to Feedback X ")
                         .fontWeight(.bold)
                         .font(.system(size:15))
-                    Image("AddAccount")
+                    Image(colorScheme == .light ? "AddAccount1_Light" : "AddAccount1_Dark")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
@@ -47,7 +47,7 @@ struct HelpAddAccountView: View {
                                   
                       
                         
-                    Text("Image: Create Account")
+                    Text("Image: Add Account")
                         .foregroundStyle(Color.secondary)
                         .padding(.top,-10)
                     Text("Note:").italic() + Text(" You have to create an Apple Developer Account before adding it to Feedback X.")
@@ -122,7 +122,17 @@ struct HelpAddAccountView: View {
                         VStack(alignment:.leading){
                             Text("If you have filled are the fields, click Save.").padding(.bottom,5)
                             
-                            Text("You must fill all required fields before you can save an account. If a required field isn't filled, it’s flagged with an arrow 􀁼.")
+                            HStack{
+                                Text("You must answer all required questions before you can save the account. If a required question isn’t answered, it’s flagged with an Arrow").lineLimit(1)
+                                Image("arrowright")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 14, height: 14)
+                                    
+                                    .padding(.trailing,-8)
+                                    .padding(.leading,-6)
+                                Text(".")
+                            }.padding(.bottom,5)
                               
                             
                                 
@@ -163,7 +173,7 @@ struct HelpAddAccountView: View {
                         
                     
                     
-                }.padding()
+                }.padding().textSelection(.enabled)
             }
         }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }

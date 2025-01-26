@@ -49,26 +49,11 @@ struct HelpSetUpCookiesView: View {
                         }
                     }
                     Text("Note:").italic()+Text(" Apple limits the amount of cookies saved. The current Limit is ") + Text("10").fontWeight(.bold) + Text(". Meaning you can only duplicate feedback on max 10 Accounts. I might try to circumwent this Limit in future versions of the Application.")
-                    
+                    Divider()
                     Text("Set Up Cookies")
                         .fontWeight(.bold)
                         .font(.system(size:15))
-                    Image("Cookies1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width:400)
-                        .clipShape(RoundedRectangle(cornerRadius:7))
-                        .overlay(
-                                        RoundedRectangle(cornerRadius: 7)
-                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                    )
-               
-                                  
-                      
-                        
-                    Text("Image: Cookies Page")
-                        .foregroundStyle(Color.secondary)
-                        .padding(.top,-10)
+                   
                         
                     HStack(alignment:.top){
                         Text("1.")
@@ -86,6 +71,23 @@ struct HelpSetUpCookiesView: View {
                         Text("2.")
                         Text("Select 􁖩 Cookies in the Sidebar.")
                     }
+                    
+                    Image(colorScheme == .light ? "Cookies1_Light" : "Cookies1_Dark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width:400)
+                        .clipShape(RoundedRectangle(cornerRadius:7))
+                        .overlay(
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                    )
+               
+                                  
+                      
+                        
+                    Text("Image: Cookies Page")
+                        .foregroundStyle(Color.secondary)
+                        .padding(.top,-10)
                     HStack(alignment:.top){
                         Text("3.")
                         Text("Select the Accounts you want to set up cookies for.")
@@ -103,11 +105,11 @@ struct HelpSetUpCookiesView: View {
                         VStack(alignment:.leading){
                             Text("Click on Start.")
                                 .padding(.bottom,5)
-                            Text("‼️ Do not close the Browser Window until it closes by itsself. It will do this after the waiting time you selected has passed.‼️").padding(.bottom,5)
-                            Text("This opens a Screen where you can chose when you are ready to set up cookies one at a time.")
+                            Text("This opens a Screen where you can chose when you are ready to set up cookies one at a time.").padding(.bottom,5)
+                            Text("‼️ Do not close the Browser Window until it closes by itsself. It will do this after the waiting time you selected has passed.‼️")
                         }
                     }
-                    Image("Cookies2")
+                    Image(colorScheme == .light ? "Cookies2_Light" : "Cookies2_Dark")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
@@ -232,7 +234,7 @@ struct HelpSetUpCookiesView: View {
                         
                     
                     
-                }.padding()
+                }.padding().textSelection(.enabled)
             }
         }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }

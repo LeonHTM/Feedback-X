@@ -15,7 +15,6 @@ struct CreateFeedbackSheetView: View {
     @State private var feedbackDescription: String = ""
     @State private var areaSave: String = ""
     @State private var typeSave:String = ""
-    @State private var topicSave: String = "iOS & iPadOS"
     @State private var showFileImporter = false
     @State private var selectedFiles: [String] = []
     @State private var showAlert: Bool = false
@@ -55,6 +54,7 @@ struct CreateFeedbackSheetView: View {
     
     
     @Binding var showSheet: Bool
+    @Binding var topicSave: String
     @AppStorage("DeveloperSettings") var developerSettings: Bool = false
     @AppStorage("syncOpen") var syncOpen: Bool = false
     
@@ -103,6 +103,7 @@ struct CreateFeedbackSheetView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 15) {
                         // Feedback Topic Section
+                        /*
                         Text("Topic")
                             .font(.title)
                             .fontWeight(.bold)
@@ -133,7 +134,7 @@ struct CreateFeedbackSheetView: View {
                             .font(.system(size: 12))
                             .padding(.top,-10)
                             .offset(x: 3)
-
+                         */
                         // Basic Information Section
                         Text("Basic Information")
                             .font(.title)
@@ -463,6 +464,8 @@ struct CreateFeedbackSheetView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                 }
+                .padding(.bottom,-9.5)
+                .frame(height:650)
                 .disabled(!buttonAllowed)
                 .onAppear {
                     accountLoader.loadAccounts(from: accountURL)
@@ -479,9 +482,16 @@ struct CreateFeedbackSheetView: View {
                 // Footer Buttons
                 HStack {
                     Button(action: { OpenHelpWindow.open(selectedPage: "Duplicate Feedback") }) {
-                        Image(systemName: "questionmark.circle.fill")
-                            .font(.system(.title2))
-                            .foregroundColor(.gray)
+                        ZStack{
+                            Image(systemName: "circle.fill")
+                                .font(.system(size:20))
+                                .foregroundStyle(colorScheme == .dark ? Color.gray.opacity(0.5) : Color.white)
+                                .shadow(radius: 1)
+                            Text("?")
+                                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                                .font(.system(size:17))
+                            
+                        }
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding()
@@ -490,7 +500,7 @@ struct CreateFeedbackSheetView: View {
                     Spacer()
 
                     if developerSettings {
-                        Text("Submit: \(submitSave), Title: \(feedbackTitle), Path: \(feedbackPath), Headless: \(headless), Selected Files: \(selectedFiles), areaSave: \(areaSave), Final: \(finalString); Iterations: \(sliderSave)").foregroundStyle(Color.secondary)
+                        Text("Submit: \(submitSave), Topic: \(topicSave), Title: \(feedbackTitle), Path: \(feedbackPath), Headless: \(headless), Selected Files: \(selectedFiles), areaSave: \(areaSave), Final: \(finalString); Iterations: \(sliderSave)").foregroundStyle(Color.secondary)
                     }
 
                     Spacer()
@@ -559,6 +569,7 @@ struct CreateFeedbackSheetView: View {
                     .background(buttonAllowed ? Color.accentColor : Color.gray)
                     .foregroundColor(.white)
                     .cornerRadius(5)
+                    
                                             
                     .padding(.trailing)
                     .alert("No Internet Connection", isPresented: $onlineAlert) {
@@ -571,7 +582,9 @@ struct CreateFeedbackSheetView: View {
                     } message: {
                         Text("You try to iterate over \(Int(sliderSave)) Accounts. One or multiple of these Accounts don't have cookies saved. Please set up cookies for all accounts.")
                     }
+                    
                 }
+                .padding(.top,-9.5)
                 .frame(width: 1000)
             }
 
@@ -635,11 +648,11 @@ struct CreateFeedbackSheetView: View {
     }
 }
 
-
+/*
 #Preview {
     @Previewable @StateObject var accountLoader = AccountLoader()
     @Previewable @StateObject var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
-    CreateFeedbackSheetView(showSheet: .constant(true))
+    CreateFeedbackSheetView(showSheet: .constant(true), topicSav)
         .environmentObject(accountLoader)
 }
-
+*/

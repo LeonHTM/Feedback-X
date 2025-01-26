@@ -10,8 +10,13 @@ import SwiftUI
 
 struct TopicSheetView: View {
     @Binding var showSheet: Bool
+    @Binding var showSheet2: Bool
+    @Binding var topicSave: String
     @Environment(\.colorScheme) var colorScheme
-    @State private var topicSave: String = "iOS & iPadOS"
+    //@State private var topicSave: String = "iOS & iPadOS"
+    @EnvironmentObject var accountLoader: AccountLoader
+    @EnvironmentObject var feedbackPython: FeedbackPython
+    @EnvironmentObject var fileLoader : FileLoader
     
     var body: some View {
       
@@ -23,6 +28,9 @@ struct TopicSheetView: View {
                     .fontWeight(.bold)
                     .padding(.top,50)
                     .padding(.bottom,-5)
+                
+                //To any possible reader: Im kinda ashamed how inefficient I coded this i just should have made a ForEach or a Set but it is what it is i guess - LeonHTM
+                
                 ScrollView{
                     
                     VStack(alignment: .leading){
@@ -310,9 +318,16 @@ struct TopicSheetView: View {
                     
                     
                 }) {
-                    Image(systemName: "questionmark.circle.fill")
-                        .font(.system(.title2))
-                        .foregroundColor(.gray)
+                    ZStack{
+                        Image(systemName: "circle.fill")
+                            .font(.system(size:20))
+                            .foregroundStyle(colorScheme == .dark ? Color.gray.opacity(0.5) : Color.white)
+                            .shadow(radius: 1)
+                        Text("?")
+                            .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                            .font(.system(size:17))
+                        
+                    }
                     
                     
                 }
@@ -336,6 +351,10 @@ struct TopicSheetView: View {
                 
                 Button(action: {
                     
+                    showSheet = false
+                    showSheet2 = true
+                        
+                    
                 }) {
                     Text("Continue")
                         .padding(6.25) // Add padding around the text
@@ -347,11 +366,14 @@ struct TopicSheetView: View {
                 .cornerRadius(5)
                 .padding([.trailing,])
                 .shadow(radius:1)
+               
               
                 
                 
                 
-            }.padding(.vertical)
+            }
+            .padding(.vertical)
+            .padding(.top,-9.5)
         }.frame(width:1000)
     }
 }

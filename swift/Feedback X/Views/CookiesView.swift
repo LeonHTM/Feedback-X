@@ -11,7 +11,7 @@ import SwiftUI
 struct CookiesView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var cookiesPython: CookiesPython
-    
+    @Environment(\.colorScheme) var colorScheme
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var isEditing: Bool = false
     @State private var waitingTime = 30.0
@@ -244,6 +244,7 @@ struct CookiesView: View {
                         
                         
                     }
+                    .padding(.bottom,15)
                     .padding(.horizontal,20)
                     .frame(maxWidth: .infinity)
                 }else{
@@ -285,6 +286,9 @@ struct CookiesView: View {
           
             
         }
+        .if(colorScheme == .light){
+                            $0.background(Color.white)
+                        }
         .frame(minWidth:1000)
         .frame(maxWidth: .infinity)// Ensures consistent parent view width
     }

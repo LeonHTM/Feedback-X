@@ -213,6 +213,7 @@ struct CreateAccountSheetView: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
         }
+        .padding(.bottom,-9.5)
         .onAppear {
                         accountLoader.loadAccounts(from: accountURL) 
                     }
@@ -228,9 +229,16 @@ struct CreateAccountSheetView: View {
                 
                 
             }) {
-                Image(systemName: "questionmark.circle.fill")
-                    .font(.system(.title2))
-                    .foregroundColor(.gray)
+                ZStack{
+                    Image(systemName: "circle.fill")
+                        .font(.system(size:20))
+                        .foregroundStyle(colorScheme == .dark ? Color.gray.opacity(0.5) : Color.white)
+                        .shadow(radius: 1)
+                    Text("?")
+                        .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                        .font(.system(size:17))
+                    
+                }
                     
                     
             }
@@ -307,7 +315,9 @@ struct CreateAccountSheetView: View {
             .cornerRadius(5)
             .padding([.trailing,])
 
-        }.frame(width:1000)
+        }
+        .padding(.top,-9.5)
+        .frame(width:1000)
         
         
         

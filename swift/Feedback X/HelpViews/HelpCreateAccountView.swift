@@ -40,7 +40,7 @@ struct HelpCreateAccountView: View {
                     Text("Create an Apple Account on the Web")
                         .fontWeight(.bold)
                         .font(.system(size:15))
-                    Image("CreateAccount")
+                    Image("CreateAccount1")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
@@ -75,7 +75,7 @@ struct HelpCreateAccountView: View {
                     Text("Create an Apple Account on an Apple Device")
                         .fontWeight(.bold)
                         .font(.system(size:15))
-                    Image("CreateAccount2")
+                    Image(colorScheme == .light ? "CreateAccount2_Light" : "CreateAccount2_Dark")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
@@ -156,7 +156,7 @@ struct HelpCreateAccountView: View {
                         
                     
                     
-                }.padding()
+                }.padding().textSelection(.enabled)
             }
         }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }

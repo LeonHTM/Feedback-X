@@ -14,7 +14,7 @@ struct CookiesSheetView: View {
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     
 
-     
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var accountLoader: AccountLoader
     
     @State private var showAlert = false
@@ -287,6 +287,7 @@ struct CookiesSheetView: View {
             }
             Text("Tip: The date when the cookies are going to expire is only updated if the accounts cookies are ❌")
         }
+        .padding(.bottom,-9.5)
         
         Divider()
         HStack{
@@ -294,9 +295,19 @@ struct CookiesSheetView: View {
                 OpenHelpWindow.open(selectedPage: "Set up Cookies")
                 
             }) {
-                Image(systemName: "questionmark.circle.fill")
-                    .font(.system(.title2))
-                    .foregroundColor(.gray)
+                ZStack{
+                    Image(systemName: "circle.fill")
+                        .font(.system(size:20))
+                        .foregroundStyle(colorScheme == .dark ? Color.gray.opacity(0.5) : Color.white)
+                        .shadow(radius: 1)
+                    Text("?")
+                        .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                        .font(.system(size:17))
+                    
+                }
+             
+                 
+                    
                     
                     
             }
@@ -328,7 +339,8 @@ struct CookiesSheetView: View {
             
             .padding(.top,1)
             .padding([.leading,.trailing,.bottom],10)
-        }.frame(width:1000)
+        }
+        .frame(width:1000)
         
     }
 

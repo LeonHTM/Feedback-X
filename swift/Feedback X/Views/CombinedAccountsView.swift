@@ -13,11 +13,15 @@ struct CombinedAccountsView: View {
     @State private var selectedAccount: Account? = nil
     @State private var selectedIndex: Int? = nil
     @EnvironmentObject var accountLoader: AccountLoader
-
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         HSplitView {
             RecentAccountsView(selectedAccount: $selectedAccount, selectedIndex: $selectedIndex)
                 .environmentObject(accountLoader)
+                .if(colorScheme == .light){
+                                    $0.background(Color.white)
+                                }
                 .frame(minWidth: 250, maxWidth: .infinity)
 
             if let selectedIndex = selectedIndex, selectedIndex >= 0, selectedIndex < accountLoader.accounts.count {
@@ -39,11 +43,17 @@ struct CombinedAccountsView: View {
                     }
                 )
                 .environmentObject(accountLoader)
+                .if(colorScheme == .light){
+                                    $0.background(Color.white)
+                                }
                 .frame(minWidth: 500, maxWidth: 1250)
             } else {
                 // Show CreateAccountView if no valid selectedIndex is available
                 CreateAccountView()
                     .environmentObject(accountLoader)
+                    .if(colorScheme == .light){
+                        $0.background(Color.white)
+                    }
                     .frame(minWidth: 500, maxWidth: 1250, maxHeight: .infinity)
             }
         }

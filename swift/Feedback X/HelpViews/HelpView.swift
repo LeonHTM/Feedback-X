@@ -25,6 +25,8 @@ struct HelpView: View {
         SidebarItem(name: "Welcome", children: nil),
         SidebarItem(name: "Overview", children: [
             SidebarItem(name: "Get Started", children: nil)
+            //SidebarItem(name: "Feedback System", children: nil)
+            
         ]),
         SidebarItem(name: "Accounts", children: [
             SidebarItem(name: "Create Accounts", children: nil),
@@ -32,6 +34,7 @@ struct HelpView: View {
             SidebarItem(name: "Set up Cookies", children: nil)
         ]),
         SidebarItem(name: "Feedbacks", children: [
+            SidebarItem(name: "Get Feedback Path", children: nil),
             SidebarItem(name: "Duplicate Feedback", children: nil),
             SidebarItem(name: "Feedback Failed", children: nil)
         ])
@@ -127,7 +130,7 @@ struct HelpView: View {
                 }
             }
             .listStyle(SidebarListStyle()) // Clean style
-            .frame(minWidth: 175)
+            .frame(minWidth: 180)
         } detail: {
             // Display the appropriate view based on the selected page
             
@@ -136,6 +139,8 @@ struct HelpView: View {
                 HelpWelcomeView(selectedPage: $selectedPage, visibility: $visibility)
             case "Get Started":
                 HelpGetStartedView(selectedPage: $selectedPage)
+            case "Feedback System":
+                HelpFeedbackSystemView(selectedPage: $selectedPage)
             case "Create Accounts":
                 HelpCreateAccountView(selectedPage: $selectedPage)
             case "Add Accounts":
@@ -144,6 +149,8 @@ struct HelpView: View {
                 HelpSetUpCookiesView(selectedPage: $selectedPage)
             case "Duplicate Feedback":
                 HelpCreateFeedbackView(selectedPage: $selectedPage)
+            case "Get Feedback Path":
+                HelpGetFeedbackPathView(selectedPage: $selectedPage)
             case "Feedback Failed":
                 HelpFeedbackFailedView(selectedPage: $selectedPage)
             default:

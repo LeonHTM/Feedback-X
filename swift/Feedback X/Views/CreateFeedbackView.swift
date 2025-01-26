@@ -10,7 +10,12 @@ import SwiftUI
 struct CreateFeedbackView: View {
     @State private var isRunning = false
     @State private var showAlert = false
-    @AppStorage("CreateshowSheet") var showSheet: Bool = false
+    @AppStorage("CreateshowSheet2") var showSheet: Bool = false
+    @AppStorage("topicShowSheet2") var topicShowSheet: Bool = false
+    @State private var topicSave: String = "iOS & iPadOS"
+    
+    
+    @State private var showAccountSheet = false
     @State private var feedbackTitle: String = ""
     @State private var selectedOption = "Option 1"
     @State private var showAccountAlert: Bool = false
@@ -37,7 +42,7 @@ struct CreateFeedbackView: View {
             Button(action: {
                 accountLoader.loadAccounts(from: accountURL)
                 if accountLoader.accounts.count >= 2{
-                    showSheet = true
+                    topicShowSheet = true
                 }else{
                     showAccountAlert = true
                 }
@@ -56,8 +61,15 @@ struct CreateFeedbackView: View {
                         Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) account.")
                     }
             }
+            .sheet(isPresented: $topicShowSheet, onDismiss: { feedbackPython.stop() }) {
+                TopicSheetView(showSheet : $topicShowSheet, showSheet2: $showSheet, topicSave: $topicSave)
+                    .environmentObject(accountLoader)
+                    .environmentObject(feedbackPython)
+                    .environmentObject(fileLoader)
+            }
+        
             .sheet(isPresented: $showSheet, onDismiss: { feedbackPython.stop() }) {
-                CreateFeedbackSheetView(showSheet : $showSheet)
+                CreateFeedbackSheetView(showSheet : $showSheet, topicSave: $topicSave)
                     .environmentObject(accountLoader)
                     .environmentObject(feedbackPython)
                     .environmentObject(fileLoader)

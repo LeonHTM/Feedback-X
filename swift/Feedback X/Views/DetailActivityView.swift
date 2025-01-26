@@ -37,16 +37,18 @@ struct DetailActivityView: View {
                     Text(fileToShow.title)
                         .font(.title)
                         .fontWeight(.bold)
+                        .textSelection(.enabled)
                     
                     Text("FB\(fileToShow.name.prefix(fileToShow.name.count - 4))")
                         .foregroundStyle(.secondary)
+                        .textSelection(.enabled)
 
                     VStack(alignment: .leading) {
                         HStack {
                             Text("Iterations:")
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
-                            Text(fileToShow.iteration).padding(-5)
+                            Text(fileToShow.iteration).textSelection(.enabled).padding(-5)
                         }
                         HStack(alignment: .top) {
                             Text("FB on all Account:")
@@ -56,6 +58,7 @@ struct DetailActivityView: View {
                                 .lineLimit(3)
                                 .multilineTextAlignment(.leading)
                                 .padding(.leading, 5)
+                                .textSelection(.enabled)
                         }
                     }
                     
@@ -68,12 +71,13 @@ struct DetailActivityView: View {
                         Text("Please provide a descriptive title for your feedback")
                             .fontWeight(.bold)
                         Text(fileToShow.title)
+                            .textSelection(.enabled)
                     }
 
                     VStack(alignment: .leading) {
                         Text("What area are you seeing an issue with?")
                             .fontWeight(.bold)
-                        Text(fileToShow.path.prefix(while: { $0 != "," }))
+                        Text(fileToShow.path.prefix(while: { $0 != "," })) .textSelection(.enabled)
                     }
 
                     VStack(alignment: .leading) {
@@ -87,7 +91,7 @@ struct DetailActivityView: View {
                             feedbackType == "4" ? "Battery Life" :
                             feedbackType == "5" ? "Suggestion" :
                             "Unknown"
-                        )
+                        ) .textSelection(.enabled)
                     }
                     
                     Divider()
@@ -98,15 +102,14 @@ struct DetailActivityView: View {
                     VStack(alignment: .leading) {
                         Text("What is the path to your Issue?")
                             .fontWeight(.bold)
-                        Text(fileToShow.path.split(separator: ",").dropFirst(2).joined(separator: ","))
+                        Text(fileToShow.path.split(separator: ",").dropFirst(2).joined(separator: ",")) .textSelection(.enabled)
                     }
 
                     VStack(alignment: .leading) {
                         Text("What time was it when this last occurred?")
                             .fontWeight(.bold)
                         HStack {
-                            Text(fileToShow.date).padding([.trailing], -5)
-                            Text(fileToShow.time)
+                            (Text(fileToShow.date) + Text(" ") + Text(fileToShow.time)).textSelection(.enabled)
                         }
                     }
 
@@ -118,7 +121,7 @@ struct DetailActivityView: View {
                     VStack(alignment: .leading) {
                         Text("Please describe your Issue and what one can take to reproduce it:")
                             .fontWeight(.bold)
-                        Text(fileToShow.content)
+                        Text(fileToShow.content) .textSelection(.enabled)
                     }
 
                     Divider()

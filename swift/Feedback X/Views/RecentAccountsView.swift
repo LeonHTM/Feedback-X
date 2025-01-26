@@ -11,7 +11,7 @@ import SwiftUI
 struct RecentAccountsView: View {
     
         
-        @AppStorage("AccountshowSheet") var showSheet: Bool = false
+        @AppStorage("AccountshowSheet1") var showSheet: Bool = false
         @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
         @State private var showDeleteAlert: Bool = false
         

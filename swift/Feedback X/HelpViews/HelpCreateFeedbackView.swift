@@ -11,6 +11,8 @@ import SwiftUI
 struct HelpCreateFeedbackView: View {
     @Binding var selectedPage: String
     @Environment(\.colorScheme) var colorScheme
+    @State private var showExample:Bool = false
+    @State private var showExampleTitle:Bool = false
     var body: some View {
         VStack{
             Divider()
@@ -44,161 +46,221 @@ struct HelpCreateFeedbackView: View {
                             Text("You could just send the same Feedback over and over again om the same account, but Apple more or less ignores a feedback if it is a dupicate of antother the account already sent. In the worst case, they even warn you, to only send one feedback for one issue.").padding(.bottom,5)}
                         
                     }
-                   
+                    Divider()
                     
                     Text("Duplicate Feedback")
                         .fontWeight(.bold)
                         .font(.system(size:15))
-                    Image("Cookies1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width:400)
-                        .clipShape(RoundedRectangle(cornerRadius:7))
-                        .overlay(
-                                        RoundedRectangle(cornerRadius: 7)
-                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                    )
-               
-                                  
-                      
-                        
-                    Text("Image: Cookies Page")
-                        .foregroundStyle(Color.secondary)
-                        .padding(.top,-10)
-                        
+
                     HStack(alignment:.top){
                         Text("1.")
-                        Text("Go to the Feedback X app")
-                        Image("FeedbackX copy 5")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 14, height: 14)
-                            .offset(y:2)
-                            .padding(.trailing,-8)
-                            .padding(.leading,-6)
-                        Text(".")
+    
+                            HStack{
+                                Text("Go to the Feedback X app")
+                                Image("FeedbackX copy 5")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 14, height: 14)
+                                    .offset(y:2)
+                                    .padding(.trailing,-8)
+                                    .padding(.leading,-6)
+                                Text(".")
+                            }
+                        
                     }
+                    
                     HStack(alignment:.top){
                         Text("2.")
-                        Text("Select 􁖩 Cookies in the Sidebar.")
+                        Text("Click  on 'New Feedback 􂛥'.")
                     }
                     HStack(alignment:.top){
                         Text("3.")
-                        Text("Select the Accounts you want to set up cookies for.")
+                        Text("Choose the topic for your Feedback, then click 'Continue'.")
                     }
+                   
+                    
                     HStack(alignment:.top){
                         Text("4.")
                         VStack(alignment:.leading){
-                            Text("Select the waiting time.").padding(.bottom,5)
-                            Text("The waiting time defines how much time you have to recieve the SMS with the code, enter it on the Website and then press 'Trust'.").padding(.bottom,5)
-                            Text("If you need more time than the Slider allows, click on 'More time' and select more time.")
+                            Text("Provide a decriptive title for your feedback.").padding(.bottom,5)
+                            Text("Your report title should be concise, while clearly describing the issue and any factors that could influence the issue you’ve encountered. Summarize and include key details, such as technology, platform, and version.")
+                                .padding(.bottom,5)
+                            Text("If the issue is related to an app, make sure to also include the app’s name and version.").padding(.bottom,5)
+                            Button(action:{
+                                
+                                showExampleTitle.toggle()
+                            }){
+                                
+                                Text("Show an example title").foregroundStyle(Color.accentColor)
+                                Image(systemName: showExampleTitle == true ? "chevron.down" : "chevron.right").foregroundStyle(Color.accentColor)
+                            }.buttonStyle(PlainButtonStyle()).padding(.bottom,5)
+                            if showExampleTitle == true{
+                                Text("App Library Blur displayed incorrectly while swiping in iOS 18.3(22D60)")
+                                    .padding(7)
+                                    .background(
+                                            RoundedRectangle(cornerRadius: 7)
+                                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                                .fill(Color.gray.opacity(0.1))
+                                           
+                                        )
+                                    .padding(.bottom,5)
+                            }
+                            
+                            
                         }
                     }
+                    Image(colorScheme == .light ? "CreateFeedback2_Light" : "CreateFeedback2_Dark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width:400)
+                        .clipShape(RoundedRectangle(cornerRadius:7))
+                        .overlay(
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                    )
+                    Text("Image: Sheet to enter feedback duplication informations")
+                        .foregroundStyle(Color.secondary)
+                        .padding(.top,-10)
                     HStack(alignment:.top){
                         Text("5.")
                         VStack(alignment:.leading){
-                            Text("Click on Start.")
+                            Text("Choose the problem area and type of the feedback.")
                                 .padding(.bottom,5)
-                            Text("‼️ Do not close the Browser Window until it closes by itsself. It will do this after the waiting time you selected has passed.‼️").padding(.bottom,5)
-                            Text("This opens a Screen where you can chose when you are ready to set up cookies one at a time.")
                         }
                     }
-                    Image("Cookies2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width:400)
-                        .clipShape(RoundedRectangle(cornerRadius:7))
-                        .overlay(
-                                        RoundedRectangle(cornerRadius: 7)
-                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                    )
-               
-                                  
-                      
-                        
-                    Text("Image: Cookies Page")
-                        .foregroundStyle(Color.secondary)
-                        .padding(.top,-10)
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     HStack(alignment:.top){
                         Text("6.")
                         VStack(alignment:.leading){
-                            Text("Click on 'Enable Cookies for [first of the accounts you selected]'.").padding(.bottom,5)
-                            Text("This will open a Tab in Google Chrome and log into the selected Account automatically.")
+                            Text("Enter the Feedback path you got above in 'Get Feedback Path'.")
+                                .padding(.bottom,5)
                         }
                     }
-
+              
+                   
                     HStack(alignment:.top){
                         Text("7.")
                         VStack(alignment:.leading){
-                            Text("Enter the Code you recieved from Apple per SMS.").padding(.bottom,5)
-                            Text("Sometimes the cursor is in the Adress bar you therefore will need to click on the Code Squares to focus the Keyboard there.")
+                            Text("Enter your description.").padding(.bottom,5)
+                            Text("Your description should include instructions on how to reproduce the issue, with detailed descriptions of each step.").padding(.bottom,5)
+                            Button(action:{
+                                
+                                showExample.toggle()
+                            }){
+                                
+                                Text("Show an example description").foregroundStyle(Color.accentColor)
+                                Image(systemName: showExample == true ? "chevron.down" : "chevron.right").foregroundStyle(Color.accentColor)
+                            }.buttonStyle(PlainButtonStyle())
+                            
+                            if showExample == true{
+                                Text("""
+The issue occurs when swiping up to exit the App Library. The Borders of the Blur behind the App Library are visible in the left and right bottom corner. This happens because the blur texture is too small.
+
+Reproduce:
+Go to App Library.
+Swipe up to exit it.
+Look at the bottom left corner of the iPhone.
+Blur is missing in the corner.
+
+Proposed fix: Make the Blur Texture marginal Bigger
+
+Expected Result:
+Border of Blur should not be visible. Like in version prior to iOS 18.0
+
+Device: iPhone 13 Pro
+Build: iOS 18.3(22D60)
+""").textSelection(.enabled)
+                                .padding(7)
+                                .background(
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                            .fill(Color.gray.opacity(0.1))
+                                       
+                                    )
+                                .padding(.top,5)
+                            }
                         }
                     }
-                    Image("Cookies3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width:400)
-                        .clipShape(RoundedRectangle(cornerRadius:7))
-                        .overlay(
-                                        RoundedRectangle(cornerRadius: 7)
-                                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                    )
-               
-                                  
-                      
-                        
-                    Text("Image: Feedback Asistant page where you enter the SMS code")
-                        .foregroundStyle(Color.secondary)
-                        .padding(.top,-10)
+                  
                     HStack(alignment:.top){
                         Text("8.")
-                        VStack(alignment: .leading){
-                            Text("Click on 'Trust this Browser'.").padding(.bottom,5)
-                        }
+                      
+                            Text("In the Attachments section, click ")
+                            Image("plus")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 14, height: 14)
+                                .offset(y:2)
+                                .padding(.trailing,-8)
+                                .padding(.leading,-6)
+                            Text(", if you want to add an attachment.")
+                        
                         
                     }
                     HStack(alignment:.top){
                         Text("9.")
                         VStack(alignment:.leading){
-                            Text("Wait until the Browser Window closes by itsself. Do not close it by yourself.").padding(.bottom,5)
+                            Text("Select how many times the Feedback is suposed to be sent.").padding(.bottom,5)
                             
-                            Text("The Browser Window will close after the waiting time you have selected has passed.")
+                            Text("Note:").italic() + Text(" The Slider can max out for values below 10, if you have added less than 10 Accounts.")
                               
                             
                                 
                             
                         }
                     }
+                    
                     HStack(alignment:.top){
                         Text("10.")
+                        VStack(alignment: .leading){
+                            Text("Choose the action you want to take with feedback").padding(.bottom,5)
+                            Text("Either you submit the duplicated Feedbacks, or you only save them, to then submit it manually for each account.")
+                        }
+                        
+                    }
+                    HStack(alignment:.top){
+                        Text("11.")
                         VStack(alignment:.leading){
-                            Text("Repeat until all Account have their cookies set up.").padding(.bottom,5)
+                            Text("If you’re ready to duplicate your feedback, click Submit.").padding(.bottom,5)
                             
-                            Text("The Window shows you the progress and tells you when you are done.").padding(.bottom,5)
+                            HStack{
+                                Text("You must answer all required questions before you can duplicate your feedback. If a required question isn’t answered, it’s flagged with an Arrow").lineLimit(1)
+                                Image("arrowright")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 14, height: 14)
+                                    
+                                    .padding(.trailing,-8)
+                                    .padding(.leading,-6)
+                                Text(".")
+                            }.padding(.bottom,5)
+                      
+                        }
+                    }
+                    HStack(alignment:.top){
+                        Text("11.")
+                        VStack(alignment:.leading){
+                            Text("If something goes wrong while duplicating, click 'try again'.").padding(.bottom,5)
+                            Button(action:{
+                                                    
+                                                    selectedPage = "Feedback Failed"
+                                                }){
+                                                    HStack{
+                                                        
+                                                        Text("Learn about why duplication could have failed")
+                                                        Image(systemName:"chevron.right")
+                                                        
+                                                    }.foregroundStyle(Color.accentColor)
+                                                }
+                                                .buttonStyle(PlainButtonStyle())
                             
-                            Text("If you haven't recieved the SMS or something else has gone wrong, just click 'Try Again'.")
+                            
                               
                             
                                 
                             
                         }
                     }
-                    
-                    HStack(alignment:.top){
-                        Text("Note:").italic()
-                        Text("Feedback X saves the date when you cookies expire (After 30 Days). After the cookies expire the the button 'Cookies set up' will switch to 'Not set up' by itsself and you will have to set up the cookies again.").padding(.leading,-5)
-                    }
-                    
+                  
                     Divider()
                     Text("See also:")
                         .fontWeight(.bold)
@@ -212,15 +274,15 @@ struct HelpCreateFeedbackView: View {
                     .padding(.vertical,-5)
                     .buttonStyle(PlainButtonStyle())
                     Button(action:{
-                        selectedPage = "Create Accounts"
+                        selectedPage = "Get Feedback Path"
                     }){
-                        Text("Create Apple Developer Accounts")
+                        Text("Get the Path of any Feedback")
                             .foregroundStyle(Color.accentColor)
                     }.buttonStyle(PlainButtonStyle())
                     Button(action:{
-                        selectedPage = "Set up Cookies"
+                        selectedPage = "Feedback Failed"
                     }){
-                        Text("Set up Cookies")
+                        Text("Learn about why duplication could have failed")
                             .foregroundStyle(Color.accentColor)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -228,7 +290,7 @@ struct HelpCreateFeedbackView: View {
                         
                     
                     
-                }.padding()
+                }.padding().textSelection(.enabled)
             }
         }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)
     }

@@ -14,6 +14,7 @@ struct CombinedView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var fileLoader: FileLoader
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         HSplitView {
@@ -21,6 +22,9 @@ struct CombinedView: View {
                 .frame(minWidth: 250, maxWidth: .infinity)
                 .environmentObject(accountLoader)
                 .environmentObject(fileLoader)
+                .if(colorScheme == .light){
+                    $0.background(Color.white)
+                }
                 
             if let file = selectedFile {
                 DetailActivityView(fileToShow: file, index: $selectedIndex, onDeleteActivity:{
@@ -49,6 +53,9 @@ struct CombinedView: View {
                     .frame(minWidth: 500, maxWidth: 1250)
                     .environmentObject(accountLoader)
                     .environmentObject(fileLoader)
+                    .if(colorScheme == .light){
+                        $0.background(Color.white)
+                    }
                 
             } else {
                 CreateFeedbackView()
@@ -56,9 +63,11 @@ struct CombinedView: View {
                     .environmentObject(accountLoader)
                     .environmentObject(feedbackPython)
                     .environmentObject(fileLoader)
+                    .if(colorScheme == .light){
+                        $0.background(Color.white)
+                    }
             }
         }
-        Spacer()
     }
 }
 

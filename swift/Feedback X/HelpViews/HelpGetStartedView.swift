@@ -28,11 +28,12 @@ struct HelpGetStartedView: View {
                         Text("Get Started with Feedback X")
                             .font(.title)
                         
+                        
                     }.padding(.bottom,10)
-                    Text("How to duplicate Feedback?")
+                    Text("Initial Setup")
                         .font(.system(size:15))
                         .fontWeight(.bold)
-                    Text("To duplicate Feedbacks with Feeedback X you have to perform the following steps:")
+                    Text("You have to perform the following steps to duplicate Feedback with Feedback. (Only one time):")
                         .padding(.bottom,5)
                     HStack(alignment:.top){
                         Text("1.")
@@ -101,9 +102,21 @@ struct HelpGetStartedView: View {
                     HStack(alignment:.top){
                         Text("4.")
                         VStack(alignment:.leading,spacing:10){
-                            Text("Duplicate Feedbacks")
-                            Text("After completing all the prior steps you are ready to duplicate Feedback at any time you want.")
+                            Text("Get Feedback Path & Duplicate Feedbacks")
+                            Text("After completing all the prior steps you are ready to duplicate Feedback at any time.")
                             
+                            Button(action:{
+                                
+                                selectedPage = "Get Feedback Path"
+                            }){
+                                HStack{
+                                    
+                                    Text("Get the Path for any Feedback")
+                                    Image(systemName:"chevron.right")
+                                    
+                                }.foregroundStyle(Color.accentColor)
+                            }
+                            .buttonStyle(PlainButtonStyle()).padding(.bottom,5)
                             Button(action:{
                                 
                                 selectedPage = "Duplicate Feedback"
@@ -117,13 +130,17 @@ struct HelpGetStartedView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
+                            
+                            
+                            
                         
                         
                     }
+                    Divider()
                     Text("What if something went wrong?")
                         .font(.system(size:15))
                         .fontWeight(.bold)
-                    Image("FeedbackFailed")
+                    /*Image("FeedbackFailed")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width:400)
@@ -133,7 +150,7 @@ struct HelpGetStartedView: View {
                                             .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                                     )
                     Text("Image: Feedback duplication failed")
-                        .foregroundStyle(Color.secondary).padding(.top,-10)
+                        .foregroundStyle(Color.secondary).padding(.top,-10)*/
                         
                     Text("Check out the Feedback Failed page to learn more about why duplication could have failed.")
                     Button(action:{
@@ -176,11 +193,21 @@ struct HelpGetStartedView: View {
                     .buttonStyle(PlainButtonStyle())
                     .padding(.vertical,-5)
                     Button(action:{
+                        selectedPage = "Set up Path"
+                    }){
+                        Text("Get the path for any feedback")
+                            .foregroundStyle(Color.accentColor)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                   
+                    Button(action:{
                         selectedPage = "Duplicate Feedback"
                     }){
                         Text("Duplicate Feedback")
                             .foregroundStyle(Color.accentColor)
                     }.buttonStyle(PlainButtonStyle())
+                        .padding(.vertical,-5)
+                    
                     Button(action:{
                         selectedPage = "Feedback Failed"
                     }){
@@ -188,9 +215,9 @@ struct HelpGetStartedView: View {
                             .foregroundStyle(Color.accentColor)
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .padding(.top,-5)
                     
-                }.padding()
+                    
+                }.padding().textSelection(.enabled)
     
                 }
             }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)

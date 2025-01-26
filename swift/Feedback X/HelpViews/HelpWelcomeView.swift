@@ -12,10 +12,12 @@ struct HelpWelcomeView: View {
     @Binding var selectedPage: String
     @Environment(\.colorScheme) var colorScheme
     @Binding var visibility: NavigationSplitViewVisibility
-    @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
     @AppStorage("CreateshowSheet1") var CreateshowSheet1: Bool = false
-    @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
+    @AppStorage("CreateshowSheet2") var CreateshowSheet2: Bool = false
+    @AppStorage("AccountshowSheet1") var AccountshowSheet: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
+    @AppStorage("topicShowSheet1") var topicshowSheet1: Bool = false
+    @AppStorage("topicShowSheet2") var topicshowSheet2: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("SideBarPage") var selectedPageSideBar: String = "Recent Activity"
     var body: some View {
@@ -83,11 +85,13 @@ struct HelpWelcomeView: View {
                     Button(action:{
                         
                         selectedPageSideBar = "About"
-                        CreateshowSheet = false
+                        CreateshowSheet2 = false
                         AccountshowSheet = false
                         AccountshowSheet2 = false
                         CookiesshowSheet = false
                         CreateshowSheet1 = false
+                        topicshowSheet1 = false
+                        topicshowSheet2 = false
                     }){
                         HStack{
                             
@@ -109,11 +113,13 @@ struct HelpWelcomeView: View {
                     Button(action:{
                         
                         selectedPageSideBar = "About"
-                        CreateshowSheet = false
+                        CreateshowSheet2 = false
                         CreateshowSheet1 = false
                         AccountshowSheet = false
                         AccountshowSheet2 = false
                         CookiesshowSheet = false
+                        topicshowSheet1 = false
+                        topicshowSheet2 = false
                     }){
                         HStack{
                             
@@ -131,7 +137,7 @@ struct HelpWelcomeView: View {
                     
                     
                     
-                }.padding()
+                }.padding().textSelection(.enabled)
                 Spacer()
             }
         }.background(colorScheme == .dark ? Color.black.opacity(0.35) : Color.white)

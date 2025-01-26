@@ -32,7 +32,7 @@ struct CreateAccountView: View {
                 CreateAccountSheetView(showSheet: $AccountshowSheet)
                     .environmentObject(accountLoader)
             }
-        }.frame(minWidth: 500,maxWidth:700)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

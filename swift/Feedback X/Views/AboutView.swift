@@ -12,7 +12,7 @@ struct AboutView: View {
     
     @State private var clickCount: Int = 0
     @AppStorage("rotationAngle") private var rotationAngle: Double = 0
-    
+    @Environment(\.colorScheme) var colorScheme
     
     
     var body: some View {
@@ -129,6 +129,8 @@ struct AboutView: View {
             }
             .padding([.leading,.trailing,.bottom],20)
             
+        }.if(colorScheme == .light){
+            $0.background(Color.white)
         }
     }
 }

@@ -9,11 +9,20 @@ import SwiftUI
 @main
 struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
-    @AppStorage("CreateshowSheet") var CreateshowSheet: Bool = false
+    
+    
     @AppStorage("CreateshowSheet1") var CreateshowSheet1: Bool = false
-    @AppStorage("AccountshowSheet") var AccountshowSheet: Bool = false
+    @AppStorage("CreateshowSheet2") var CreateshowSheet2: Bool = false
+    
+    
+    @AppStorage("AccountshowSheet1") var AccountshowSheet1: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
+    
+    @AppStorage("topicshowSheet1") var topicShowSheet1:Bool = false
+    @AppStorage("topicshowSheet2") var topicShowSheet2:Bool = false
+    
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
+    
     @StateObject private var accountLoader = AccountLoader()
     @StateObject private var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
     @StateObject private var cookiesPython = CookiesPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py")
@@ -36,22 +45,26 @@ struct Feedback_XApp: App {
                 .environmentObject(fileLoader)
                 .onAppear {
                     //NSWindow.allowsAutomaticWindowTabbing = false
-                    CreateshowSheet = false
+                    CreateshowSheet2 = false
                     CreateshowSheet1 = false
-                    AccountshowSheet = false
+                    AccountshowSheet1 = false
                     CookiesshowSheet = false
                     AccountshowSheet2 = false
+                    topicShowSheet1 = false
+                    topicShowSheet2 = false
                     
                   
                     
                 }
                 .onDisappear{
                     
-                    CreateshowSheet = false
+                    CreateshowSheet2 = false
                     CreateshowSheet1 = false
-                    AccountshowSheet = false
+                    AccountshowSheet1 = false
                     CookiesshowSheet = false
                     AccountshowSheet2 = false
+                    topicShowSheet1 = false
+                    topicShowSheet2 = false
                 }
                 
         }/*.commands {
