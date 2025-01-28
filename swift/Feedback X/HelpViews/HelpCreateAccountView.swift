@@ -58,19 +58,19 @@ struct HelpCreateAccountView: View {
                     }
                     HStack(alignment:.top){
                         Text("2.")
-                        Text("Create a Duck Adress that relays to an email of your choice (You will have to open a Link sent to your email).")
+                        Text("Create a Duck Adress that relays to an email of your choice and open the confirmation link sent to your email.")
                     }
                     HStack(alignment:.top){
                         Text("3.")
-                        Text("Go to https://duckduckgo.com/email/settings/ and genereate privat duck adresses (write down these adresses somewhere).")
+                        Text("Go to https://duckduckgo.com/email/settings/ and genereate duck mail aliases for the amount of apple accounts you want to create. Be sure to write down these addresses somewhere.")
                     }
                     HStack(alignment:.top){
                         Text("4.")
-                        Text("Go to https://account.apple.com/account# and create an Apple Account with you phone number and the privat duck adresses you just created.")
+                        Text("Navigate to https://account.apple.com/#/ and create Apple Accounts using your phone number and the private DuckDuckGo addresses you just generated.")
                     }
                     HStack(alignment:.top){
                         Text("5.")
-                        Text("Sign up for the Apple Developer Programm on https://developer.apple.com/account#.")
+                        Text("Sign up for the Apple Developer Programm at https://developer.apple.com/account#.")
                     }.padding(.bottom,10)
                     Text("Create an Apple Account on an Apple Device")
                         .fontWeight(.bold)
@@ -96,7 +96,7 @@ struct HelpCreateAccountView: View {
                     }
                     HStack(alignment:.top){
                         Text("1.")
-                        Text("Make sure there is no Apple Account logged into the device. If there is, log out. (On mac you can create a new Account and set it up there).")
+                        Text("Ensure no Apple Account is logged into the device. If one exists, log out. On macOS, you can create a new user account and set it up there.")
                     }
                     HStack(alignment:.top,spacing:0){
                         
@@ -116,7 +116,7 @@ struct HelpCreateAccountView: View {
                     }
                     HStack(alignment:.top){
                         Text("4.")
-                        Text("Sign up for the Apple Developer Programm on https://developer.apple.com/account#.")
+                        Text("Sign up for the Apple Developer Programm at https://developer.apple.com/account#.")
                     }
                     Divider()
                     /*Text("Websites mentioned on this page:")

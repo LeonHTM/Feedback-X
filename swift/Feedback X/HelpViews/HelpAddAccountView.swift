@@ -68,7 +68,7 @@ struct HelpAddAccountView: View {
                     .offset(x:38)
                     HStack(alignment:.top){
                         Text("1.")
-                        Text("Go to the Feedback X app")
+                        Text("Open the Feedback X app")
                         Image("FeedbackX copy 5")
                             .resizable()
                             .scaledToFit()
@@ -90,7 +90,7 @@ struct HelpAddAccountView: View {
                         Text("4.")
                         VStack(alignment:.leading){
                             Text("Enter the email adress of the Apple Developer Account you created.").padding(.bottom,5)
-                            Text("You can only enter each Account once, if you try to enter an email of an Account you have already added, you will get an error message.")
+                            Text("Each account can only be entered once. If you try to add an account you've already entered, an error message will appear.")
                         }
                     }
                     HStack(alignment:.top){
@@ -101,19 +101,19 @@ struct HelpAddAccountView: View {
                         Text("6.")
                         VStack(alignment:.leading){
                             Text("Choose if the Apple Developer Account you created has Apple Developer.").padding(.bottom,5)
-                            Text("You won't be able to set up cookies for the account if it doesn't have Apple Developer. Therefore please set up Apple Developer as soon as possible if you selected 'Not Set Up' and change the setting in Accounts.")
+                            Text("You won't be able to set up cookies for the account if it doesn't have Apple Developer. Therefore please set up Apple Developer as soon as possible. Apple Developer can be added at a later point.")
                         }
                     }
 
                     HStack(alignment:.top){
                         Text("7.")
-                        Text("Choose the country of origin you chose for the Account.")
+                        Text("Select the country of origin for the Account.")
                     }
                     HStack(alignment:.top){
                         Text("8.")
                         VStack(alignment: .leading){
-                            Text("If you want to, you can add notes to the account.").padding(.bottom,5)
-                            Text("This is not obligatory and doesn't affect the functionality of the account.")
+                            Text("(Optional) Add notes to the account.").padding(.bottom,5)
+                            Text("This is not mandatory and doesn't affect the accounts functionality inside Feedback X.")
                         }
                         
                     }
@@ -141,7 +141,7 @@ struct HelpAddAccountView: View {
                     }
                     HStack(alignment:.top){
                         Text("Note:").italic()
-                        Text("You can change any of the fields at any time by clicking the Edit Button on an Account. ").padding(.leading,-5)
+                        Text("You can edit any of the account details at any time by clicking the Edit Button on the top right when displaying an account. ").padding(.leading,-5)
                     }
                     
                     Divider()

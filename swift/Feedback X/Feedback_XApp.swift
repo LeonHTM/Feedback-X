@@ -9,18 +9,12 @@ import SwiftUI
 @main
 struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
-    
-    
     @AppStorage("CreateshowSheet1") var CreateshowSheet1: Bool = false
     @AppStorage("CreateshowSheet2") var CreateshowSheet2: Bool = false
-    
-    
     @AppStorage("AccountshowSheet1") var AccountshowSheet1: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
-    
     @AppStorage("topicshowSheet1") var topicShowSheet1:Bool = false
     @AppStorage("topicshowSheet2") var topicShowSheet2:Bool = false
-    
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     
     @StateObject private var accountLoader = AccountLoader()

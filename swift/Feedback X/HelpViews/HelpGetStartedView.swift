@@ -33,13 +33,13 @@ struct HelpGetStartedView: View {
                     Text("Initial Setup")
                         .font(.system(size:15))
                         .fontWeight(.bold)
-                    Text("You have to perform the following steps to duplicate Feedback with Feedback. (Only one time):")
+                    Text("To duplicate feedback with Feedback X, follow these steps (some are only performed once):")
                         .padding(.bottom,5)
                     HStack(alignment:.top){
                         Text("1.")
                         VStack(alignment:.leading,spacing:10){
                             Text("Create Apple Developer Accounts")
-                            Text("To send duplicated Feedback you have to add Accounts to the Application first. These Accounts have to be created manually on account.apple.com. After having been created log into develeoper.apple.com with them to give them access to Feedback Assistant.").lineLimit(nil)
+                            Text("To send duplicated feedback, you need to add accounts to the application. The duplication will take place on the feedback assistant access of these accounts. These accounts must be created manually at account.apple.com, because apple is really good at detecting bots creating apple accounts.").lineLimit(nil)
                             Button(action:{
                                 
                                 selectedPage = "Create Account"
@@ -60,6 +60,7 @@ struct HelpGetStartedView: View {
                         Text("2.")
                         VStack(alignment:.leading,spacing:10){
                             Text("Add Apple Developer Accounts to Feedback X")
+                            Text("After creating the accounts, add them to Feedback X.")
                             
                             Button(action:{
                                 
@@ -81,7 +82,7 @@ struct HelpGetStartedView: View {
                         Text("3.")
                         VStack(alignment:.leading,spacing:10){
                             Text("Set up Cookies for Apple Accounts")
-                            Text("After having added the Accounts to Feedback X you have to set up the cookies for them. This Step is important because if the cookies are not set up Apple wants an SMS Code every time you try to login into a developer Account. With adding cookies for each Apple Account we can circumwent this. Sadly Apple only saves cookies for max. 10 Accounts and I haven't yet found a way to circumwent this Limit. Therefore the Application can only add Cookies for max. 10 Accounts.")
+                            Text("After adding accounts to Feedback X, set up cookies for each one. This step is crucial to bypass Apple's SMS code requirement every time the programms logs into an apple account in the background.")
                             
                             Button(action:{
                                 
@@ -103,7 +104,7 @@ struct HelpGetStartedView: View {
                         Text("4.")
                         VStack(alignment:.leading,spacing:10){
                             Text("Get Feedback Path & Duplicate Feedbacks")
-                            Text("After completing all the prior steps you are ready to duplicate Feedback at any time.")
+                            Text("Once all prior steps are complete, you’re ready to duplicate feedback anytime.")
                             
                             Button(action:{
                                 
@@ -137,7 +138,7 @@ struct HelpGetStartedView: View {
                         
                     }
                     Divider()
-                    Text("What if something went wrong?")
+                    Text("What if Something Went Wrong?")
                         .font(.system(size:15))
                         .fontWeight(.bold)
                     /*Image("FeedbackFailed")
@@ -152,7 +153,7 @@ struct HelpGetStartedView: View {
                     Text("Image: Feedback duplication failed")
                         .foregroundStyle(Color.secondary).padding(.top,-10)*/
                         
-                    Text("Check out the Feedback Failed page to learn more about why duplication could have failed.")
+                    Text("If feedback duplication fails, visit the Feedback Failed page to understand potential reasons and solutions.")
                     Button(action:{
                         
                         selectedPage = "Feedback Failed"

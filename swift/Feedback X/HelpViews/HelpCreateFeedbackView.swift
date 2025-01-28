@@ -56,7 +56,7 @@ struct HelpCreateFeedbackView: View {
                         Text("1.")
     
                             HStack{
-                                Text("Go to the Feedback X app")
+                                Text("Open Feedback X app")
                                 Image("FeedbackX copy 5")
                                     .resizable()
                                     .scaledToFit()
@@ -83,7 +83,7 @@ struct HelpCreateFeedbackView: View {
                         Text("4.")
                         VStack(alignment:.leading){
                             Text("Provide a decriptive title for your feedback.").padding(.bottom,5)
-                            Text("Your report title should be concise, while clearly describing the issue and any factors that could influence the issue you’ve encountered. Summarize and include key details, such as technology, platform, and version.")
+                            Text("The title should be concise, while clearly describing the issue and any factors that could influence the issue you’ve encountered. Summarize and include key details, such as technology, platform, and version.")
                                 .padding(.bottom,5)
                             Text("If the issue is related to an app, make sure to also include the app’s name and version.").padding(.bottom,5)
                             Button(action:{
@@ -131,7 +131,7 @@ struct HelpCreateFeedbackView: View {
                     HStack(alignment:.top){
                         Text("6.")
                         VStack(alignment:.leading){
-                            Text("Enter the Feedback path you got above in 'Get Feedback Path'.")
+                            Text("Enter the Feedback path you retrieved earlier in 'Get Feedback Path'.")
                                 .padding(.bottom,5)
                         }
                     }
@@ -199,7 +199,7 @@ Build: iOS 18.3(22D60)
                     HStack(alignment:.top){
                         Text("9.")
                         VStack(alignment:.leading){
-                            Text("Select how many times the Feedback is suposed to be sent.").padding(.bottom,5)
+                            Text("Select the number of feedback duplicates.").padding(.bottom,5)
                             
                             Text("Note:").italic() + Text(" The Slider can max out for values below 10, if you have added less than 10 Accounts.")
                               
@@ -213,7 +213,7 @@ Build: iOS 18.3(22D60)
                         Text("10.")
                         VStack(alignment: .leading){
                             Text("Choose the action you want to take with feedback").padding(.bottom,5)
-                            Text("Either you submit the duplicated Feedbacks, or you only save them, to then submit it manually for each account.")
+                            Text("Either you submit the duplicated Feedbacks immedediately, or you save them, for manual submission on each account later.")
                         }
                         
                     }

@@ -36,12 +36,12 @@ struct HelpGetFeedbackPathView: View {
                         HStack(alignment:.top){
                             Image(systemName:"circle.fill")
                                 .font(.system(size:5)).offset(y:4).padding(.trailing,5)
-                            Text("The Feedback path is a crucial information for duplicating feedback. It has to be gotten from Feedback Assistant and then entered into Feedback X.")
+                            Text("The Feedback Path is crucial for duplicating feedback. It needs to be obtained from the Feedback Assistant and entered into Feedback X.")
                         }.padding(.bottom,5)
                         HStack(alignment:.top){
                             Image(systemName:"circle.fill")
                                 .font(.system(size:5)).offset(y:4).padding(.trailing,5)
-                            Text("The Feedback Path is a simplification of the choices listed under 'Details' when creating a Feedback in the Feedback Assistant. Without the path Feedback X is only able to fill out the area and type of Feedback, but not the Details.").padding(.bottom,5)}
+                            Text("The Feedback Path simplifies the choices listed under 'Details' when creating a feedback report in the Feedback Assistant. Without the path, Feedback X can only populate the area and type of feedback but not the specific details..").padding(.bottom,5)}
                         
                     }
                     Divider()
@@ -71,7 +71,7 @@ struct HelpGetFeedbackPathView: View {
                         Text("1.")
                         VStack(alignment:.leading){
                             HStack{
-                                Text("Go to the Apple Feedback Assistant app")
+                                Text("Open the Apple Feedback Assistant app")
                                 Image("FeedbackAssistantIcon")
                                     .resizable()
                                     .scaledToFit()
@@ -79,7 +79,7 @@ struct HelpGetFeedbackPathView: View {
                                     .offset(y:2)
                                     .padding(.trailing,-8)
                                     .padding(.leading,-6)
-                                Text(" (Not Feedback X)!")
+                                Text(" (Not Feedback X)!").bold()
                             }
 
                             
@@ -103,15 +103,15 @@ struct HelpGetFeedbackPathView: View {
                     }
                     HStack(alignment:.top){
                         Text("5.")
-                        Text("Fill out the details below area and type for the Issue you want to duplicate with Feedback X.")
+                        Text("Fill out the details (below area and type) for the Issue you want to duplicate with Feedback X.")
                     }
                     
                     HStack(alignment:.top){
                         Text("6.")
                         VStack(alignment:.leading){
-                            Text("Get the path of the feedback configuration you just entered.").padding(.bottom,5)
-                            Text("The path of your feedback are the options listed as 'Details'.").padding(.bottom,5)
-                            (Text("For example, if you chose 'Lock Screen' and 'Incorrect/Unexpected Behaviour', then 'Adding or Editing Lock Screns' and 'Customizing Lock Screen' and 'Font & Color', your path would be 4,1,2.")).padding(.bottom,5)
+                            Text("Obtain the path of the detail configuration you just entered.").padding(.bottom,5)
+                            Text("The Feedback Path consists of the options listed under 'Details'.").padding(.bottom,5)
+                            (Text("For example, if you select 'Lock Screen' and 'Incorrect/Unexpected Behaviour', then 'Adding or Editing Lock Screns' and 'Customizing Lock Screen' and 'Font & Color', your path would be 4,1,2.")).padding(.bottom,5)
                             Text("'Adding or Editing Lock Screns' is the fourth option (4) in the first Selector, 'Customizing Lock Screen' is the first option (1) in the second Selector, and 'Font & Color' is the second option (2) in the third and last Selector, the path would therefore be 4,1,2.").padding(.bottom,5)
                         }
                     }
@@ -135,7 +135,7 @@ struct HelpGetFeedbackPathView: View {
                         Text("7.")
                         VStack(alignment:.leading){
                             Text("Write down the Feedback Path.").padding(.bottom,5)
-                            Text("You can now duplicate Feedbacks for the Issue you wrote down the path for.").padding(.bottom,5)
+                            Text("You can now use Feedback X to duplicate feedback for the issue you obtained the path for.").padding(.bottom,5)
                             Button(action:{
                                 
                                 selectedPage = "Duplicate Feedback"
@@ -154,7 +154,7 @@ struct HelpGetFeedbackPathView: View {
                         Text("8.")
                         VStack(alignment:.leading){
                             Text("Finish filing the Feedback and submit it, save it or delete it.").padding(.bottom,5)
-                            Text("I personally reccomend submiting the feedback after having filled out everything so that Apple has at least one Feedback with Diagnostic Files for the Issue.")
+                            Text("I personally reccomend submiting the feedback after obtaining the path and then filling everything else out, ensuring that Apple receives at least one report with diagnostic files for the issue.")
                         }
                     }
                     Divider()

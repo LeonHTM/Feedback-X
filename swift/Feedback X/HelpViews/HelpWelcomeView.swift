@@ -59,7 +59,7 @@ struct HelpWelcomeView: View {
                     Text("What is Feedback X used for?")
                         .font(.title3)
                         .fontWeight(.bold)
-                    Text("Feedback X is a programm to duplicate Feedbacks inside the Apple Feedback System. The goal of duplicating Bugs is to get more Attention to the bugs that really matter. Feedback X does this by logging into the Feedback Assistant Website on different Apple Accounts and submiting the Feedback each once. The Apple Developer Accounts for this have to be created manually (Apple detects bots creating Apple Accounts) and saved inside the app.")
+                    Text("Feedback X is a program designed to duplicate feedback within the Apple Feedback System. Its goal is to draw more attention to bugs that truly matter by duplicating feedback submissions. Feedback X achieves this by logging into the Feedback Assistant website using multiple Apple accounts and submitting each piece of feedback once.")
                         .lineLimit(nil)
                     
                     Button(action:{
@@ -79,8 +79,8 @@ struct HelpWelcomeView: View {
                     Text("Who created Feedback X?")
                         .font(.title3)
                         .fontWeight(.bold)
-                    Text("Check out the About Section of the Application to find out more about the creation of Feedback X.")
-                        .lineLimit(nil)
+                    Text("For more information about the creation of Feedback X, visit the ") + Text("About").bold() + Text(" page.")
+                 
                     
                     Button(action:{
                         

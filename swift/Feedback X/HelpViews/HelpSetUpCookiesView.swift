@@ -36,7 +36,7 @@ struct HelpSetUpCookiesView: View {
                         HStack(alignment:.top){
                             Image(systemName:"circle.fill")
                                 .font(.system(size:5)).offset(y:4).padding(.trailing,5)
-                            Text("Feedback X uses a Browser to log into the Apple Accounts you provided the Application with. If you log into the Feedback Assistant site, you need to enter an SMS code that Apple sends to your phone number.")
+                            Text("Feedback X uses a browser enigne to log into the Apple Accounts you provided the Application with. Generally, if anyone logs into the Feedback Assistant site, they need to enter an SMS code that Apple sends to their phone number.")
                         }.padding(.bottom,5)
                         HStack(alignment:.top){
                             Image(systemName:"circle.fill")
@@ -45,7 +45,7 @@ struct HelpSetUpCookiesView: View {
                         HStack(alignment:.top){
                             Image(systemName:"circle.fill")
                                 .font(.system(size:5)).offset(y:4).padding(.trailing,5)
-                            Text("Because the Application can't enter an SMS code everytime it needs to log into an Account, the only solution is the save the Cookies for every Account by hand.")
+                            Text("Since the application cannot enter SMS codes every time it logs in, you must manually save the cookies for each account.")
                         }
                     }
                     Text("Note:").italic()+Text(" Apple limits the amount of cookies saved. The current Limit is ") + Text("10").fontWeight(.bold) + Text(". Meaning you can only duplicate feedback on max 10 Accounts. I might try to circumwent this Limit in future versions of the Application.")
@@ -57,7 +57,7 @@ struct HelpSetUpCookiesView: View {
                         
                     HStack(alignment:.top){
                         Text("1.")
-                        Text("Go to the Feedback X app")
+                        Text("Open the Feedback X app")
                         Image("FeedbackX copy 5")
                             .resizable()
                             .scaledToFit()
@@ -96,7 +96,7 @@ struct HelpSetUpCookiesView: View {
                         Text("4.")
                         VStack(alignment:.leading){
                             Text("Select the waiting time.").padding(.bottom,5)
-                            Text("The waiting time defines how much time you have to recieve the SMS with the code, enter it on the Website and then press 'Trust'.").padding(.bottom,5)
+                            Text("The waiting time determines how long you have to receive the SMS code, enter it, and click 'Trust.'").padding(.bottom,5)
                             Text("If you need more time than the Slider allows, click on 'More time' and select more time.")
                         }
                     }
@@ -105,8 +105,8 @@ struct HelpSetUpCookiesView: View {
                         VStack(alignment:.leading){
                             Text("Click on Start.")
                                 .padding(.bottom,5)
-                            Text("This opens a Screen where you can chose when you are ready to set up cookies one at a time.").padding(.bottom,5)
-                            Text("‼️ Do not close the Browser Window until it closes by itsself. It will do this after the waiting time you selected has passed.‼️")
+                            Text("A screen will appear, allowing you to handle cookies setup one account at a time.").padding(.bottom,5)
+                            Text("‼️ Do not close the Browser Window until it closes by itsself. It will do this after the waiting time you selected has passed.‼️").bold()
                         }
                     }
                     Image(colorScheme == .light ? "Cookies2_Light" : "Cookies2_Dark")
@@ -147,7 +147,7 @@ struct HelpSetUpCookiesView: View {
                         Text("7.")
                         VStack(alignment:.leading){
                             Text("Enter the Code you recieved from Apple per SMS.").padding(.bottom,5)
-                            Text("Sometimes the cursor is in the Adress bar you therefore will need to click on the Code Squares to focus the Keyboard there.")
+                            Text("Sometimes the cursor is in the focused on the Adress bar of the browser. You therefore will need to click on the entry squares to focus the Keyboard there.")
                         }
                     }
                     Image("Cookies3")
@@ -176,7 +176,7 @@ struct HelpSetUpCookiesView: View {
                     HStack(alignment:.top){
                         Text("9.")
                         VStack(alignment:.leading){
-                            Text("Wait until the Browser Window closes by itsself. Do not close it by yourself.").padding(.bottom,5)
+                            Text("Wait until the Browser Window closes automatically by itsself. Do not close it by yourself.").padding(.bottom,5)
                             
                             Text("The Browser Window will close after the waiting time you have selected has passed.")
                               
@@ -190,9 +190,9 @@ struct HelpSetUpCookiesView: View {
                         VStack(alignment:.leading){
                             Text("Repeat until all Account have their cookies set up.").padding(.bottom,5)
                             
-                            Text("The Window shows you the progress and tells you when you are done.").padding(.bottom,5)
+                            Text("The app tracks your progress and indicates when the setup is complete.").padding(.bottom,5)
                             
-                            Text("If you haven't recieved the SMS or something else has gone wrong, just click 'Try Again'.")
+                            Text("If you dont recieve the SMS or something else has gone wrong, just click 'Try Again', to try again for the account.")
                               
                             
                                 
@@ -202,7 +202,7 @@ struct HelpSetUpCookiesView: View {
                     
                     HStack(alignment:.top){
                         Text("Note:").italic()
-                        Text("Feedback X saves the date when you cookies expire (After 30 Days). After the cookies expire the the button 'Cookies set up' will switch to 'Not set up' by itsself and you will have to set up the cookies again.").padding(.leading,-5)
+                        Text("The Cookies expire after 30 Days. Feedback X saves the date when account cookies expire. Once cookies expire, the 'Cookies set up' status will automatically change to 'Not set up' , requiring you to redo the process.").padding(.leading,-5)
                     }
                     
                     Divider()
