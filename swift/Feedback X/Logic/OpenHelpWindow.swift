@@ -11,59 +11,52 @@ import SwiftUI
 
 public struct OpenHelpWindow {
     
-    // Static variable to track if the Help window has been opened
     private static var hasLaunched: Bool = false
-    @State private static var selectedPage1: String = ""
-    
-    static func open(selectedPage: String) {
-        // Check if the window has already been opened
-        if hasLaunched {
-            print("Help window is already open.")
+    private static var helpWindow: NSWindow?
+
+    static func open() {
+        if let window = helpWindow {
+            window.makeKeyAndOrderFront(nil)
             return
         }
         
-        selectedPage1 = selectedPage
-        // Create the Help window
-        let helpWindow = NSWindow(
+        let newWindow = NSWindow(
             contentViewController: NSHostingController(rootView: HelpView())
         )
-
-        helpWindow.title = "Feedback X User Guide"
-        helpWindow.styleMask = [.resizable, .titled, .closable, .miniaturizable, .fullSizeContentView]
-        helpWindow.titlebarAppearsTransparent = true
-        helpWindow.titleVisibility = .hidden
         
-
-        
+        newWindow.title = "Feedback X User Guide"
+        newWindow.styleMask = [.resizable, .titled, .closable, .miniaturizable, .fullSizeContentView]
+        newWindow.titlebarAppearsTransparent = true
+        newWindow.titleVisibility = .hidden
         
        
-        
-        
-        // Position window in the center of the primary screen
         if let screen = NSScreen.main {
             let screenFrame = screen.frame
             let windowWidth: CGFloat = 1100
             let windowHeight: CGFloat = 750
             
-            // Calculate the center point
             let xPosition = (screenFrame.width - windowWidth) / 2
             let yPosition = (screenFrame.height - windowHeight) / 2
             
-            // Set the window's frame to the calculated position
-            helpWindow.setFrame(CGRect(x: xPosition, y: yPosition, width: windowWidth, height: windowHeight), display: true)
+            newWindow.setFrame(CGRect(x: xPosition, y: yPosition, width: windowWidth, height: windowHeight), display: true)
         }
         
-        // Show the window
-        helpWindow.makeKeyAndOrderFront(nil)
+        helpWindow = newWindow  // Fenster speichern
+        newWindow.makeKeyAndOrderFront(nil)
         
-        // Mark the window as launched
         hasLaunched = true
     }
     
-    // Function to reset the launch status, allowing the window to be opened again
+   
     static func resetLaunchStatus() {
         hasLaunched = false
+        helpWindow?.close()
+        helpWindow = nil
+    }
+    
+    static func back() {
+        
+        helpWindow?.orderBack(nil)
+        NSApp.windows.first?.makeKeyAndOrderFront(nil)
     }
 }
-
-

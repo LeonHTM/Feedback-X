@@ -42,7 +42,7 @@ struct HelpGetStartedView: View {
                             Text("To send duplicated feedback, you need to add accounts to the application. The duplication will take place on the feedback assistant access of these accounts. These accounts must be created manually at account.apple.com, because apple is really good at detecting bots creating apple accounts.").lineLimit(nil)
                             Button(action:{
                                 
-                                selectedPage = "Create Account"
+                                selectedPage = "Create Accounts"
                             }){
                                 HStack{
                                     

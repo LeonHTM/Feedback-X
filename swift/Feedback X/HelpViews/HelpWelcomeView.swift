@@ -92,6 +92,7 @@ struct HelpWelcomeView: View {
                         CreateshowSheet1 = false
                         topicshowSheet1 = false
                         topicshowSheet2 = false
+                        OpenHelpWindow.back()
                     }){
                         HStack{
                             
@@ -120,6 +121,7 @@ struct HelpWelcomeView: View {
                         CookiesshowSheet = false
                         topicshowSheet1 = false
                         topicshowSheet2 = false
+                        OpenHelpWindow.back()
                     }){
                         HStack{
                             

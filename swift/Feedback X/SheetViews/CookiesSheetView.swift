@@ -13,10 +13,11 @@ struct CookiesSheetView: View {
     
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     
-
+    @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Set up Cookies"
+    
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var accountLoader: AccountLoader
-    
+   
     @State private var showAlert = false
     @State private var isSubmitEnabled = false
     
@@ -292,7 +293,8 @@ struct CookiesSheetView: View {
         Divider()
         HStack{
             Button(action: {
-                OpenHelpWindow.open(selectedPage: "Set up Cookies")
+                helpSelectedPage = "Set up Cookies"
+                OpenHelpWindow.open()
                 
             }) {
                 ZStack{

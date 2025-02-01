@@ -23,7 +23,7 @@ struct CreateFeedbackSheetView: View {
     @State private var onlineAlert: Bool = false
     @State private var alreadyClicked: Bool = false
     @State private var showCookiesAlert: Bool = false
-    
+    @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Duplicate Feedback"
     @State private var submitSave: String = ""
     @State private var iterationSave: Double = 1
     @State private var sliderSave: Double = 2
@@ -481,7 +481,10 @@ struct CreateFeedbackSheetView: View {
 
                 // Footer Buttons
                 HStack {
-                    Button(action: { OpenHelpWindow.open(selectedPage: "Duplicate Feedback") }) {
+                    Button(action: {
+                        helpSelectedPage = "Duplicate Feedback"
+                        OpenHelpWindow.open()
+                    }) {
                         ZStack{
                             Image(systemName: "circle.fill")
                                 .font(.system(size:20))

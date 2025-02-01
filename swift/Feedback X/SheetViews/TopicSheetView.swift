@@ -13,7 +13,7 @@ struct TopicSheetView: View {
     @Binding var showSheet2: Bool
     @Binding var topicSave: String
     @Environment(\.colorScheme) var colorScheme
-    //@State private var topicSave: String = "iOS & iPadOS"
+    @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Choose Topic"
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var fileLoader : FileLoader
@@ -314,7 +314,8 @@ struct TopicSheetView: View {
             Divider()
             HStack(alignment:.center){
                 Button(action: {
-                    OpenHelpWindow.open(selectedPage: "Create Account")
+                    helpSelectedPage = "Duplicate Feedback"
+                    OpenHelpWindow.open()
                     
                     
                 }) {

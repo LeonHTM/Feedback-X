@@ -12,7 +12,7 @@ struct CreateAccountSheetView: View {
     
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @EnvironmentObject var accountLoader: AccountLoader
-    
+    @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Create Accounts"
     @State private var icloudmailSave: String = ""
     @State private var passwordSave: String = ""
     @State private var noteSave: String = "Notes"
@@ -225,7 +225,8 @@ struct CreateAccountSheetView: View {
         Divider()
         HStack{
             Button(action: {
-                OpenHelpWindow.open(selectedPage: "Create Account")
+                helpSelectedPage = "Create Accounts"
+                OpenHelpWindow.open()
                 
                 
             }) {

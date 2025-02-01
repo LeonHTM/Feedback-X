@@ -13,6 +13,7 @@ struct SidebarView: View {
     @AppStorage("SideBarPage") var selectedPage: String = "Recent Activity"
     @AppStorage("CreateshowSheet1") var showSheet: Bool = false
     @AppStorage("topicShowSheet1") var topicShowSheet: Bool = false
+    @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Welcome"
     @State private var showAccountSheet = false
     @State private var showAccountAlert: Bool = false
     @State private var topicSave: String = "iOS & iPadOS"
@@ -21,6 +22,9 @@ struct SidebarView: View {
     @EnvironmentObject var cookiesPython: CookiesPython
     @EnvironmentObject var fileLoader: FileLoader
     @Environment(\.colorScheme) var colorScheme
+    
+    
+    
     
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
 
@@ -71,7 +75,8 @@ struct SidebarView: View {
             HStack{
                 Spacer()
                 Button(action: {
-                    OpenHelpWindow.open(selectedPage: "Welome")
+                    helpSelectedPage = "Welcome"
+                    OpenHelpWindow.open()
                 }) {
                     
                     ZStack{
@@ -112,6 +117,7 @@ struct SidebarView: View {
                     CookiesView()
                         .environmentObject(accountLoader)
                         .environmentObject(cookiesPython)
+                        //.environmentObject(helpSelected)
                 case "Rewrite Cycle":
                     TestRewriteView()
                 case "Login Cycle":
@@ -179,8 +185,8 @@ struct SidebarView: View {
 
     }
 }
-
+/*
 #Preview {
     SidebarView()
 }
-
+*/

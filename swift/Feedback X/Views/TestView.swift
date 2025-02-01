@@ -35,7 +35,7 @@ struct TestView: View {
             Divider()
             HStack(alignment:.center){
                 Button(action: {
-                    OpenHelpWindow.open(selectedPage: "Create Account")
+                    OpenHelpWindow.open()
                     
                     
                 }) {

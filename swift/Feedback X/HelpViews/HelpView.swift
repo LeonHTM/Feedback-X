@@ -10,7 +10,9 @@
 import SwiftUI
 
 struct HelpView: View {
-    @State private var selectedPage: String = "Welcome"
+    
+    @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Welcome"
+  
     @State private var expandedParents: Set<String> = []
     @State private var visibility: NavigationSplitViewVisibility = .all
 
@@ -67,7 +69,7 @@ struct HelpView: View {
             .offset(x:20,y:-35)
             .foregroundStyle(.secondary)
             
-            List(selection: $selectedPage) {
+            List(selection: $helpSelectedPage) {
                 ForEach(items) { item in
                     if let children = item.children, !children.isEmpty {
                         // Parent item with children, make the entire row clickable to expand/collapse
@@ -90,7 +92,7 @@ struct HelpView: View {
                             
                             
                         }.buttonStyle(PlainButtonStyle())
-                            .onChange(of: selectedPage) {
+                            .onChange(of: helpSelectedPage) {
                                 func findParent(of page: String, in items: [SidebarItem], parentName: String? = nil) -> String? {
                                     for item in items {
                                         if item.name == page {
@@ -105,7 +107,26 @@ struct HelpView: View {
                                     return nil
                                 }
                                 
-                                if let parent = findParent(of: selectedPage, in: items) {
+                                if let parent = findParent(of: helpSelectedPage, in: items) {
+                                    expandedParents.insert(parent)
+                                }
+                            }
+                            .onAppear() {
+                                func findParent(of page: String, in items: [SidebarItem], parentName: String? = nil) -> String? {
+                                    for item in items {
+                                        if item.name == page {
+                                            return parentName
+                                        }
+                                        if let children = item.children {
+                                            if let parent = findParent(of: page, in: children, parentName: item.name) {
+                                                return parent
+                                            }
+                                        }
+                                    }
+                                    return nil
+                                }
+                                
+                                if let parent = findParent(of: helpSelectedPage, in: items) {
                                     expandedParents.insert(parent)
                                 }
                             }
@@ -134,27 +155,27 @@ struct HelpView: View {
         } detail: {
             // Display the appropriate view based on the selected page
             
-            switch selectedPage {
+            switch helpSelectedPage{
             case "Welcome":
-                HelpWelcomeView(selectedPage: $selectedPage, visibility: $visibility)
+                HelpWelcomeView(selectedPage: $helpSelectedPage, visibility: $visibility)
             case "Get Started":
-                HelpGetStartedView(selectedPage: $selectedPage)
+                HelpGetStartedView(selectedPage: $helpSelectedPage)
             case "Feedback System":
-                HelpFeedbackSystemView(selectedPage: $selectedPage)
+                HelpFeedbackSystemView(selectedPage: $helpSelectedPage)
             case "Create Accounts":
-                HelpCreateAccountView(selectedPage: $selectedPage)
+                HelpCreateAccountView(selectedPage: $helpSelectedPage)
             case "Add Accounts":
-                HelpAddAccountView(selectedPage: $selectedPage)
+                HelpAddAccountView(selectedPage: $helpSelectedPage)
             case "Set up Cookies":
-                HelpSetUpCookiesView(selectedPage: $selectedPage)
+                HelpSetUpCookiesView(selectedPage: $helpSelectedPage)
             case "Duplicate Feedback":
-                HelpCreateFeedbackView(selectedPage: $selectedPage)
+                HelpCreateFeedbackView(selectedPage: $helpSelectedPage)
             case "Get Feedback Path":
-                HelpGetFeedbackPathView(selectedPage: $selectedPage)
+                HelpGetFeedbackPathView(selectedPage: $helpSelectedPage)
             case "Feedback Failed":
-                HelpFeedbackFailedView(selectedPage: $selectedPage)
+                HelpFeedbackFailedView(selectedPage: $helpSelectedPage)
             default:
-                HelpWelcomeView(selectedPage: $selectedPage, visibility: $visibility)
+                HelpWelcomeView(selectedPage: $helpSelectedPage, visibility: $visibility)
             }
             
         }
@@ -197,6 +218,7 @@ struct HelpView: View {
 
         
         }
+        .frame(minWidth:1125,minHeight:600)
         
         
         

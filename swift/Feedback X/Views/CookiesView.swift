@@ -11,6 +11,9 @@ import SwiftUI
 struct CookiesView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var cookiesPython: CookiesPython
+    
+    
+    
     @Environment(\.colorScheme) var colorScheme
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var isEditing: Bool = false
@@ -232,6 +235,8 @@ struct CookiesView: View {
                                 CookiesSheetView(showSheet: $showSheet,selectedList: $cookiesList, waitingTime: $waitingTimeInt )
                                     .environmentObject(accountLoader)
                                     .environmentObject(cookiesPython)
+                                  
+                                
                             }
                         }
                         .padding()
