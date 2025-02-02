@@ -12,12 +12,13 @@ struct CombinedAccountsView: View {
    
     @State private var selectedAccount: Account? = nil
     @State private var selectedIndex: Int? = nil
+    @State private var editingMode: Bool = false
     @EnvironmentObject var accountLoader: AccountLoader
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         HSplitView {
-            RecentAccountsView(selectedAccount: $selectedAccount, selectedIndex: $selectedIndex)
+            RecentAccountsView(selectedAccount: $selectedAccount, selectedIndex: $selectedIndex,editingMode:$editingMode)
                 .environmentObject(accountLoader)
                 .if(colorScheme == .light){
                                     $0.background(Color.white)
@@ -40,7 +41,8 @@ struct CombinedAccountsView: View {
                                 self.selectedAccount = nil
                             }
                         }
-                    }
+                    },
+                    editingMode: $editingMode
                 )
                 .environmentObject(accountLoader)
                 .if(colorScheme == .light){

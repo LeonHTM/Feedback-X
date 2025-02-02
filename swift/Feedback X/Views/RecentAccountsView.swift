@@ -18,6 +18,7 @@ struct RecentAccountsView: View {
         @EnvironmentObject var accountLoader: AccountLoader
         @Binding var selectedAccount: Account?
         @Binding var selectedIndex: Int?
+        @Binding var editingMode: Bool
         
         
         let dateSaveNow = Date().formatted(Date.FormatStyle()
@@ -175,7 +176,16 @@ struct RecentAccountsView: View {
                                     }
                                     .contextMenu {
                                         
-                                        
+                                        Button(role: .destructive) {
+                                            selectedAccount = account
+                                            selectedIndex = index
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                                editingMode = true
+                                            }
+                                            print(String(editingMode))
+                                        } label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        }
                                         Button(role: .destructive) {
                                             showDeleteAlert = true
                                             selectedAccount = account
@@ -184,6 +194,10 @@ struct RecentAccountsView: View {
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
+                                        
+                                        
+                                        
+                                        
                                     }
                                     
                                     if index < accountLoader.accounts.count - 1 {

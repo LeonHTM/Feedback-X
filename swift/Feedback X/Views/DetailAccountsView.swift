@@ -20,7 +20,7 @@ struct DetailAccountsView: View {
         
         @State private var hoveredPassword: Bool = false
         @State private var showDeleteAlert: Bool = false
-        @State private var editingMode: Bool = false
+        @Binding var editingMode: Bool
         @State private var editingButtonDisable: Bool = false
         
         @State private var icloudmailSave: String = ""
