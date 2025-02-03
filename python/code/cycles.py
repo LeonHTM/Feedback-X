@@ -152,15 +152,12 @@ class cycles():
                     error1 = False
                 except:
                      continue
-                chill(chill_value)
                 try:
-                    logout(1)
+                    cookies(wait=chill_value)
                     error2 = False
                 except:
-                    pass
-                if index == 0:
-                     isinCycle == True
-                chill(1)
+                    continue
+                
                
 
         if error1 == True or error2 == True:

@@ -238,7 +238,20 @@ def detail_feedback(path: str) -> None:
         #print("Couldn't find Time Box")
         pass
         
+def cookies(wait: int) -> None:
+    """
+    Accepts cookies on the Apple Feedback Assistant website.
+    """
+    """
+    try:
+        Cookies_Box_1 = WebDriverWait(driver,5).until(
+        expected_conditions.presence_of_element_located((By.XPATH, "//*[@aria-label='Enter Verification Code Digit 1']")))
+        Cookies_Box_1.focus()
+    except TimeoutException:
+        print("Failed: Couldn't find Cookies Button")"""
 
+    WebDriverWait(driver,wait).until(expected_conditions.url_contains("feedbackassistant"))
+    driver.close()
 
 def upload_feedback(uploads: str) -> None:
     """

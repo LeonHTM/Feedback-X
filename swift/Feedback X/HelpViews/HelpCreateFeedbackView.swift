@@ -92,7 +92,7 @@ struct HelpCreateFeedbackView: View {
                             }){
                                 
                                 Text("Show an example title").foregroundStyle(Color.accentColor)
-                                Image(systemName: showExampleTitle == true ? "chevron.down" : "chevron.right").foregroundStyle(Color.accentColor)
+                                Image(systemName: showExampleTitle == true ? "chevron.up" : "chevron.right").foregroundStyle(Color.accentColor)
                             }.buttonStyle(PlainButtonStyle()).padding(.bottom,5)
                             if showExampleTitle == true{
                                 Text("App Library Blur displayed incorrectly while swiping in iOS 18.3(22D60)")
@@ -148,7 +148,7 @@ struct HelpCreateFeedbackView: View {
                             }){
                                 
                                 Text("Show an example description").foregroundStyle(Color.accentColor)
-                                Image(systemName: showExample == true ? "chevron.down" : "chevron.right").foregroundStyle(Color.accentColor)
+                                Image(systemName: showExample == true ? "chevron.up" : "chevron.right").foregroundStyle(Color.accentColor)
                             }.buttonStyle(PlainButtonStyle())
                             
                             if showExample == true{
@@ -233,11 +233,12 @@ Build: iOS 18.3(22D60)
                                     .padding(.leading,-6)
                                 Text(".")
                             }.padding(.bottom,5)
+                            Text("Note:").italic() + Text(" There might be a privacy prompt of google chrome that asks you to access your files. You must allow this, or you won't be able to duplicate your feedback.")
                       
                         }
                     }
                     HStack(alignment:.top){
-                        Text("11.")
+                        Text("12.")
                         VStack(alignment:.leading){
                             Text("If something goes wrong while duplicating, click 'try again'.").padding(.bottom,5)
                             Button(action:{

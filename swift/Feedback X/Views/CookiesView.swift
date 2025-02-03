@@ -63,12 +63,13 @@ struct CookiesView: View {
                                             .clipShape(
                                                 .rect(
                                                     topLeadingRadius: 0,
-                                                    bottomLeadingRadius: 15,
-                                                    bottomTrailingRadius: 15,
+                                                    bottomLeadingRadius: 14,
+                                                    bottomTrailingRadius: 14,
                                                     topTrailingRadius: 0
                                                 )
                                             )
                                             .padding(.top, -5)
+                                            .padding(.bottom,-4)
                                             .padding(.horizontal, -15)
                                             
                                     }else{
@@ -77,6 +78,7 @@ struct CookiesView: View {
                                         RoundedRectangle(cornerRadius:  0)
                                             .fill(account.appledev != "y" ? Color.red.opacity(0.2) : (cookiesList.contains(index) ? Color.gray.opacity(0.2) : Color.clear))
                                             .padding(.top, -5)
+                                            
                                             .padding(.horizontal, -15)
                                         
                                         
@@ -153,6 +155,7 @@ struct CookiesView: View {
 
                         }
                         .padding([.top,.leading,.trailing])
+                        .padding(.bottom,5)
                         .background(
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)

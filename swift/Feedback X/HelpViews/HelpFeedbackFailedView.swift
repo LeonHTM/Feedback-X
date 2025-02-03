@@ -61,6 +61,25 @@ struct HelpFeedbackFailedView: View {
                     }
                     Divider()
                     HStack(alignment:.top){
+                        Text("3.")
+                        VStack(alignment:.leading, spacing: 10){
+                            Text("Google Chrome doesn't have access to your files")
+                            Text("Reason:").bold() + Text(" Feedback X uses Google Chrome in the background. When you add Files to a Feedback Chrome needs access to youe files to add them to the feedback.")
+                            HStack(alignment:.top,spacing:0){
+                                Text("Solution:").bold() + Text(" Go to Settings ")
+                                Image("SettingsIcon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 14, height: 14)
+                                    .offset(y: 2)
+                                Text(" > Privacy & Security > Files & Folders and allow Files access for all Application called 'Google Chrome for Testing'.")
+                            }
+                           
+                            
+                        }
+                    }
+                    Divider()
+                    HStack(alignment:.top){
                         Text("2.")
                         VStack(alignment:.leading, spacing: 10){
                             Text("Cookies are not set up or have expired")
