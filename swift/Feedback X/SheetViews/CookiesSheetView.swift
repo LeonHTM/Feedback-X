@@ -66,13 +66,21 @@ struct CookiesSheetView: View {
                     Text("Account \(currentStep + 1) of \(totalSteps)")
                         .font(.title)
                         .fontWeight(.bold)
-                } else {
-                    Text("All done")
+                } else if goneWrong == true{
+                    
+                    Text("Something has gone wrong")
                         .font(.title)
                         .fontWeight(.bold)
                 }
                 
-                Text("Current Account:")
+                else {
+                    Text("All done")
+                        .font(.title)
+                        .fontWeight(.bold)
+                }
+                if goneWrong == false && currentStep < totalSteps {
+                    Text("Current Account:")
+                }
                 
                 if currentStep < totalSteps {
                     if !accountLoader.accounts.isEmpty {
@@ -83,9 +91,15 @@ struct CookiesSheetView: View {
                     } else {
                         Text("Error")
                     }
-                } else {
-                    Text("Done")
+                } else if goneWrong == true{
+                    
+                    Text("Please try again or go to the next account.")
+                    Text("Note: If on the first try, something instantly goes wrong, please quit all Google Chrome sessions and try again.")
+                        .foregroundStyle(.secondary)
+                        .font(.system(size: 12))
                 }
+                
+               
                 
              
                 
@@ -141,6 +155,11 @@ struct CookiesSheetView: View {
                                     )
                                     accountLoader.editAccount(at: selectedList[currentStep - 1], with: updatedAccount, to: accountURL)
                                     print("Edited Account \(dateSave)")
+                                    dateSave = Calendar.current.date(byAdding: .day, value: 30, to: Date())?
+                                        .formatted(Date.FormatStyle()
+                                            .day(.defaultDigits)
+                                            .month(.defaultDigits)
+                                            .year())
                                     
                                 }else{
                                     print("Couldnt edit Account")
@@ -181,10 +200,10 @@ struct CookiesSheetView: View {
                 }
                 .disabled(currentStep >= totalSteps || !buttonAllowed)
                 
-                if goneWrong {
+                /*if goneWrong {
                     Text("Something seems to have gone wrong. Try again or go to the next account.")
                     Text("Tipp: if it instantly doesnt work on the first try, try quiting all chrome broswer sessions and try again")
-                }
+                }*/
                 if !buttonAllowed {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
@@ -237,6 +256,11 @@ struct CookiesSheetView: View {
                                     )
                                     accountLoader.editAccount(at: selectedList[currentStep - 1], with: updatedAccount, to: accountURL)
                                     print("Edited Account \(dateSave)")
+                                    dateSave = Calendar.current.date(byAdding: .day, value: 30, to: Date())?
+                                        .formatted(Date.FormatStyle()
+                                            .day(.defaultDigits)
+                                            .month(.defaultDigits)
+                                            .year())
                                     
                                 }else{
                                     print("Couldnt edit Account")
@@ -286,7 +310,7 @@ struct CookiesSheetView: View {
                 
                 
             }
-            Text("Tip: The date when the cookies are going to expire is only updated if the accounts cookies are ❌")
+            
         }
         .padding(.bottom,-9.5)
         

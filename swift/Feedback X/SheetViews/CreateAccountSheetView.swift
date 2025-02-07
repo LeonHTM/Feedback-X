@@ -101,11 +101,11 @@ struct CreateAccountSheetView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.top,-10)
                 }
-                VStack(alignment: .leading, spacing: 10) {
-                  
-                    Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can see them in the system files. If you dont use passwords and or icloud accounts you use elsewhere, this isn't a issue. Therefore please never use data you use in other places.")
+                HStack(alignment: .top,spacing: 5) {
+                    Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.yellow).offset(y:1)
+                    Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can find them if they dig deep enough into the system files. While this isn’t a significant issue if you use passwords that you don’t use elsewhere, please avoid using passwords that you use in other places.")
                         .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.leading)
                 }
                 
                    
@@ -197,18 +197,7 @@ struct CreateAccountSheetView: View {
                 TextEditor(text: $noteSave)
                     .frame(height: 100)
                     .border(Color.gray, width: 1)
-                
-               
-                
-            
-                
-
-                
-                
-                
-                
-                
-                
+          
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
@@ -225,7 +214,7 @@ struct CreateAccountSheetView: View {
         Divider()
         HStack{
             Button(action: {
-                helpSelectedPage = "Create Accounts"
+                helpSelectedPage = "Add Accounts"
                 OpenHelpWindow.open()
                 
                 

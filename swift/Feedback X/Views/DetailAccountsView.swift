@@ -452,7 +452,7 @@ struct DetailAccountsView: View {
                                     }
                                     Text("This Account can't be used to duplicate Feedback")
                                         .font(.title3)
-                                    Text("Apple limits the account one can save by saving cookies. The current Limit is 10. This is account Nr. \(indexToShow + 1). Delete other Accounts to use this one. I might try to circumwent this Limit in future versions of the Application.")
+                                    Text("Apple limits the cookies that can be saved. The current Limit is 10. This is account Nr. \(indexToShow + 1). You therefore have more accounts than can be stored with cookies. Delete other Accounts to use this one. I might try to circumwent this Limit in future versions of the Application.")
                                         .foregroundStyle(.secondary)
                                         .multilineTextAlignment(.center)
                                 }
@@ -464,22 +464,7 @@ struct DetailAccountsView: View {
                                 )
                                 .padding(.horizontal, 10)
                             }
-                            
-                            
-                            
-                           
-                            
-                            
-                            
-                            
-                            
-
-                            
-                            
-                            
-                            
-                            
-                            
+                     
                             // Delete Account Section
                             HStack {
                                 Spacer()

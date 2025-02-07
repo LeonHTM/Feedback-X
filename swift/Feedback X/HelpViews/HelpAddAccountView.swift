@@ -143,6 +143,10 @@ struct HelpAddAccountView: View {
                         Text("Note:").italic()
                         Text("You can edit any of the account details at any time by clicking the Edit Button on the top right when displaying an account. ").padding(.leading,-5)
                     }
+                    HStack(alignment:.top){
+                        Text("Note:").italic()
+                        Text("In the current version of this app, passwords are stored in plain text, which means anyone with access to your device can find them if they dig deep enough into the system files. While this isn’t a significant issue if you use passwords that you don’t use elsewhere, please avoid using passwords that you use in other places.").padding(.leading,-5)
+                    }
                     
                     Divider()
                     Text("See also:")

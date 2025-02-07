@@ -202,8 +202,15 @@ struct HelpSetUpCookiesView: View {
                     
                     HStack(alignment:.top){
                         Text("Note:").italic()
-                        Text("The Cookies expire after 30 Days. Feedback X saves the date when account cookies expire. Once cookies expire, the 'Cookies set up' status will automatically change to 'Not set up' , requiring you to redo the process.").padding(.leading,-5)
+                        Text("Cookies expire after 30 Days. Feedback X saves the date when account cookies expire. Once cookies expire, the 'Cookies set up' status will automatically change to 'Not set up' , requiring you to redo the process.").padding(.leading,-5)
                     }
+                    
+                    HStack(alignment:.top){
+                        Text("Note:").italic()
+                        Text("The date when the cookies are going to expire is only updated for an account, if the cookies are set to 'Not set up' for this account.").padding(.leading,-5)
+                    }
+                    
+                    
                     
                     Divider()
                     Text("See also:")
