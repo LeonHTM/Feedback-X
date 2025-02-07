@@ -20,7 +20,7 @@ struct HelpAddAccountView: View {
                 
                 VStack(alignment:.leading,spacing:15){
                     HStack{
-                        Image("FeedbackX256.png")
+                        Image("FeedbackX_256")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 40, height: 40)
@@ -69,7 +69,7 @@ struct HelpAddAccountView: View {
                     HStack(alignment:.top){
                         Text("1.")
                         Text("Open the Feedback X app")
-                        Image("FeedbackX copy 5")
+                        Image("FeedbackX_32")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 14, height: 14)

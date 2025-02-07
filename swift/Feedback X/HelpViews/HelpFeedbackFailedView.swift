@@ -20,7 +20,7 @@ struct HelpFeedbackFailedView: View {
                 
                 VStack(alignment:.leading,spacing:15){
                     HStack{
-                        Image("FeedbackX256.png")
+                        Image("FeedbackX_256")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 40, height: 40)
@@ -61,7 +61,7 @@ struct HelpFeedbackFailedView: View {
                     }
                     Divider()
                     HStack(alignment:.top){
-                        Text("3.")
+                        Text("2.")
                         VStack(alignment:.leading, spacing: 10){
                             Text("Google Chrome doesn't have access to your files")
                             Text("Reason:").bold() + Text(" Feedback X uses Google Chrome in the background. When you add Files to a Feedback Chrome needs access to youe files to add them to the feedback.")
@@ -72,7 +72,7 @@ struct HelpFeedbackFailedView: View {
                                     .scaledToFit()
                                     .frame(width: 14, height: 14)
                                     .offset(y: 2)
-                                Text(" > Privacy & Security > Files & Folders and allow Files access for all Application called 'Google Chrome for Testing'.")
+                                Text(" > Privacy & Security > Files & Folders and allow Files access for all Applications called 'Google Chrome for Testing'.")
                             }
                            
                             
@@ -80,7 +80,7 @@ struct HelpFeedbackFailedView: View {
                     }
                     Divider()
                     HStack(alignment:.top){
-                        Text("2.")
+                        Text("3.")
                         VStack(alignment:.leading, spacing: 10){
                             Text("Cookies are not set up or have expired")
                             Text("Reason:").bold() + Text(" Feedback duplication requires saved cookies to login.")
@@ -91,7 +91,7 @@ struct HelpFeedbackFailedView: View {
                     }
                     Divider()
                     HStack(alignment:.top){
-                        Text("3.")
+                        Text("4.")
                         VStack(alignment:.leading, spacing: 10){
                             Text("Internet connection issues")
                             Text("Reason:").bold() + Text(" A weak or unstable internet connection might prevent successful submission")
@@ -102,7 +102,7 @@ struct HelpFeedbackFailedView: View {
                     }
                     Divider()
                     HStack(alignment:.top){
-                        Text("4.")
+                        Text("5.")
                         VStack(alignment:.leading, spacing: 10){
                             Text("Feedback X App Issue")
                             Text("Reason:").bold() + Text(" I am dumb and the App doesn't work like it is supposed to.")
@@ -114,7 +114,7 @@ struct HelpFeedbackFailedView: View {
                     }
                     Divider()
                     HStack(alignment:.top){
-                        Text("5.")
+                        Text("6.")
                         VStack(alignment:.leading, spacing: 10){
                             Text("MacOS Issue")
                             Text("Reason:").bold() + Text(" Apple is dumb and your macOS has fucked things up.")

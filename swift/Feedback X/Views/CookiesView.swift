@@ -55,98 +55,101 @@ struct CookiesView: View {
                             Divider()
                             ForEach(accountLoader.accounts.indices, id: \.self) { index in
                                 let account = accountLoader.accounts[index]
-                                ZStack {
-                                    if index == accountLoader.accounts.count - 1 {
-                                        RoundedRectangle(cornerRadius:  0)
-                                            .fill(account.appledev != "y" ? Color.red.opacity(0.2) : (cookiesList.contains(index) ? Color.gray.opacity(0.2) : Color.clear))
-                                        
-                                            .clipShape(
-                                                .rect(
-                                                    topLeadingRadius: 0,
-                                                    bottomLeadingRadius: 14,
-                                                    bottomTrailingRadius: 14,
-                                                    topTrailingRadius: 0
+                                if index <= 9 {
+                                    ZStack {
+                                        if index == accountLoader.accounts.count - 1 || index == 9 {
+                                            RoundedRectangle(cornerRadius:  0)
+                                                .fill(account.appledev != "y" ? Color.red.opacity(0.2) : (cookiesList.contains(index) ? Color.gray.opacity(0.2) : Color.clear))
+                                            
+                                                .clipShape(
+                                                    .rect(
+                                                        topLeadingRadius: 0,
+                                                        bottomLeadingRadius: 14,
+                                                        bottomTrailingRadius: 14,
+                                                        topTrailingRadius: 0
+                                                    )
                                                 )
-                                            )
-                                            .padding(.top, -5)
-                                            .padding(.bottom,-4)
-                                            .padding(.horizontal, -15)
+                                                .padding(.top, -5)
+                                                .padding(.bottom,-4)
+                                                .padding(.horizontal, -15)
                                             
-                                    }else{
-                                        
-                                        
-                                        RoundedRectangle(cornerRadius:  0)
-                                            .fill(account.appledev != "y" ? Color.red.opacity(0.2) : (cookiesList.contains(index) ? Color.gray.opacity(0.2) : Color.clear))
-                                            .padding(.top, -5)
+                                        }else{
                                             
-                                            .padding(.horizontal, -15)
-                                        
-                                        
-                                        
-                                    }
-                                        
-
-
-                                    VStack {
-                                        HStack {
-                                            ZStack {
-                                                Image(systemName: "circle")
-                                                    .font(.system(size: 20))
-                                                Image(systemName: cookiesList.contains(index) ? "checkmark" : "")
-                                                    .foregroundStyle(Color.white)
-                                            }
-                                            .background(
-                                                Circle()
-                                                    .fill(cookiesList.contains(index) ? Color.accentColor : Color.clear)
-                                            )
-                                            .foregroundStyle(cookiesList.contains(index) ? Color.accentColor : Color.primary)
                                             
-                                            VStack(alignment: .leading) {
-                                                Text(account.icloudmail)
-                                                    .padding(.horizontal)
-                                                    .fontWeight(.bold)
+                                            RoundedRectangle(cornerRadius:  0)
+                                                .fill(account.appledev != "y" ? Color.red.opacity(0.2) : (cookiesList.contains(index) ? Color.gray.opacity(0.2) : Color.clear))
+                                                .padding(.top, -5)
+                                            
+                                                .padding(.horizontal, -15)
+                                            
+                                            
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                        VStack {
+                                            HStack {
+                                                ZStack {
+                                                    Image(systemName: "circle")
+                                                        .font(.system(size: 20))
+                                                    Image(systemName: cookiesList.contains(index) ? "checkmark" : "")
+                                                        .foregroundStyle(Color.white)
+                                                }
+                                                .background(
+                                                    Circle()
+                                                        .fill(cookiesList.contains(index) ? Color.accentColor : Color.clear)
+                                                )
+                                                .foregroundStyle(cookiesList.contains(index) ? Color.accentColor : Color.primary)
                                                 
-                                                if account.cookies == "y" {
-                                                    Text("Cookies already set up: ✅")
+                                                VStack(alignment: .leading) {
+                                                    Text(account.icloudmail)
                                                         .padding(.horizontal)
-                                                        .padding(.vertical, 1)
-                                                } else {
-                                                    Text("Cookies not set up: ❌")
-                                                        .padding(.horizontal)
-                                                        .padding(.vertical, 1)
+                                                        .fontWeight(.bold)
+                                                    
+                                                    if account.cookies == "y" {
+                                                        Text("Cookies already set up: ✅")
+                                                            .padding(.horizontal)
+                                                            .padding(.vertical, 1)
+                                                    } else {
+                                                        Text("Cookies not set up: ❌")
+                                                            .padding(.horizontal)
+                                                            .padding(.vertical, 1)
+                                                    }
+                                                }
+                                                
+                                                Spacer()
+                                                /*
+                                                 if account.cookies == "n" && !cookiesList.contains(index) && account.appledev == "y" {
+                                                 Image(systemName:"lightbulb.fill")
+                                                 .foregroundStyle(Color.yellow)
+                                                 Text("Cookie set up recommended")
+                                                 }*/
+                                                if account.appledev != "y" {
+                                                    Image(systemName:"exclamationmark.circle.fill")
+                                                        .foregroundStyle(Color.red)
+                                                    Text("Set up Apple Developer first")
+                                                }
+                                            }
+                                            .contentShape(Rectangle())
+                                            .onTapGesture {
+                                                if account.appledev == "y" {
+                                                    if !cookiesList.contains(index) {
+                                                        cookiesList.append(index)
+                                                    } else {
+                                                        cookiesList.removeAll { $0 == index }
+                                                        print("remove from list")
+                                                    }
                                                 }
                                             }
                                             
-                                            Spacer()
-                                            /*
-                                            if account.cookies == "n" && !cookiesList.contains(index) && account.appledev == "y" {
-                                                Image(systemName:"lightbulb.fill")
-                                                    .foregroundStyle(Color.yellow)
-                                                Text("Cookie set up recommended")
-                                            }*/
-                                            if account.appledev != "y" {
-                                                Image(systemName:"exclamationmark.circle.fill")
-                                                    .foregroundStyle(Color.red)
-                                                Text("Set up Apple Developer first")
+                                            
+                                            if index != accountLoader.accounts.count - 1 && index != 9 {
+                                                Divider()
                                             }
                                         }
-                                        .contentShape(Rectangle())
-                                        .onTapGesture {
-                                            if account.appledev == "y" {
-                                                if !cookiesList.contains(index) {
-                                                    cookiesList.append(index)
-                                                } else {
-                                                    cookiesList.removeAll { $0 == index }
-                                                    print("remove from list")
-                                                }
-                                            }
-                                        }
-                                      
-                                        if index != accountLoader.accounts.count - 1 {
-                                            Divider()
-                                        }
+                                        
                                     }
-                                   
                                 }
                              
                             }

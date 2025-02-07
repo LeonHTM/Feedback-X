@@ -25,7 +25,7 @@ struct AboutView: View {
                         clickCount = 0
                     }
                 }) {
-                    Image("FeedbackX512")
+                    Image("FeedbackX_512")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 100) // Reduced size

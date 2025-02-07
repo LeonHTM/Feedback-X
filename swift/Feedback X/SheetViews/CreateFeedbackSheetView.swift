@@ -136,9 +136,90 @@ struct CreateFeedbackSheetView: View {
                             .offset(x: 3)
                          */
                         // Basic Information Section
-                        Text("Basic Information")
-                            .font(.title)
-                            .fontWeight(.bold)
+                        HStack{
+                            Text("Basic Information")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            Spacer()
+                            ZStack{
+                                Text("Change Topic").foregroundStyle(.secondary)
+                                Menu {
+                                    Button(action: {
+                                        topicSave = "iOS & iPadOS"
+                                    }) {
+                                        Label(topicSave == "iOS & iPadOS" ? "✓ iOS & iPadOS" : "    iOS & iPadOS", systemImage: "star")
+                                    }
+                                    Button(action: {
+                                        topicSave = "macOS"
+                                    }) {
+                                        Label(topicSave == "macOS" ? "✓ macOS" : "    macOS", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "tvOS"
+                                    }) {
+                                        Label(topicSave == "tvOS" ? "✓ tvOS" : "    tvOS", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "visionOS"
+                                    }) {
+                                        Label(topicSave == "visionOS" ? "✓ visionOS" : "    visionOS", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "watchOS"
+                                    }) {
+                                        Label(topicSave == "watchOS" ? "✓ watchOS" : "    watchOS", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "HomePod"
+                                    }) {
+                                        Label(topicSave == "HomePod" ? "✓ HomePod" : "    HomePod", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "AirPods Beta Firmware"
+                                    }) {
+                                        Label(topicSave == "AirPods Beta Firmware" ? "✓ AirPods Beta Firmware" : "    AirPods Beta Firmware", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "Developer Technologies & SDKs"
+                                    }) {
+                                        Label(topicSave == "Developer Technologies & SDKs" ? "✓ Developer Technologies & SDKs" : "    Developer Technologies & SDKs", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "Developer Tools & Ressources"
+                                    }) {
+                                        Label(topicSave == "Developer Tools & Ressources" ? "✓ Developer Tools & Ressources" : "    Developer Tools & Ressources", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "Enterprise & Education"
+                                    }) {
+                                        Label(topicSave == "Enterprise & Education" ? "✓ Enterprise & Education" : "    Enterprise & Education", systemImage: "star")
+                                    }.disabled(true)
+                                    Button(action: {
+                                        topicSave = "MFi Technologies"
+                                    }) {
+                                        Label(topicSave == "MFi Technologies" ? "✓ MFi Technologies" : "    MFi Technologies", systemImage: "star")
+                                    }.disabled(true)
+                                } label: {
+                                    Text("                     ")
+                                        .padding(5)
+                                    
+                                    
+                                }
+                                
+                                .menuStyle(BorderlessButtonMenuStyle())
+                                .menuIndicator(.hidden)
+                                .fixedSize()
+                                .padding(6)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                                )
+                                .cornerRadius(5)
+                            }
+
+                            
+                            
+                        }
                         HStack(spacing:0){
                             if alreadyClicked == true && feedbackTitle.isEmpty {
                                 Image(systemName:"arrow.right.circle.fill")
@@ -175,7 +256,10 @@ struct CreateFeedbackSheetView: View {
                                 ForEach(PublicSaves.feedbackAreasiOS, id: \.self) { type in
                                     Text(type)
                                 }
-                            }.labelsHidden()
+                            }
+                            
+                            //.pickerStyle(MenuPickerStyle())
+                            .labelsHidden()
                             if areaSave.isEmpty {
                                 Text("Please select the feedback area").padding(.leading, 7)
                                     .foregroundStyle(Color.secondary).opacity(0.5)
@@ -203,7 +287,11 @@ struct CreateFeedbackSheetView: View {
                                 Text("Suggestion").tag("3")
                                 Text("Battery Life").tag("4")
                                 Text("Suggestion").tag("5")
-                            }.labelsHidden()
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                            .labelsHidden()
+                            
+                            
                             if typeSave.isEmpty {
                                 Text("Please select the feedback type").padding(.leading, 7)
                                     .foregroundStyle(.secondary)
@@ -294,57 +382,115 @@ struct CreateFeedbackSheetView: View {
 
                         // Display Selected Files
                         if !selectedFiles.isEmpty {
-                            VStack(alignment: .leading, spacing: 5) {
-                                ForEach(selectedFiles, id: \.self) { file in
-                                    HStack {
-                                        let absoluteFilePath = (file)
-                                                                            if FileManager.default.fileExists(atPath: absoluteFilePath) {
-                                                                                let nsImage = NSWorkspace.shared.icon(forFile: absoluteFilePath)
-                                                                                Image(nsImage: nsImage)
-                                                                                    .resizable()
-                                                                                    .scaledToFit()
-                                                                                    .frame(width: 16, height: 16)
-                                                                            }else{
-                                                                                
-                                                                                Image("custom.document.2.badge.questionmark")
-                                                                            }
-                                        Text(URL(fileURLWithPath: file).lastPathComponent)
-                                        Spacer()
-                                        Button(action: {
-                                            let fileURL = URL(fileURLWithPath: file)
-                                            if FileManager.default.fileExists(atPath: file) {
-                                                NSWorkspace.shared.activateFileViewerSelecting([fileURL])
-                                            } else {
-                                                errorMessage = "File not found: \(file)"
-                                                showAlert = true
+                            
+                            
+                            
+                            
+                            HStack(alignment:.top){
+                                
+                                Image(nsImage: NSImage(named: NSImage.computerName) ?? NSImage())
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 40, height: 40)
+                                            .offset(y:-7)
+                                
+                                VStack(alignment:.leading){
+                                    
+                                    Text(DeviceImage.getDeviceName())
+                                    Text(DeviceImage.getDeviceIdentifier())
+                                        .foregroundColor(.secondary)
+                                        .font(.system(size: 12))
+                                    Divider()
+                                    ForEach(selectedFiles, id: \.self) { file in
+                                        HStack {
+                                            let absoluteFilePath = (file)
+                                                                                if FileManager.default.fileExists(atPath: absoluteFilePath) {
+                                                                                    let nsImage = NSWorkspace.shared.icon(forFile: absoluteFilePath)
+                                                                                    Image(nsImage: nsImage)
+                                                                                        .resizable()
+                                                                                        .scaledToFit()
+                                                                                        .frame(width: 16, height: 16)
+                                                                                }else{
+                                                                                    
+                                                                                    Image("custom.document.2.badge.questionmark")
+                                                                                }
+                                            Text(URL(fileURLWithPath: file).lastPathComponent)
+                                            Spacer()
+                                            Button(action: {
+                                                let fileURL = URL(fileURLWithPath: file)
+                                                if FileManager.default.fileExists(atPath: file) {
+                                                    NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+                                                } else {
+                                                    errorMessage = "File not found: \(file)"
+                                                    showAlert = true
+                                                }
+                                            }) {
+                                                Image(systemName: "magnifyingglass")
                                             }
-                                        }) {
-                                            Image(systemName: "magnifyingglass")
-                                        }.buttonStyle(PlainButtonStyle())
+                                            .buttonStyle(PlainButtonStyle())
+                                            .foregroundStyle(.secondary)
 
-                                        Button(action: {
-                                            selectedFiles.removeAll { $0 == file }
-                                        }) {
-                                            Image(systemName: "trash")
-                                        }.buttonStyle(PlainButtonStyle())
-                                    }
-                                    if file != selectedFiles.last {
-                                        Divider()
-                                    }
+                                            Button(action: {
+                                                selectedFiles.removeAll { $0 == file }
+                                            }) {
+                                                Image(systemName: "trash")
+                                            }
+                                            .buttonStyle(PlainButtonStyle())
+                                            .foregroundStyle(.secondary)
+                                        }.padding(.vertical,3)
+                                        if file != selectedFiles.last {
+                                            Divider()
+                                        }
+                                    
                                 }
-                            }
-                            .padding(10)
-                            .background(Color.accentColor.opacity(0.1))
-                            .cornerRadius(10)
-                        } else {
-                            HStack {
-                                Image(systemName: "face.smiling")
-                                Text("No Attachments chosen")
+                                    
+                                    
+                                    
+                                }
                                 Spacer()
+                                
+                                
                             }
                             .padding(10)
                             .background(Color.accentColor.opacity(0.1))
                             .cornerRadius(5)
+                            
+                            
+                            
+                           
+                        } else {
+                            
+                            HStack(alignment:.top){
+                                
+                                Image(nsImage: NSImage(named: NSImage.computerName) ?? NSImage())
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 40, height: 40)
+                                            .offset(y:-7)
+                                
+                                VStack(alignment:.leading){
+                                    
+                                    Text(DeviceImage.getDeviceName())
+                                    Text(DeviceImage.getDeviceIdentifier())
+                                        .foregroundColor(.secondary)
+                                        .font(.system(size: 12))
+                                    Divider()
+                                    HStack{
+                                        Image(systemName: "face.smiling")
+                                        Text("No Attachment chosen")
+                                    }.padding(.vertical,3)
+                                    
+                                    
+                                    
+                                }
+                                Spacer()
+                                
+                                
+                            }
+                            .padding(10)
+                            .background(Color.accentColor.opacity(0.1))
+                            .cornerRadius(5)
+                            
                         }
 
                         // Automation Section
@@ -651,11 +797,16 @@ struct CreateFeedbackSheetView: View {
     }
 }
 
-/*
+
 #Preview {
     @Previewable @StateObject var accountLoader = AccountLoader()
     @Previewable @StateObject var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
-    CreateFeedbackSheetView(showSheet: .constant(true), topicSav)
+    @Previewable @StateObject var fileLoader = FileLoader(folderURL: URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/saves"))
+    
+    @Previewable @State  var topic: String = "iOS & iPadOS"
+    CreateFeedbackSheetView(showSheet: .constant(true),topicSave: $topic)
         .environmentObject(accountLoader)
+        .environmentObject(feedbackPython)
+        .environmentObject(fileLoader)
 }
-*/
+

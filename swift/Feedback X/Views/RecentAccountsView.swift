@@ -75,56 +75,65 @@ struct RecentAccountsView: View {
                                                     .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
                                             }
                                             HStack{
-                                                if account.cookies == "y" {
-                                                    Text("Cookies: ✅")
-                                                        .font(.subheadline)
-                                                        .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
-                                                        .lineLimit(1)
-                                                        .onAppear{
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            if let cookieDate = convertToDate(dateString: account.date),
-                                                               let currentDate = convertToDate(dateString: dateSaveNow) {
-                                                                if currentDate >= cookieDate{
+                                                if index <= 9 {
+                                                    if account.cookies == "y" {
+                                                        Text("Cookies: ✅")
+                                                            .font(.subheadline)
+                                                            .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                            .lineLimit(1)
+                                                            .onAppear{
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                if let cookieDate = convertToDate(dateString: account.date),
+                                                                   let currentDate = convertToDate(dateString: dateSaveNow) {
+                                                                    if currentDate >= cookieDate{
+                                                                        
+                                                                        let updatedAccountCookies = Account(
+                                                                            account: account.account,
+                                                                            icloudmail: account.icloudmail,
+                                                                            password: account.password,
+                                                                            relay: account.relay,
+                                                                            country: account.country,
+                                                                            appledev: account.appledev,
+                                                                            cookies: "n",
+                                                                            note: account.note,
+                                                                            date: account.date
+                                                                        )
+                                                                        
+                                                                        accountLoader.editAccount(at: index, with: updatedAccountCookies, to: accountURL)
+                                                                    }
                                                                     
-                                                                    let updatedAccountCookies = Account(
-                                                                        account: account.account,
-                                                                        icloudmail: account.icloudmail,
-                                                                        password: account.password,
-                                                                        relay: account.relay,
-                                                                        country: account.country,
-                                                                        appledev: account.appledev,
-                                                                        cookies: "n",
-                                                                        note: account.note,
-                                                                        date: account.date
-                                                                    )
                                                                     
-                                                                    accountLoader.editAccount(at: index, with: updatedAccountCookies, to: accountURL)
+                                                                    
                                                                 }
                                                                 
                                                                 
                                                                 
+                                                                
+                                                                
+                                                                
                                                             }
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                        }
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                    } else {
+                                                        Text("Cookies: ❌")
+                                                            .font(.subheadline)
+                                                            .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                            .lineLimit(1)
+                                                    }
+                                                }else{
                                                     
-                                                    
-                                                    
-                                                    
-                                                    
-                                                } else {
-                                                    Text("Cookies: ❌")
+                                                    Text("This Account can't be used to duplicate feedback")
                                                         .font(.subheadline)
                                                         .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
                                                         .lineLimit(1)
                                                 }
+                                                
                                                 /*
                                                 if account.appledev == "y"{
                                                     Text("Apple Dev: ✅")

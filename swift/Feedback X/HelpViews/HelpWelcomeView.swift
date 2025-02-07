@@ -28,7 +28,7 @@ struct HelpWelcomeView: View {
             ScrollView{
                 VStack(alignment: .leading,spacing:10){
                     HStack{
-                        Image("FeedbackX256.png")
+                        Image("FeedbackX_256")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 75, height: 75)

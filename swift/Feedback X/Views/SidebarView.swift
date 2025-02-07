@@ -141,6 +141,7 @@ struct SidebarView: View {
                     Button(action:{
                         accountLoader.loadAccounts(from: accountURL)
                         if accountLoader.accounts.count >= 2{
+                       
                             topicShowSheet = true
                             
                         }else{

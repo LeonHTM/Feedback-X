@@ -98,7 +98,7 @@ struct DetailAccountsView: View {
                                                             )
                                                         
                                                         Text("\(indexToShow + 1)")
-                                                            .foregroundStyle(Color.white)
+                                                            .foregroundStyle(indexToShow <= 9 ? Color.white : Color.yellow)
                                                             .padding(10)
                                                             .background(
                                                                Circle()
@@ -403,7 +403,7 @@ struct DetailAccountsView: View {
                                 }
                             }
                             
-                            
+                            /*
                             // Security Section
                             Text("Security")
                                 .fontWeight(.bold)
@@ -433,6 +433,37 @@ struct DetailAccountsView: View {
                                     .fill(Color.gray.opacity(0.1))
                             )
                             .padding(.horizontal, 10)
+                             */
+                            if indexToShow > 9 {
+                                Text("Funcionality")
+                                    .fontWeight(.bold)
+                                    .font(.title3)
+                                    .padding(.leading, 15)
+                                    .padding(.vertical, 10)
+                                    .padding(.bottom, -10)
+                                
+                                VStack(alignment: .center, spacing: 10) {
+                                    HStack {
+                                        Spacer()
+                                        Image(systemName: "exclamationmark.circle.fill")
+                                            .font(.system(size: 25))
+                                            .foregroundColor(.yellow)
+                                        Spacer()
+                                    }
+                                    Text("This Account can't be used to duplicate Feedback")
+                                        .font(.title3)
+                                    Text("Apple limits the account one can save by saving cookies. The current Limit is 10. This is account Nr. \(indexToShow + 1). Delete other Accounts to use this one. I might try to circumwent this Limit in future versions of the Application.")
+                                        .foregroundStyle(.secondary)
+                                        .multilineTextAlignment(.center)
+                                }
+                                .padding(10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                        .fill(Color.gray.opacity(0.1))
+                                )
+                                .padding(.horizontal, 10)
+                            }
                             
                             
                             

@@ -51,7 +51,7 @@ struct DetailActivityView: View {
                             Text(fileToShow.iteration).textSelection(.enabled).padding(-5)
                         }
                         HStack(alignment: .top) {
-                            Text("FB on all Account:")
+                            Text("FB on all Accounts:")
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
                             Text(fdbList.map { "FB\($0)" }.joined(separator: ", "))

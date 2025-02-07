@@ -8,86 +8,44 @@
 
 import SwiftUI
 
+
 struct TestView: View {
-    @State private var cookiesList: Set<String> = []
-
-    var items = ["yo", "wallah yo", "antifa"]
-    @State var text:String = ""
-    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
-
-    var body: some View {
-        VStack(alignment:.leading){
-            Button(action:{
-                CookiesCheck.check(iterations:3, accountURL: accountURL ){isOnline in
-                    if isOnline == true{
-                        text = "Cookies Good"}else{
-                            text = "Cookies Bad"
-                        }
-                    
-                    
-                }
-            })
-            {Text("Online Check")}
-                .padding(10)
-            Text(text)
-            
-            
-            Divider()
-            HStack(alignment:.center){
-                Button(action: {
-                    OpenHelpWindow.open()
-                    
-                    
-                }) {
-                    Image(systemName: "questionmark.circle.fill")
-                        .font(.system(.title2))
-                        .foregroundColor(.gray)
-                    
-                    
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.horizontal)
-                
-                
-                
-                
-                Spacer()
-                Button(action: {
-                   
-                }) {
-                    Text("Close")
-                        .padding(5) // Add padding around the text
-                }
-                
-                
-                
-                
-                
-                Button(action: {
-                    
-                }) {
-                    Text("Continue")
-                        .padding(6.25) // Add padding around the text
-                    
-                }
-                .buttonStyle(PlainButtonStyle())
-                .background(Color.accentColor)
-                .foregroundColor(Color.white)
-                .cornerRadius(5)
-                .padding([.trailing,])
-                .shadow(radius:1)
-              
-                
-                
-                
-            }
-            .padding(.vertical)
-            .padding(.top,-9.5)
-        }.frame(width:500)
-        
-        
-    }
     
+    @State var text: String = "MacBookAir10,1"
+    @State var text2: String = "MacBookAir10,1"
+    
+    
+    
+    var body: some View {
+        Menu {
+            Button(action: {
+                // Action for the first menu item
+                print("Option 1 selected")
+            }) {
+                Label("Option 1", systemImage: "star")
+            }
+            
+            Button(action: {
+                // Action for the second menu item
+                print("Option 2 selected")
+            }) {
+                Label("Option 2", systemImage: "heart")
+            }
+            
+            Button(action: {
+                // Action for the third menu item
+                print("Option 3 selected")
+            }) {
+                Label("Option 3", systemImage: "gear")
+            }
+        } label: {
+            Text("Tap me")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
+    }
 }
 
 #Preview {

@@ -18,6 +18,16 @@ struct TopicSheetView: View {
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var fileLoader : FileLoader
     
+    @State private var showAlert: Bool = false
+    
+    private var topicAllowed: Bool {
+        
+        return topicSave == "iOS & iPadOS"
+        
+    }
+    
+    
+    
     var body: some View {
       
             
@@ -351,9 +361,13 @@ struct TopicSheetView: View {
                 
                 
                 Button(action: {
-                    
-                    showSheet = false
-                    showSheet2 = true
+                    if topicAllowed {
+                        
+                        showSheet = false
+                        showSheet2 = true
+                    }else{
+                        showAlert = true
+                    }
                         
                     
                 }) {
@@ -367,6 +381,13 @@ struct TopicSheetView: View {
                 .cornerRadius(5)
                 .padding([.trailing,])
                 .shadow(radius:1)
+                
+                .alert("Topic not available", isPresented: $showAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text("Please select another topic. \(topicSave) has not been implemented yet. Currently available topics are: \n iOS & iPadOS")
+                }
+                
                
               
                 
