@@ -31,24 +31,17 @@ jobs:
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $NEW_BUILD_NUMBER" "$PLIST_FILE"
           echo "Updated build number to $NEW_BUILD_NUMBER"
 
-      - name: Fetch and merge latest changes
+      - name: Pull latest changes
         run: |
           git fetch origin
-          git reset --hard origin/main
-          git merge origin/main --no-edit
+          git pull origin main
 
-      - name: Commit and push changes (if needed)
+      - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Check if there are changes before committing
-          if git diff --quiet && git diff --staged --quiet; then
-            echo "No changes to commit, skipping push."
-            exit 0  # Exit successfully
-          fi
-
-          # Add, commit, and push only if there are changes
+          
+          # Use the Personal Access Token (PAT) to authenticate
           git add swift/Feedback-X-Info.plist
           git commit -m "Auto-incremented build number to $NEW_BUILD_NUMBER"
           git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/LeonHTM/Feedback-X.git
