@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Increment build number
+      - name: Update Build Number
         run: |
           PLIST_FILE="swift/Feedback-X-Info.plist"
           
