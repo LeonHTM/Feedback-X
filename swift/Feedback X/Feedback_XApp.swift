@@ -19,6 +19,7 @@ struct Feedback_XApp: App {
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("selectedIndex")  var selectedIndex: Int?
     @AppStorage("selectedIndexActivity")  var selectedIndexActivity: Int?
+    @AppStorage("SideBarPage") var selectedPageSideBar: String = "Recent Activity"
     
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var showAccountAlert: Bool = false
@@ -30,7 +31,22 @@ struct Feedback_XApp: App {
     @StateObject private var fileLoader = FileLoader(folderURL: URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/saves"))
    
     var fullDelete: Bool = true
-
+    func reset(){
+        
+        CreateshowSheet2 = false
+        CreateshowSheet1 = false
+        AccountshowSheet1 = false
+        CookiesshowSheet = false
+        AccountshowSheet2 = false
+        topicShowSheet1 = false
+        topicShowSheet2 = false
+        
+        selectedIndex = -1
+        selectedIndexActivity = -1
+        
+        selectedPageSideBar = "Recent Activity"
+        
+    }
 
     init() {
         appLaunchCounter += 1
@@ -74,16 +90,7 @@ struct Feedback_XApp: App {
                 //.environmentObject(helpSelected)
                 .onAppear {
                     //NSWindow.allowsAutomaticWindowTabbing = false
-                    CreateshowSheet2 = false
-                    CreateshowSheet1 = false
-                    AccountshowSheet1 = false
-                    CookiesshowSheet = false
-                    AccountshowSheet2 = false
-                    topicShowSheet1 = false
-                    topicShowSheet2 = false
-                    
-                    selectedIndex = -1
-                    selectedIndexActivity = -1
+                    reset()
                     
                     
                   
@@ -91,16 +98,7 @@ struct Feedback_XApp: App {
                 }
                 .onDisappear{
                     
-                    CreateshowSheet2 = false
-                    CreateshowSheet1 = false
-                    AccountshowSheet1 = false
-                    CookiesshowSheet = false
-                    AccountshowSheet2 = false
-                    topicShowSheet1 = false
-                    topicShowSheet2 = false
-                    
-                    selectedIndex = -1
-                    selectedIndexActivity = -1
+                   reset()
                 }
                 
         } .commands {
@@ -139,12 +137,7 @@ struct Feedback_XApp: App {
                }
             
         }
-        
-        
-        
-        
-        
-        
+      
         /*.commands {
             CommandGroup(replacing: .newItem, addition: { })
         }*/
