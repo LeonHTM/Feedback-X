@@ -16,8 +16,9 @@ struct HelpWelcomeView: View {
     @AppStorage("CreateshowSheet2") var CreateshowSheet2: Bool = false
     @AppStorage("AccountshowSheet1") var AccountshowSheet: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
-    @AppStorage("topicShowSheet1") var topicshowSheet1: Bool = false
-    @AppStorage("topicShowSheet2") var topicshowSheet2: Bool = false
+    @AppStorage("AccountshowSheet3") var AccountshowSheet3: Bool = false
+    @AppStorage("topicshowSheet1") var topicshowSheet1: Bool = false
+    @AppStorage("topicshowSheet2") var topicshowSheet2: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("SideBarPage") var selectedPageSideBar: String = "Recent Activity"
     var body: some View {
@@ -92,6 +93,7 @@ struct HelpWelcomeView: View {
                         CreateshowSheet1 = false
                         topicshowSheet1 = false
                         topicshowSheet2 = false
+                        AccountshowSheet3 = false
                         OpenHelpWindow.back()
                     }){
                         HStack{
@@ -121,6 +123,7 @@ struct HelpWelcomeView: View {
                         CookiesshowSheet = false
                         topicshowSheet1 = false
                         topicshowSheet2 = false
+                        AccountshowSheet3 = false
                         OpenHelpWindow.back()
                     }){
                         HStack{

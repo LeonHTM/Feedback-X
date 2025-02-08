@@ -813,8 +813,11 @@ struct CreateFeedbackSheetView: View {
                     }
                 }
                 .padding()
+              
                 .background(Color.gray.opacity(0.9))
                 .cornerRadius(10)
+                .frame(width:800)
+   
                 .onAppear{
                     totalSteps = Int(sliderSave)
                 }

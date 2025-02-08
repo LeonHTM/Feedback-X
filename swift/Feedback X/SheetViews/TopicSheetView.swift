@@ -17,6 +17,7 @@ struct TopicSheetView: View {
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var fileLoader : FileLoader
+  
     
     @State private var showAlert: Bool = false
     
@@ -382,6 +383,8 @@ struct TopicSheetView: View {
                 .padding([.trailing,])
                 .shadow(radius:1)
                 
+                
+                
                 .alert("Topic not available", isPresented: $showAlert) {
                     Button("OK", role: .cancel) {}
                 } message: {
@@ -396,7 +399,9 @@ struct TopicSheetView: View {
             }
             .padding(.vertical)
             .padding(.top,-9.5)
-        }.frame(width:1000)
+        }
+        .frame(width:1000)
+       
     }
 }
 

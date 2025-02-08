@@ -13,14 +13,16 @@ struct Feedback_XApp: App {
     @AppStorage("CreateshowSheet2") var CreateshowSheet2: Bool = false
     @AppStorage("AccountshowSheet1") var AccountshowSheet1: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
+    @AppStorage("AccountshowSheet3") var AccountshowSheet3: Bool = false
     @AppStorage("topicshowSheet1") var topicShowSheet1:Bool = false
     @AppStorage("topicshowSheet2") var topicShowSheet2:Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("selectedIndex")  var selectedIndex: Int?
     @AppStorage("selectedIndexActivity")  var selectedIndexActivity: Int?
     
-    
-    
+    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    @State private var showAccountAlert: Bool = false
+    @State private var topicSave: String = "iOS & iPadOS"
     
     @StateObject private var accountLoader = AccountLoader()
     @StateObject private var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
@@ -39,6 +41,32 @@ struct Feedback_XApp: App {
     var body: some Scene {
         Window("", id: "FeedbackXMain") {
             SidebarView()
+                .sheet(isPresented: $topicShowSheet1, onDismiss: { feedbackPython.stop() }) {
+                    TopicSheetView(showSheet : $topicShowSheet1, showSheet2: $CreateshowSheet1, topicSave: $topicSave)
+                        .environmentObject(accountLoader)
+                        .environmentObject(feedbackPython)
+                        .environmentObject(fileLoader)
+                }
+            
+                .sheet(isPresented: $CreateshowSheet1, onDismiss: { feedbackPython.stop() }) {
+                    CreateFeedbackSheetView(showSheet : $CreateshowSheet1, topicSave: $topicSave)
+                        .environmentObject(accountLoader)
+                        .environmentObject(feedbackPython)
+                        .environmentObject(fileLoader)
+                }
+                .alert("Not enough Accounts", isPresented: $showAccountAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    if accountLoader.accounts.count == 0 {
+                        Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) accounts.")}else{
+                            
+                            Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) account.")
+                        }
+                }
+                .sheet(isPresented: $AccountshowSheet3) {
+                    CreateAccountSheetView(showSheet: $AccountshowSheet3)
+                        .environmentObject(accountLoader)
+                }
                 .environmentObject(accountLoader)
                 .environmentObject(feedbackPython)
                 .environmentObject(cookiesPython)
@@ -75,7 +103,49 @@ struct Feedback_XApp: App {
                     selectedIndexActivity = -1
                 }
                 
-        }/*.commands {
+        } .commands {
+            
+            
+            
+            
+            CommandGroup(replacing: .newItem) {  // Replaces "New" section in the "File" menu
+                Button("New Feedback") {
+                    accountLoader.loadAccounts(from: accountURL)
+                    if accountLoader.accounts.count >= 2{
+                        if topicShowSheet1 == false && CreateshowSheet1 == false{
+                            topicShowSheet1 = true
+                        }
+                        
+                        
+                    }else{
+                            showAccountAlert = true
+                        }
+                    
+                }
+                .keyboardShortcut("n", modifiers: [.command]) // Adds a shortcut ⌘H
+                
+                
+                
+                Divider()
+                Button("Add Account") {
+                    
+                    if AccountshowSheet3 == false{
+                        AccountshowSheet3 = true
+                    }
+                    
+                }
+                .keyboardShortcut("a", modifiers: [.command])
+                
+               }
+            
+        }
+        
+        
+        
+        
+        
+        
+        /*.commands {
             CommandGroup(replacing: .newItem, addition: { })
         }*/
         Settings {
