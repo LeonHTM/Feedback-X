@@ -25,13 +25,14 @@ struct CreateFeedbackSheetView: View {
     @State private var showCookiesAlert: Bool = false
     @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Duplicate Feedback"
     @State private var submitSave: String = ""
-    @State private var iterationSave: Double = 1
+    @State private var iterationSave: Double = 10
     @State private var sliderSave: Double = 2
     @State private var sliderSave2: Double = 1
     @State private var shouldRewrite: Bool = false
     @State private var headless: Bool = false
     @State private var showAccountsAlertOne: Bool = false
     @State private var showAccountsAlertTwo: Bool = false
+    @State private var accountNumber: Double = 2
 
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var feedbackURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt")
@@ -315,7 +316,7 @@ struct CreateFeedbackSheetView: View {
                             .offset(x:3)
                             .padding(.top,-10)
                         }
-                        Text("Example: 5,3,4,5 (Options you chose after area and type)")
+                        Text("Example: 4,1,2 (Check out the User Guide 􀁝 for more information )")
                             .foregroundColor(.gray)
                             .font(.system(size: 12))
                             .padding(.top,-10)
@@ -497,6 +498,7 @@ struct CreateFeedbackSheetView: View {
                         Text("Automation")
                             .font(.title)
                             .fontWeight(.bold)
+                            
                         HStack(spacing:0){
                             if alreadyClicked == true && iterationSave < 2 {
                                 Image(systemName:"arrow.right.circle.fill")
@@ -518,6 +520,7 @@ struct CreateFeedbackSheetView: View {
                                 in: 2...iterationSave,
                                 step: 1.0
                             )
+                          
                             HStack{
                                 Text("2")
                                 Spacer()
@@ -539,11 +542,32 @@ struct CreateFeedbackSheetView: View {
                             }
                             .foregroundStyle(Color.secondary)
                             .padding(.top,-10)
+                          
                             .onAppear {
                                 accountLoader.loadAccounts(from: accountURL)
-                                iterationSave = max(1, Double(accountLoader.accounts.count))
+                                iterationSave = 10 //max(1, Double(accountLoader.accounts.count))
+                                accountNumber = Double(accountLoader.accounts.count)
                                 sliderSave = max(1, sliderSave)
                             }
+                            .onChange(of: sliderSave) {
+                                
+                                if sliderSave > accountNumber {
+                                   
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35 ) {
+                                            sliderSave = accountNumber
+                                        }
+                                }
+                            }
+                            Text("You currently have \(Int(accountNumber)) Apple Accounts, can therefore only duplicate max \(Int(accountNumber)) times.")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 12))
+                                .padding(.top,-10)
+                     
+                            
+                            
+                            
+                                
+                            
                         } else {
                             Slider(value: $sliderSave2, in: 1...2, step: 1.0)
                                 .disabled(true)
@@ -561,19 +585,21 @@ struct CreateFeedbackSheetView: View {
                             }
                             Text("What action do you want to take with the feedback?")
                                 .padding(.bottom,-10)
-                                .offset(x:3)
+                              
                         }
                         ZStack(alignment: .leading) {
                            
                             Picker("", selection: $submitSave) {
                                 Text("Submit Feedback").tag("submit")
                                 Text("Save Feedback").tag("save")
-                            }.labelsHidden()
-                            if submitSave.isEmpty {
+                            }
+                            .labelsHidden()
+                            .pickerStyle(InlinePickerStyle())
+                            /*if submitSave.isEmpty {
                                 Text("Please select the action you want to take with the feedback").padding(.leading, 7)
                                     .foregroundStyle(.secondary)
                                     .opacity(0.5)
-                            }
+                            }*/
                         }
 
                         /*Toggle(isOn: $shouldRewrite) {

@@ -34,7 +34,6 @@ struct RecentAccountsView: View {
 
 
         var body: some View {
-            VStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
                         if accountLoader.accounts.isEmpty {
@@ -67,19 +66,19 @@ struct RecentAccountsView: View {
                                                 Text(account.icloudmail.isEmpty ? "Untitled" : account.icloudmail)
                                                     .font(.headline)
                                                     .lineLimit(1)
-                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white : Color.primary)
+                                                    .foregroundStyle(selectedIndex == index ? Color.white : Color.primary)
                                                 
                                                 Spacer()
                                                 Text(account.country)
                                                     .font(.subheadline)
-                                                    .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                    .foregroundStyle(selectedIndex == index ? Color.white.opacity(0.7) : Color.secondary)
                                             }
                                             HStack{
                                                 if index <= 9 {
                                                     if account.cookies == "y" {
                                                         Text("Cookies: ✅")
                                                             .font(.subheadline)
-                                                            .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                            .foregroundStyle(selectedIndex == index ? Color.white.opacity(0.7) : Color.secondary)
                                                             .lineLimit(1)
                                                             .onAppear{
                                                                 
@@ -123,14 +122,14 @@ struct RecentAccountsView: View {
                                                     } else {
                                                         Text("Cookies: ❌")
                                                             .font(.subheadline)
-                                                            .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                            .foregroundStyle(selectedIndex == index ? Color.white.opacity(0.7) : Color.secondary)
                                                             .lineLimit(1)
                                                     }
                                                 }else{
                                                     
                                                     Text("This Account can't be used to duplicate feedback")
                                                         .font(.subheadline)
-                                                        .foregroundStyle(selectedAccount?.id == account.id ? Color.white.opacity(0.7) : Color.secondary)
+                                                        .foregroundStyle(selectedIndex == index ? Color.white.opacity(0.7) : Color.secondary)
                                                         .lineLimit(1)
                                                 }
                                                 
@@ -153,7 +152,7 @@ struct RecentAccountsView: View {
                                         }
                                         .padding([.leading, .trailing], 20)
                                         .padding(.vertical, 5)
-                                        .background(selectedAccount?.id == account.id ? Color.accentColor : Color.clear)
+                                        .background(selectedIndex == index ? Color.accentColor : Color.clear)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
                                         .contentShape(RoundedRectangle(cornerRadius: 8))
                                     }
@@ -211,14 +210,27 @@ struct RecentAccountsView: View {
                                     
                                     if index < accountLoader.accounts.count - 1 {
                                         Divider()
+                                    
                                     }
+                                    
                                 }
+                               
+                                
+                               
+
                             }
                         }
                     }
                     .padding([.leading, .trailing], 5)
+                    
+                    
+                    
+                    
                 }
-            }
+        
+            
+            
+            
             .onAppear {
                 accountLoader.loadAccounts(from: accountURL) // Ensure path is passed here
             }

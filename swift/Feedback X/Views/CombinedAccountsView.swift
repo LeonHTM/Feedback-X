@@ -10,8 +10,13 @@ import SwiftUI
 
 struct CombinedAccountsView: View {
    
-    @State private var selectedAccount: Account? = nil
-    @State private var selectedIndex: Int? = nil
+   
+    //@State private
+    
+    
+    @AppStorage("selectedIndex")  var selectedIndex: Int? 
+    @State private var selectedAccount: Account?
+    
     @State private var editingMode: Bool = false
     @EnvironmentObject var accountLoader: AccountLoader
     @Environment(\.colorScheme) var colorScheme
@@ -21,10 +26,10 @@ struct CombinedAccountsView: View {
             RecentAccountsView(selectedAccount: $selectedAccount, selectedIndex: $selectedIndex,editingMode:$editingMode)
                 .environmentObject(accountLoader)
                 .if(colorScheme == .light){
-                                    $0.background(Color.white)
-                                }
+                    $0.background(Color.white)
+                }
                 .frame(minWidth: 250, maxWidth: .infinity)
-
+            
             if let selectedIndex = selectedIndex, selectedIndex >= 0, selectedIndex < accountLoader.accounts.count {
                 // Show DetailAccountsView if the selectedIndex is valid
                 DetailAccountsView(
@@ -46,8 +51,8 @@ struct CombinedAccountsView: View {
                 )
                 .environmentObject(accountLoader)
                 .if(colorScheme == .light){
-                                    $0.background(Color.white)
-                                }
+                    $0.background(Color.white)
+                }
                 .frame(minWidth: 500, maxWidth: 1250)
             } else {
                 // Show CreateAccountView if no valid selectedIndex is available
@@ -58,7 +63,14 @@ struct CombinedAccountsView: View {
                     }
                     .frame(minWidth: 500, maxWidth: 1250, maxHeight: .infinity)
             }
-        }
+        }/*.onAppear{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                
+                
+                selectedIndex = -1
+            }
+            
+        }*/
     }
 }
 

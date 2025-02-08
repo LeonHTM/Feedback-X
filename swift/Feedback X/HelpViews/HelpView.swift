@@ -151,7 +151,7 @@ struct HelpView: View {
                 }
             }
             .listStyle(SidebarListStyle()) // Clean style
-            .frame(minWidth: 180)
+            .frame(minWidth: 190)
         } detail: {
             // Display the appropriate view based on the selected page
             
@@ -179,6 +179,7 @@ struct HelpView: View {
             }
             
         }
+        .frame(minWidth:1125,minHeight:600)
         .onDisappear{
             
             OpenHelpWindow.resetLaunchStatus()
@@ -218,7 +219,7 @@ struct HelpView: View {
 
         
         }
-        .frame(minWidth:1125,minHeight:600)
+        
         
         
         
