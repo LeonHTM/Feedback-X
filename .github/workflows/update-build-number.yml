@@ -1,0 +1,29 @@
+name: Auto Increment Build Number
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  increment_build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Increment build number
+        run: |
+          PLIST_FILE="/Users/leon/Desktop/Feedback-X/swift/Feedback-X-Info.plist"
+          CURRENT_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$PLIST_FILE")
+          NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $NEW_BUILD_NUMBER" "$PLIST_FILE"
+          echo "Updated build number to $NEW_BUILD_NUMBER"
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add path/to/your/project/Info.plist
+          git commit -m "Auto-incremented build number to $NEW_BUILD_NUMBER"
+          git push
