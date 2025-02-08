@@ -14,7 +14,6 @@ jobs:
 
       - name: Increment build number
         run: |
-          # Adjust the path to the Info.plist file based on where it's located in your repo
           PLIST_FILE="swift/Feedback-X-Info.plist"
           
           # Check if CFBundleVersion exists, if not, initialize it
@@ -34,6 +33,8 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Use GITHUB_TOKEN to authenticate
           git add swift/Feedback-X-Info.plist
           git commit -m "Auto-incremented build number to $NEW_BUILD_NUMBER"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/LeonHTM/Feedback-X.git
