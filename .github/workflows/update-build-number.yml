@@ -1,4 +1,4 @@
-name: Update Build Number
+name: Auto Increment Build Number
 
 on:
   push:
@@ -31,18 +31,24 @@ jobs:
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $NEW_BUILD_NUMBER" "$PLIST_FILE"
           echo "Updated build number to $NEW_BUILD_NUMBER"
 
-      - name: Fetch and merge changes
+      - name: Fetch and merge latest changes
         run: |
           git fetch origin
-          git reset --hard origin/main  # Resets local changes to match the remote main
-          git merge origin/main --no-edit # Merge the latest remote changes, automatically resolve conflicts
-          
-      - name: Commit and push changes
+          git reset --hard origin/main
+          git merge origin/main --no-edit
+
+      - name: Commit and push changes (if needed)
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Add changes, commit, and push
+
+          # Check if there are changes before committing
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes to commit, skipping push."
+            exit 0  # Exit successfully
+          fi
+
+          # Add, commit, and push only if there are changes
           git add swift/Feedback-X-Info.plist
           git commit -m "Auto-incremented build number to $NEW_BUILD_NUMBER"
           git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/LeonHTM/Feedback-X.git
