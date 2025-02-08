@@ -16,27 +16,25 @@ jobs:
         run: |
           PLIST_FILE="swift/Feedback-X-Info.plist"
           
-          #CFBundleShortVersionString-------------------------------------
-
-          # Check if CFBundleShortVersionString exists, if not, initialize it
+          # CFBundleShortVersionString (Stored as a String)
           if ! /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$PLIST_FILE"; then
-            echo "CFBundleShortVersionString does not exist. Setting it to 1."
-            /usr/libexec/PlistBuddy -c "Add :CFBundleShortVersionString integer 1" "$PLIST_FILE"
-            CURRENT_BUILD_NUMBER=1
+            echo "CFBundleShortVersionString does not exist. Setting it to '1.0'."
+            /usr/libexec/PlistBuddy -c "Add :CFBundleShortVersionString string '1.0'" "$PLIST_FILE"
+            CURRENT_VERSION="1.0"
           else
-            CURRENT_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$PLIST_FILE")
+            CURRENT_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$PLIST_FILE")
           fi
-          
-          NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
-          
-          # Update CFBundleShortVersionString without adding a new string entry
-          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $NEW_BUILD_NUMBER" "$PLIST_FILE"
-          echo "Updated build number to $NEW_BUILD_NUMBER"
 
+          # Extract major version (before ".") and increment
+          VERSION_PARTS=(${CURRENT_VERSION//./ }) # Split by '.'
+          MAJOR_VERSION=${VERSION_PARTS[0]}
+          NEW_VERSION="$((MAJOR_VERSION + 1)).0"
 
-          #CfBundleVersion---------------------------------
+          # Update CFBundleShortVersionString as a string
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString '$NEW_VERSION'" "$PLIST_FILE"
+          echo "Updated CFBundleShortVersionString to $NEW_VERSION"
 
-          # Check if CFBundleVersion exists, if not, initialize it
+          # CFBundleVersion (Stored as an Integer)
           if ! /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$PLIST_FILE"; then
             echo "CFBundleVersion does not exist. Setting it to 1."
             /usr/libexec/PlistBuddy -c "Add :CFBundleVersion integer 1" "$PLIST_FILE"
@@ -46,15 +44,10 @@ jobs:
           fi
           
           NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
-          
-          # Update CFBundleVersion without adding a new string entry
+
+          # Update CFBundleVersion as an integer
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $NEW_BUILD_NUMBER" "$PLIST_FILE"
-          echo "Updated build number to $NEW_BUILD_NUMBER"
-
-
-
-
-
+          echo "Updated CFBundleVersion to $NEW_BUILD_NUMBER"
 
       - name: Pull latest changes
         run: |
@@ -68,5 +61,5 @@ jobs:
           
           # Use the Personal Access Token (PAT) to authenticate
           git add swift/Feedback-X-Info.plist
-          git commit -m "Auto-incremented build number to $NEW_BUILD_NUMBER"
+          git commit -m "Auto-incremented build number to $NEW_BUILD_NUMBER and version to $NEW_VERSION"
           git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/LeonHTM/Feedback-X.git
