@@ -12,7 +12,7 @@ import SwiftUI
 struct VersionBuild {
     static func getAppVersion() -> String {
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            print("App Version: \(appVersion)") // Debug print
+          
             return appVersion
         }
         return "Unknown"
@@ -20,7 +20,7 @@ struct VersionBuild {
     
     static func getBuildNumber() -> String {
         if let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-            print("Build Number: \(buildNumber)") // Debug print
+        
             return buildNumber
         }
         return "Unknown"
