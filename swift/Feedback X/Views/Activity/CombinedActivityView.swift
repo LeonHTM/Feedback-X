@@ -10,7 +10,8 @@ import SwiftUI
 
 struct CombinedView: View {
     @State private var selectedFile: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)? = nil
-    @State private var selectedIndex: Int? = nil
+    @AppStorage("selectedIndexActivity") private var selectedIndex: Int?
+
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
     @EnvironmentObject var fileLoader: FileLoader

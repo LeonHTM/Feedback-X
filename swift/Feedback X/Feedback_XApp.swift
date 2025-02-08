@@ -17,6 +17,7 @@ struct Feedback_XApp: App {
     @AppStorage("topicshowSheet2") var topicShowSheet2:Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("selectedIndex")  var selectedIndex: Int?
+    @AppStorage("selectedIndexActivity")  var selectedIndexActivity: Int?
     
     
     
@@ -53,6 +54,8 @@ struct Feedback_XApp: App {
                     topicShowSheet1 = false
                     topicShowSheet2 = false
                     
+                    selectedIndex = -1
+                    selectedIndexActivity = -1
                     
                     
                   
@@ -69,6 +72,7 @@ struct Feedback_XApp: App {
                     topicShowSheet2 = false
                     
                     selectedIndex = -1
+                    selectedIndexActivity = -1
                 }
                 
         }/*.commands {
