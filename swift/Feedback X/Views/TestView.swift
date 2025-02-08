@@ -35,6 +35,7 @@ struct TestView: View {
         }
         Text(VersionBuild.getAppVersion())
         Text(String(VersionBuild.getBuildNumber()))
+        
     }
 }
 
