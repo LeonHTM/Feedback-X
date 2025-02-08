@@ -1,4 +1,4 @@
-name: Auto Increment Build Number
+name: Updated Build Number [Automatic]
 
 on:
   push:
