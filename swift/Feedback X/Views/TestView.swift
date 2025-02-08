@@ -33,8 +33,8 @@ struct TestView: View {
                 .foregroundColor(.white)
                 .cornerRadius(8)
         }
-        Text(String(sliderSave))
-        Text(String(accountNumber))
+        Text(VersionBuild.getAppVersion())
+        Text(String(VersionBuild.getBuildNumber()))
     }
 }
 
