@@ -26,6 +26,8 @@ jobs:
           fi
           
           NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
+          
+          # Update CFBundleVersion without adding a new string entry
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $NEW_BUILD_NUMBER" "$PLIST_FILE"
           echo "Updated build number to $NEW_BUILD_NUMBER"
 
@@ -34,7 +36,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Use GITHUB_TOKEN to authenticate
+          # Use the Personal Access Token (PAT) to authenticate
           git add swift/Feedback-X-Info.plist
           git commit -m "Auto-incremented build number to $NEW_BUILD_NUMBER"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/LeonHTM/Feedback-X.git
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/LeonHTM/Feedback-X.git
