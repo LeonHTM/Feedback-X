@@ -34,19 +34,19 @@ jobs:
           /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString '$NEW_VERSION'" "$PLIST_FILE"
           echo "Updated CFBundleShortVersionString to $NEW_VERSION"
 
-          # CFBundleVersion (Stored as an Integer)
+          # CFBundleVersion (Stored as a String)
           if ! /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$PLIST_FILE"; then
-            echo "CFBundleVersion does not exist. Setting it to 1."
-            /usr/libexec/PlistBuddy -c "Add :CFBundleVersion integer 1" "$PLIST_FILE"
-            CURRENT_BUILD_NUMBER=1
+            echo "CFBundleVersion does not exist. Setting it to '1'."
+            /usr/libexec/PlistBuddy -c "Add :CFBundleVersion string '1'" "$PLIST_FILE"
+            CURRENT_BUILD_NUMBER="1"
           else
             CURRENT_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$PLIST_FILE")
           fi
           
-          NEW_BUILD_NUMBER=$((CURRENT_BUILD_NUMBER + 1))
+          NEW_BUILD_NUMBER="$((CURRENT_BUILD_NUMBER + 1))"
 
-          # Update CFBundleVersion as an integer
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $NEW_BUILD_NUMBER" "$PLIST_FILE"
+          # Update CFBundleVersion as a string
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion '$NEW_BUILD_NUMBER'" "$PLIST_FILE"
           echo "Updated CFBundleVersion to $NEW_BUILD_NUMBER"
 
       - name: Pull latest changes
