@@ -23,3 +23,5 @@ git/*
 swift/Feedback X.xcodeproj/*
 !swift/Feedback X.xcodeproj/.gitkeep
 
+#Gimp
+FeedbackX_Gimp.xcf

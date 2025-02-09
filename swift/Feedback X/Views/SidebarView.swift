@@ -30,7 +30,7 @@ struct SidebarView: View {
 
     
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView{
             List(selection: $selectedPage) {
                 Section(header: Text("Feedback X")
                     .font(.system(size: 11))
@@ -51,8 +51,13 @@ struct SidebarView: View {
                             .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                     NavigationLink(value: "Cookies") {
-                        Label("Cookies", systemImage: "birthday.cake")
-                            .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
+                        Label{Text("Cookies")}icon:{
+                            
+                            Image("cookies")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 14, height: 14)
+                        }.frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
                     }
                     
                 }
@@ -64,7 +69,8 @@ struct SidebarView: View {
                 ) {
                     NavigationLink(value: "About") {
                         Label("About", systemImage: "questionmark.circle")
-                            .frame(maxWidth: .infinity, alignment: .leading) // Left-align label text
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            
                     }
                 }
                 

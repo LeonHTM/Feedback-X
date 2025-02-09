@@ -69,7 +69,14 @@ struct HelpSetUpCookiesView: View {
                     }
                     HStack(alignment:.top){
                         Text("2.")
-                        Text("Select 􁖩 Cookies in the Sidebar.")
+                        HStack(spacing:0){
+                            Text("Select ")
+                            Image("cookies")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 12, height: 12)
+                            Text(" Cookies in the Sidebar.")
+                        }
                     }
                     
                     Image(colorScheme == .light ? "Cookies1_Light" : "Cookies1_Dark")
