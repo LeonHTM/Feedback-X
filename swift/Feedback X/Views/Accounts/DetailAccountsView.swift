@@ -259,8 +259,11 @@ struct DetailAccountsView: View {
                                                         if accountToShow.appledev != "y" {
                                                             
                                                             Spacer()
-                                                            Link("Set up Apple Developer",
-                                                                 destination: URL(string: "https://developer.apple.com/account/")!).underline()
+                                                            Button(action: {}){
+                                                                
+                                                                Link("Set up Apple Developer",
+                                                                     destination: URL(string: "https://developer.apple.com/account/")!)
+                                                            }.buttonStyle(LinkButtonStyle())
                                                             
                                                             Spacer()
                                                             
@@ -502,4 +505,5 @@ struct DetailAccountsView: View {
             
         }
     }
+
 

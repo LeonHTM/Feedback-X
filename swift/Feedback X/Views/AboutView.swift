@@ -34,11 +34,24 @@ struct AboutView: View {
                         .rotationEffect(.degrees(rotationAngle))
                         .animation(.easeInOut(duration: 1), value: rotationAngle)
                 }.buttonStyle(PlainButtonStyle())
-                
+                (
+                    Text("Version: ") +
+                    Text(VersionBuild.getAppVersion()) +
+                    Text(" (") +
+                    Text(VersionBuild.getBuildNumber()) +
+                    Text(")")
+                    
+                    
+                )
+                .foregroundColor(.secondary)
+                .font(.system(size: 12))
                 Text("This App was made by LeonHTM")
                     .font(.title2)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
+                
+                
+                
                 
                 VStack(alignment: .leading, spacing: 10) {
                     
@@ -88,6 +101,37 @@ struct AboutView: View {
                                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                     .fill(Color.gray.opacity(0.1))
                             )
+                    
+                    Text("Report an Issue")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    Text("Please check the User Guide before submitting an Issue.")
+                        .padding(10)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                                RoundedRectangle(cornerRadius: 7)
+                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                    .fill(Color.gray.opacity(0.1))
+                            )
+                
+                    HStack {
+                        Spacer()
+                        Link("Report an Issue",
+                             destination: URL(string: "https://github.com/LeonHTM/Feedback-X/issues/new?template=Blank+issue")!)
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                            .padding(10)
+                            .background(
+                                    RoundedRectangle(cornerRadius: 7)
+                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                        .fill(Color.gray.opacity(0.1))
+                                )
+                        Spacer()
+                    }
+                    
+                    
+                    
                     
                     Text("Privacy")
                         .font(.headline)

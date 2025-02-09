@@ -14,13 +14,36 @@ struct HelpWelcomeView: View {
     @Binding var visibility: NavigationSplitViewVisibility
     @AppStorage("CreateshowSheet1") var CreateshowSheet1: Bool = false
     @AppStorage("CreateshowSheet2") var CreateshowSheet2: Bool = false
-    @AppStorage("AccountshowSheet1") var AccountshowSheet: Bool = false
+    @AppStorage("CreateshowSheet3") var CreateshowSheet3: Bool = false
+    @AppStorage("AccountshowSheet1") var AccountshowSheet1: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
     @AppStorage("AccountshowSheet3") var AccountshowSheet3: Bool = false
     @AppStorage("topicshowSheet1") var topicshowSheet1: Bool = false
     @AppStorage("topicshowSheet2") var topicshowSheet2: Bool = false
+    @AppStorage("topicshowSheet3") var topicshowSheet3: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("SideBarPage") var selectedPageSideBar: String = "Recent Activity"
+    
+    
+    func focusaway(){
+        selectedPageSideBar = "About"
+        CookiesshowSheet = false
+        
+        CreateshowSheet1 = false
+        CreateshowSheet2 = false
+        CreateshowSheet3 = false
+        
+        topicshowSheet1 = false
+        topicshowSheet2 = false
+        topicshowSheet3 = false
+        
+        AccountshowSheet1 = false
+        AccountshowSheet2 = false
+        AccountshowSheet3 = false
+        OpenHelpWindow.back()
+    }
+    
+    
     var body: some View {
         VStack{
             Divider()
@@ -85,16 +108,8 @@ struct HelpWelcomeView: View {
                     
                     Button(action:{
                         
-                        selectedPageSideBar = "About"
-                        CreateshowSheet2 = false
-                        AccountshowSheet = false
-                        AccountshowSheet2 = false
-                        CookiesshowSheet = false
-                        CreateshowSheet1 = false
-                        topicshowSheet1 = false
-                        topicshowSheet2 = false
-                        AccountshowSheet3 = false
-                        OpenHelpWindow.back()
+                        focusaway()
+                       
                     }){
                         HStack{
                             
@@ -115,16 +130,7 @@ struct HelpWelcomeView: View {
                     .lineLimit(nil)
                     Button(action:{
                         
-                        selectedPageSideBar = "About"
-                        CreateshowSheet2 = false
-                        CreateshowSheet1 = false
-                        AccountshowSheet = false
-                        AccountshowSheet2 = false
-                        CookiesshowSheet = false
-                        topicshowSheet1 = false
-                        topicshowSheet2 = false
-                        AccountshowSheet3 = false
-                        OpenHelpWindow.back()
+                        focusaway()
                     }){
                         HStack{
                             

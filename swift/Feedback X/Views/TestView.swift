@@ -17,6 +17,10 @@ struct TestView: View {
         Text(VersionBuild.getAppVersion())
         Text(String(VersionBuild.getBuildNumber()))
         
+        Button(action:{}){
+            
+            Text("yo")
+        }.buttonStyle(LinkButtonStyle())
     }
 }
 

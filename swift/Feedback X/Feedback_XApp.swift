@@ -11,11 +11,13 @@ struct Feedback_XApp: App {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 0
     @AppStorage("CreateshowSheet1") var CreateshowSheet1: Bool = false
     @AppStorage("CreateshowSheet2") var CreateshowSheet2: Bool = false
+    @AppStorage("CreateshowSheet3") var CreateshowSheet3: Bool = false
     @AppStorage("AccountshowSheet1") var AccountshowSheet1: Bool = false
     @AppStorage("AccountshowSheet2") var AccountshowSheet2: Bool = false
     @AppStorage("AccountshowSheet3") var AccountshowSheet3: Bool = false
     @AppStorage("topicshowSheet1") var topicShowSheet1:Bool = false
     @AppStorage("topicshowSheet2") var topicShowSheet2:Bool = false
+    @AppStorage("topicshowSheet3") var topicShowSheet3:Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("selectedIndex")  var selectedIndex: Int?
     @AppStorage("selectedIndexActivity")  var selectedIndexActivity: Int?
@@ -35,11 +37,19 @@ struct Feedback_XApp: App {
         
         CreateshowSheet2 = false
         CreateshowSheet1 = false
+        CreateshowSheet3 = false
+        
         AccountshowSheet1 = false
-        CookiesshowSheet = false
         AccountshowSheet2 = false
+        AccountshowSheet3 = false
+        
+        CookiesshowSheet = false
+        
         topicShowSheet1 = false
         topicShowSheet2 = false
+        topicShowSheet3 = false
+        
+        
         
         selectedIndex = -1
         selectedIndexActivity = -1
@@ -57,15 +67,15 @@ struct Feedback_XApp: App {
     var body: some Scene {
         Window("", id: "FeedbackXMain") {
             SidebarView()
-                .sheet(isPresented: $topicShowSheet1, onDismiss: { feedbackPython.stop() }) {
-                    TopicSheetView(showSheet : $topicShowSheet1, showSheet2: $CreateshowSheet1, topicSave: $topicSave)
+                .sheet(isPresented: $topicShowSheet3, onDismiss: { feedbackPython.stop() }) {
+                    TopicSheetView(showSheet : $topicShowSheet3, showSheet2: $CreateshowSheet3, topicSave: $topicSave)
                         .environmentObject(accountLoader)
                         .environmentObject(feedbackPython)
                         .environmentObject(fileLoader)
                 }
             
-                .sheet(isPresented: $CreateshowSheet1, onDismiss: { feedbackPython.stop() }) {
-                    CreateFeedbackSheetView(showSheet : $CreateshowSheet1, topicSave: $topicSave)
+                .sheet(isPresented: $CreateshowSheet3, onDismiss: { feedbackPython.stop() }) {
+                    CreateFeedbackSheetView(showSheet : $CreateshowSheet3, topicSave: $topicSave)
                         .environmentObject(accountLoader)
                         .environmentObject(feedbackPython)
                         .environmentObject(fileLoader)
@@ -103,6 +113,17 @@ struct Feedback_XApp: App {
                 
         } .commands {
             
+            CommandGroup(replacing: CommandGroupPlacement.appInfo) {
+                Button(action: {
+                    
+                selectedPageSideBar = "About"
+                OpenHelpWindow.back()
+                    
+                }) {
+                    Text("About Feedback X")
+                }
+            }
+            
             
             
             
@@ -110,8 +131,8 @@ struct Feedback_XApp: App {
                 Button("New Feedback") {
                     accountLoader.loadAccounts(from: accountURL)
                     if accountLoader.accounts.count >= 2{
-                        if topicShowSheet1 == false && CreateshowSheet1 == false{
-                            topicShowSheet1 = true
+                        if topicShowSheet3 == false && CreateshowSheet3 == false{
+                            topicShowSheet3 = true
                         }
                         
                         
