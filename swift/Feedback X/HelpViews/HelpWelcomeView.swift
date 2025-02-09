@@ -23,6 +23,7 @@ struct HelpWelcomeView: View {
     @AppStorage("topicshowSheet3") var topicshowSheet3: Bool = false
     @AppStorage("CookiesshowSheet") var CookiesshowSheet: Bool = false
     @AppStorage("SideBarPage") var selectedPageSideBar: String = "Recent Activity"
+    @AppStorage("aboutSelectedPage") var aboutSelectedPage: String = "Privacy"
     
     
     func focusaway(){
@@ -109,6 +110,7 @@ struct HelpWelcomeView: View {
                     Button(action:{
                         
                         focusaway()
+                        
                        
                     }){
                         HStack{
@@ -131,6 +133,7 @@ struct HelpWelcomeView: View {
                     Button(action:{
                         
                         focusaway()
+                        aboutSelectedPage = "Legal"
                     }){
                         HStack{
                             

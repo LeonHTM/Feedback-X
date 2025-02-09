@@ -213,7 +213,7 @@ struct DetailActivityView: View {
                     .alert(isPresented: $showDeleteAlert) {
                                             Alert(
                                                 title: Text("Delete \(fileToShow.title)?"),
-                                                message: Text("Are you sure you want to delete Account \(fileToShow.name)?"),
+                                                message: Text("Are you sure you want to delete FB\(fileToShow.name.prefix(fileToShow.name.count - 4))?"),
                                                 primaryButton: .destructive(Text("Confirm")) {
                                                     
                                                     fileLoader.deleteFile(named:fileToShow.name)

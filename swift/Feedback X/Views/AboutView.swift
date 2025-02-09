@@ -14,7 +14,7 @@ struct AboutView: View {
     @AppStorage("rotationAngle") private var rotationAngle: Double = 0
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.openURL) var openURL
-    @State private var selectedPage: String = "Privacy"
+    @AppStorage("aboutSelectedPage") var selectedPage: String = "Privacy"
     @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Welcome"
     
     
@@ -24,7 +24,7 @@ struct AboutView: View {
                 Button(action: {
                     clickCount += 1
                     if clickCount == 10 {
-                        rotationAngle += Double.random(in: -360...360)
+                        rotationAngle += 900//Double.random(in: 180...360)
                         clickCount = 0
                     }
                 }) {
@@ -78,7 +78,7 @@ struct AboutView: View {
                         )
                         .foregroundColor(.white)
                         .shadow(radius:3)
-                        .contentShape(Rectangle())
+                        //.contentShape(Rectangle())
                         
                         Divider()
                         Button(action:{
@@ -97,7 +97,7 @@ struct AboutView: View {
                         .foregroundColor(Color.white)
                         /*.clipShape(selectedPage == "Open Source" ? RoundedRectangle(cornerRadius: 4) : RoundedRectangle(cornerRadius: 0) )*/
                         .shadow(radius:3)
-                        .contentShape(Rectangle())
+                        //.contentShape(Rectangle())
                         
                         
                         Divider()
@@ -122,7 +122,7 @@ struct AboutView: View {
                         )
                         .foregroundColor(.white)
                         .shadow(radius:3)
-                        .contentShape(Rectangle())
+                        //.contentShape(Rectangle())
                         
                         
                         
@@ -256,7 +256,9 @@ struct AboutView: View {
             }
             .padding([.leading,.trailing,.bottom],20)
             
-        }.if(colorScheme == .light){
+        }
+        .frame(minWidth:300)
+        .if(colorScheme == .light){
             $0.background(Color.white)
         }
     }

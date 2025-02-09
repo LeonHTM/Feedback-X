@@ -58,7 +58,7 @@ struct RecentActivityView: View {
                             .alert(isPresented: $showDeleteAlert) {
                                 Alert(
                                     title: Text("Delete \(selectedFile?.title ?? "Unknown")?"),
-                                    message: Text("Are you sure you want to delete feedback \(selectedFile?.name ?? "Unknown")?"),
+                                    message: Text("Are you sure you want to delete feedback FB\(selectedFile?.name.dropLast(4) ?? "Unknown")?"),
                                     primaryButton: .destructive(Text("Confirm")) {
                                         
                                         fileLoader.deleteFile(named:selectedFile?.name ?? "yo")
