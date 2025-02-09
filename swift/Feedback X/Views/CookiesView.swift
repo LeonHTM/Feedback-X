@@ -9,45 +9,49 @@
 import SwiftUI
 
 struct CookiesView: View {
+    
+    // Environment objects for account and cookies management
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var cookiesPython: CookiesPython
-    
-    
-    
+
+    // Environment variable for the color scheme (light or dark mode)
     @Environment(\.colorScheme) var colorScheme
+
+    // State variables for managing UI and user interactions
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     @State private var isEditing: Bool = false
     @State private var waitingTime = 30.0
     @State private var waitingTimeInt = 30
-    @State private var extraWaiting:Bool = false
+    @State private var extraWaiting: Bool = false
     @State private var maxSlider: Double = 60
-    @State private var stepSlider:Double = 1
+    @State private var stepSlider: Double = 1
     @State private var buttonActive: Bool = false
     @AppStorage("CookiesshowSheet") var showSheet: Bool = false
-    
     @State private var cookiesList: [Int] = []
-    
+
+    // Computed property to check if the button should be enabled
     private var isButtonAllowed: Bool {
-            return !cookiesList.isEmpty
-        }
-    
-    
+        return !cookiesList.isEmpty
+    }
+
+    // AppStorage property for storing developer settings
     @AppStorage("DeveloperSettings") var developerSettings: Bool = false
-    
+
     var body: some View {
-        VStack(alignment:.leading,spacing: 0) { // Wrap the entire layout
+        VStack(alignment: .leading, spacing: 0) {
             ScrollView {
                 if !accountLoader.accounts.isEmpty {
                     VStack(alignment: .leading, spacing: 15) {
+                        // Basic Information Section
                         Text("Basic Information")
                             .font(.title3)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading,5)
-                            .padding(.top,15)
+                            .padding(.leading, 5)
+                            .padding(.top, 15)
                         
-                        
-                        VStack(alignment:.leading){
+                        // Account Selection Section
+                        VStack(alignment: .leading) {
                             Text("Select accounts you want to save cookies for")
                                 .font(.title3)
                                 .fontWeight(.bold)
@@ -58,9 +62,8 @@ struct CookiesView: View {
                                 if index <= 9 {
                                     ZStack {
                                         if index == accountLoader.accounts.count - 1 || index == 9 {
-                                            RoundedRectangle(cornerRadius:  0)
+                                            RoundedRectangle(cornerRadius: 0)
                                                 .fill(account.appledev != "y" ? Color.red.opacity(0.2) : (cookiesList.contains(index) ? Color.gray.opacity(0.2) : Color.clear))
-                                            
                                                 .clipShape(
                                                     .rect(
                                                         topLeadingRadius: 0,
@@ -70,23 +73,14 @@ struct CookiesView: View {
                                                     )
                                                 )
                                                 .padding(.top, -5)
-                                                .padding(.bottom,-4)
+                                                .padding(.bottom, -4)
                                                 .padding(.horizontal, -15)
-                                            
-                                        }else{
-                                            
-                                            
-                                            RoundedRectangle(cornerRadius:  0)
+                                        } else {
+                                            RoundedRectangle(cornerRadius: 0)
                                                 .fill(account.appledev != "y" ? Color.red.opacity(0.2) : (cookiesList.contains(index) ? Color.gray.opacity(0.2) : Color.clear))
                                                 .padding(.top, -5)
-                                            
                                                 .padding(.horizontal, -15)
-                                            
-                                            
-                                            
                                         }
-                                        
-                                        
                                         
                                         VStack {
                                             HStack {
@@ -119,14 +113,9 @@ struct CookiesView: View {
                                                 }
                                                 
                                                 Spacer()
-                                                /*
-                                                 if account.cookies == "n" && !cookiesList.contains(index) && account.appledev == "y" {
-                                                 Image(systemName:"lightbulb.fill")
-                                                 .foregroundStyle(Color.yellow)
-                                                 Text("Cookie set up recommended")
-                                                 }*/
+                                                
                                                 if account.appledev != "y" {
-                                                    Image(systemName:"exclamationmark.circle.fill")
+                                                    Image(systemName: "exclamationmark.circle.fill")
                                                         .foregroundStyle(Color.red)
                                                     Text("Set up Apple Developer first")
                                                 }
@@ -143,34 +132,30 @@ struct CookiesView: View {
                                                 }
                                             }
                                             
-                                            
                                             if index != accountLoader.accounts.count - 1 && index != 9 {
                                                 Divider()
                                             }
                                         }
-                                        
                                     }
                                 }
-                             
                             }
-
-
-
                         }
-                        .padding([.top,.leading,.trailing])
-                        .padding(.bottom,5)
+                        .padding([.top, .leading, .trailing])
+                        .padding(.bottom, 5)
                         .background(
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                .fill(Color.gray.opacity(0.1)))
+                                .fill(Color.gray.opacity(0.1))
+                        )
                         
+                        // Details Section
                         Text("Details")
                             .font(.title3)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading,5)
+                            .padding(.leading, 5)
                         
-                        VStack(alignment:.leading){
+                        VStack(alignment: .leading) {
                             Text("Please select the waiting time")
                                 .font(.title3)
                                 .fontWeight(.bold)
@@ -187,27 +172,22 @@ struct CookiesView: View {
                             } onEditingChanged: { editing in
                                 isEditing = editing
                             }
-                            HStack(spacing:0) {
-                                
+                            HStack(spacing: 0) {
                                 Text("You will have ")
                                 Text("\(Int(waitingTime))")
-                                    .foregroundStyle(isEditing ? ColorForWaitingTime.colorMatch(waitingTime,maxTime:maxSlider) : Color.primary)
-                            
-                            
-                                Text(" seconds. In this time you will recieve an SMS with a 6 digit code from Apple and you will have to enter it in the app.")
-                                
+                                    .foregroundStyle(isEditing ? ColorForWaitingTime.colorMatch(waitingTime, maxTime: maxSlider) : Color.primary)
+                                Text(" seconds. In this time you will receive an SMS with a 6-digit code from Apple and you will have to enter it in the app.")
                             }
                             Toggle(isOn: $extraWaiting) {
                                 Text("More time")
                             }.onChange(of: extraWaiting) {
-                                if extraWaiting == true{
+                                if extraWaiting == true {
                                     maxSlider = 300
                                     stepSlider = 5
-                                    
-                                }else{
+                                } else {
                                     maxSlider = 60
                                     stepSlider = 1
-                                    if waitingTime > maxSlider{
+                                    if waitingTime > maxSlider {
                                         waitingTime = maxSlider
                                     }
                                 }
@@ -217,91 +197,69 @@ struct CookiesView: View {
                         .background(
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                .fill(Color.gray.opacity(0.1)))
+                                .fill(Color.gray.opacity(0.1))
+                        )
                         
+                        // Running Section
                         Text("Running")
                             .font(.title3)
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading,5)
-                        VStack{
+                            .padding(.leading, 5)
+                        VStack {
+                            Text("Please use the question mark at the bottom left if you are not sure what you are doing or if you don't understand why this step is necessary and how it is performed.")
+                                .frame(maxWidth: .infinity)
                             
-                            Text("Please use the question mark at the bottom left if you are not sure what you are doing or if you dont understand why this step is necessary and how it is performed.")
-                                .frame(maxWidth:.infinity)
-                            
-                            
-                            Button(action:{
+                            Button(action: {
                                 showSheet.toggle()
                                 waitingTimeInt = Int(waitingTime)
-                            }){
+                            }) {
                                 Text("Start")
                             }
                             .disabled(!isButtonAllowed)
-                            .sheet(isPresented: $showSheet, onDismiss: {cookiesPython.stop()}) {
-                                CookiesSheetView(showSheet: $showSheet,selectedList: $cookiesList, waitingTime: $waitingTimeInt )
+                            .sheet(isPresented: $showSheet, onDismiss: { cookiesPython.stop() }) {
+                                CookiesSheetView(showSheet: $showSheet, selectedList: $cookiesList, waitingTime: $waitingTimeInt)
                                     .environmentObject(accountLoader)
                                     .environmentObject(cookiesPython)
-                                  
-                                
                             }
                         }
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                                .fill(Color.gray.opacity(0.1)))
-                        
-                       
-                        
-                        
+                                .fill(Color.gray.opacity(0.1))
+                        )
                     }
-                    .padding(.bottom,15)
-                    .padding(.horizontal,20)
+                    .padding(.bottom, 15)
+                    .padding(.horizontal, 20)
                     .frame(maxWidth: .infinity)
-                }else{
-                    
+                } else {
                     Text("No Accounts yet. Please add accounts before you set up cookies")
                         .frame(maxWidth: .infinity, alignment: .center)
                         .foregroundStyle(Color.secondary)
                         .padding()
                 }
-                
-                
-                
-                
-            }.onAppear {
-                accountLoader.loadAccounts(from: accountURL)
-                
             }
-            
-            
+            .onAppear {
+                // Load accounts when the view appears
+                accountLoader.loadAccounts(from: accountURL)
+            }
             
             HStack {
                 Spacer()
                 
-                
-                
-                if developerSettings == true{
-                    
+                if developerSettings == true {
                     Text("DevDetails: List: \(cookiesList.map { String($0) }.joined(separator: ", ")), WaitingTime: \(String(waitingTimeInt))")
                         .foregroundStyle(Color.secondary)
-                    
                     Spacer()
-                    
-                    
-                    
                 }
             }
-              
-            
-          
-            
         }
-        .if(colorScheme == .light){
-                            $0.background(Color.white)
-                        }
-        .frame(minWidth:1000)
-        .frame(maxWidth: .infinity)// Ensures consistent parent view width
+        .if(colorScheme == .light) {
+            $0.background(Color.white)
+        }
+        .frame(minWidth: 1000)
+        .frame(maxWidth: .infinity) // Ensures consistent parent view width
     }
 }
 

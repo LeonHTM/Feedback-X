@@ -10,39 +10,41 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    // State variables for managing alerts
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
     @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
     
+    // Environment objects for account and file loaders
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var fileLoader: FileLoader
 
-
+    // AppStorage properties for storing user preferences
     @AppStorage("syncOpen") var syncOpen: Bool = false
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @AppStorage("HasShownAlert") var hasShownAlert: Bool = false
     @AppStorage("rotationAngle") var rotationAngle: Double = 0
     @AppStorage("DeveloperSettings") var developerSettings: Bool = false
-    
 
     var body: some View {
-        TabView{
+        TabView {
             Tab("Main", systemImage: "gear") {
                 Form {
                     // Synchronisation Section
-                    /*VStack(alignment: .leading,spacing:10) {
+                    /*
+                    VStack(alignment: .leading, spacing: 10) {
                         Text("Synchronisation")
                             .fontWeight(.bold)
                         Toggle(isOn: $syncOpen) {
                             Text("Sync to Open Feedback Repository")
                         }
-                    
                         .padding(.leading, 10)
-                    }*/
+                    }
+                    */
                     
                     // Resets Section
-                    VStack(alignment: .leading,spacing:10) {
+                    VStack(alignment: .leading, spacing: 10) {
                         Text("Resets")
                             .fontWeight(.bold)
                         
@@ -54,7 +56,6 @@ struct SettingsView: View {
                         }) {
                             Text("Reset Warnings")
                         }
-                   
                         .padding(.leading, 10)
                         
                         Text("This will show all Warnings again")
@@ -68,7 +69,6 @@ struct SettingsView: View {
                         }) {
                             Text("Reset Accounts")
                         }
-              
                         .padding(.leading, 10)
                         
                         Text("All Accounts will be deleted.")
@@ -82,23 +82,24 @@ struct SettingsView: View {
                         }) {
                             Text("Reset Feedbacks")
                         }
- 
                         .padding(.leading, 10)
                         
                         Text("All sent Feedbacks will be deleted from the App. (Only from the App).")
                             .padding(.leading, 10)
                     }
-                    VStack(alignment:.leading) {
+                    
+                    // Developer Details Section
+                    VStack(alignment: .leading) {
                         Text("Developer Details")
                             .fontWeight(.bold)
-                            .offset(x:-5)
+                            .offset(x: -5)
                         Toggle(isOn: $developerSettings) {
                             Text("Show Developer Details")
-                        }.padding(.horizontal, 5)
+                        }
+                        .padding(.horizontal, 5)
                         Spacer()
-                        
-                    }.padding(10)
-                    
+                    }
+                    .padding(10)
                     
                     Spacer()
                 }
@@ -109,40 +110,25 @@ struct SettingsView: View {
                         title: Text(alertTitle),
                         message: Text(alertMessage),
                         primaryButton: .destructive(Text("Confirm")) {
-                            if alertTitle == "Reset Warnings"{
-                                
+                            if alertTitle == "Reset Warnings" {
                                 appLaunchCounter = 0
                                 hasShownAlert = false
                                 rotationAngle = 0
-                        
                             }
                             if alertTitle == "Reset Accounts" {
-                            
-                                accountLoader.loadAccounts(from:accountURL)
-                                accountLoader.deleteAll(from:accountURL)
-                               
-                                
-                                
-                                
-                                
+                                accountLoader.loadAccounts(from: accountURL)
+                                accountLoader.deleteAll(from: accountURL)
                             }
-                            if alertTitle == "Reset Feedbacks"{
-                                
-                                
+                            if alertTitle == "Reset Feedbacks" {
                                 fileLoader.deleteAllFiles()
-                                
-                                
-                                
-                                
                             }
-                            // Handle confirmation action here
+                            // Handle confirmation action
                             print("\(alertTitle) confirmed.")
                         },
                         secondaryButton: .cancel()
                     )
                 }
             }
-            
         }
     }
 }
