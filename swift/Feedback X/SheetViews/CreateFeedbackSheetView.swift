@@ -34,8 +34,15 @@ struct CreateFeedbackSheetView: View {
     @State private var showAccountsAlertTwo: Bool = false
     @State private var accountNumber: Double = 2
 
-    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
-    @State private var feedbackURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt")
+    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    var accountURL: URL {
+        URL(fileURLWithPath: accountsPath)
+    }
+    @AppStorage("contentPath") var contentPath: String = "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt"
+    var contentURL: URL {
+        URL(fileURLWithPath: contentPath)
+    }
+    //@State private var feedbackURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/current_fdb/content.txt")
     
     @State private var finalString: String = ""
     @State private var pythonOutPutString: String = ""
@@ -702,7 +709,7 @@ struct CreateFeedbackSheetView: View {
                         
                         if isSubmitEnabled{
                             do {
-                                try StringToFile.writeToFile(input: feedbackDescription, filePath: feedbackURL)
+                                try StringToFile.writeToFile(input: feedbackDescription, filePath: contentURL)
                             } catch {
                                 print("Failed to write file: \(error)")
                             }

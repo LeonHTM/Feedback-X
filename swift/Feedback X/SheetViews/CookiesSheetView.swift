@@ -12,7 +12,10 @@ import Foundation
 struct CookiesSheetView: View {
     
     // Path to the accounts.json file
-    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    var accountURL: URL {
+        URL(fileURLWithPath: accountsPath)
+    }
     
     // AppStorage for selected help page
     @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Set up Cookies"

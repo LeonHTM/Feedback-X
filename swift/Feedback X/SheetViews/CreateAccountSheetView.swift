@@ -3,7 +3,10 @@ import SwiftUI
 struct CreateAccountSheetView: View {
     
     // URL to store account information
-    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    var accountURL: URL {
+        URL(fileURLWithPath: accountsPath)
+    }
     
     @EnvironmentObject var accountLoader: AccountLoader
     @AppStorage("helpSelectedPage") var helpSelectedPage: String = "Create Accounts"

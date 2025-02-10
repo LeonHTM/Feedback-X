@@ -119,15 +119,6 @@ struct HelpCreateAccountView: View {
                         Text("Sign up for the Apple Developer Programm at https://developer.apple.com/account#.")
                     }
                     Divider()
-                    /*Text("Websites mentioned on this page:")
-                        .fontWeight(.bold)
-                    Link("duckduckgo.com/email",destination: URL(string:"https://duckduckgo.com/email/")!)
-                        .padding(.vertical,-5)
-                    Link("duckduckgo.com/email/settings",destination: URL(string:"https://duckduckgo.com/email/settings")!)
-                    Link("account.apple.com/account#",destination: URL(string:"https://account.apple.com/account#")!)
-                        .padding(.vertical,-5)
-                    Link("developer.apple.com/account#",destination: URL(string:"https://developer.apple.com/account#")!)
-                    Divider()*/
                     Text("See also:")
                         .fontWeight(.bold)
                     Button(action:{

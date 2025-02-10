@@ -16,7 +16,11 @@ struct DetailAccountsView: View {
         
         
         public let onDelete: () -> Void
-        let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    
+        @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+        var accountURL: URL {
+            URL(fileURLWithPath: accountsPath)
+        }
         
         @State private var hoveredPassword: Bool = false
         @State private var showDeleteAlert: Bool = false

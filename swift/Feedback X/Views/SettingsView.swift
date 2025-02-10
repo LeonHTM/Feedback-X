@@ -14,7 +14,10 @@ struct SettingsView: View {
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
-    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    var accountURL: URL {
+            URL(fileURLWithPath: accountsPath)
+        }
     
     // Environment objects for account and file loaders
     @EnvironmentObject var accountLoader: AccountLoader

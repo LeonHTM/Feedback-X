@@ -31,7 +31,19 @@ struct Feedback_XApp: App {
     @AppStorage("aboutSelectedPage") var selectedPageAbout: String = "Privacy"
     
     // File paths for external resources
-    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    var accountURL: URL {
+        URL(fileURLWithPath: accountsPath)
+    }
+    
+    @AppStorage("savesPath") var savesPath: String = "/Users/leon/Desktop/Feedback-X/python/saves"
+    var savesURL: URL {
+            URL(fileURLWithPath: savesPath)
+        }
+    
+    @AppStorage("mainPath") var mainPath: String = "/Users/leon/Desktop/Feedback-X/python/code/main.py"
+    @AppStorage("cookiesPath") var cookiesPath: String = "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py"
+    
     
     // State variables for UI control
     @State private var showAccountAlert: Bool = false
@@ -39,9 +51,9 @@ struct Feedback_XApp: App {
     
     // State objects for managing data and scripts
     @StateObject private var accountLoader = AccountLoader()
-    @StateObject private var feedbackPython = FeedbackPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main.py")
-    @StateObject private var cookiesPython = CookiesPython(scriptPath: "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py")
-    @StateObject private var fileLoader = FileLoader(folderURL: URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/saves"))
+    @StateObject private var feedbackPython: FeedbackPython
+    @StateObject private var cookiesPython: CookiesPython
+    @StateObject private var fileLoader: FileLoader
     
     var fullDelete: Bool = true
     
@@ -65,6 +77,12 @@ struct Feedback_XApp: App {
     
     // App initialization
     init() {
+        
+        //Load App Storage into State Objects 
+        _fileLoader = StateObject(wrappedValue: FileLoader(folderURL: URL(fileURLWithPath: UserDefaults.standard.string(forKey: "savesPath") ?? "/Users/leon/Desktop/Feedback-X/python/saves")))
+        _feedbackPython = StateObject(wrappedValue: FeedbackPython(scriptPath: UserDefaults.standard.string(forKey: "mainPath") ?? "/Users/leon/Desktop/Feedback-X/python/code/main.py"))
+        _cookiesPython = StateObject(wrappedValue: CookiesPython(scriptPath: UserDefaults.standard.string(forKey: "cookiesPath") ?? "/Users/leon/Desktop/Feedback-X/python/code/main_cookies.py"))
+            
         appLaunchCounter += 1
         print("App has launched \(appLaunchCounter) times")
     }

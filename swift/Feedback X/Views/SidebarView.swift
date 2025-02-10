@@ -28,7 +28,11 @@ struct SidebarView: View {
     @Environment(\.colorScheme) var colorScheme
     
     // File path for accounts data
-    let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    var accountURL: URL {
+        URL(fileURLWithPath: accountsPath)
+    }
+    
     
     var body: some View {
         NavigationSplitView {

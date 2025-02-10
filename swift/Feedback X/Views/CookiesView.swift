@@ -18,7 +18,10 @@ struct CookiesView: View {
     @Environment(\.colorScheme) var colorScheme
 
     // State variables for managing UI and user interactions
-    @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    var accountURL: URL {
+            URL(fileURLWithPath: accountsPath)
+        }
     @State private var isEditing: Bool = false
     @State private var waitingTime = 30.0
     @State private var waitingTimeInt = 30

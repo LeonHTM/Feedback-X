@@ -12,7 +12,10 @@ struct RecentAccountsView: View {
     
         
         @AppStorage("AccountshowSheet1") var showSheet: Bool = false
-        @State private var accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
+        @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+        var accountURL: URL {
+            URL(fileURLWithPath: accountsPath)
+        }
         @State private var showDeleteAlert: Bool = false
         
         @EnvironmentObject var accountLoader: AccountLoader
