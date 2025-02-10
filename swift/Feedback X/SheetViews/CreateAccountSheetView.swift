@@ -22,6 +22,7 @@ struct CreateAccountSheetView: View {
     @State private var isEmailInvalid = false
     @State private var debounceWorkItem: DispatchWorkItem?
     @State private var alreadyClicked: Bool = false
+    @State private var isSubmitEnabled: Bool = false
     
     @State var dateSave = Calendar.current.date(byAdding: .day, value: 30, to: Date())?
         .formatted(Date.FormatStyle()
@@ -39,9 +40,50 @@ struct CreateAccountSheetView: View {
     @Binding var showSheet: Bool
     @Environment(\.colorScheme) var colorScheme
     
-    private var isSubmitEnabled: Bool {
-        return !icloudmailSave.isEmpty && !passwordSave.isEmpty && !cookiesSave.isEmpty && !appledevSave.isEmpty && !countrySave.isEmpty
+    func submitTest(){
+        if !icloudmailSave.isEmpty && !passwordSave.isEmpty  && !appledevSave.isEmpty && !countrySave.isEmpty{
+            
+            isSubmitEnabled = true
         }
+            
+        }
+    
+    func save(){
+        alreadyClicked = true
+        submitTest()
+        
+        
+        if isSubmitEnabled == true{
+            
+            dateSave = nil
+            
+            print(String(isSubmitEnabled))
+            let newAccount = Account(
+                account: icloudmailSave,
+                icloudmail: icloudmailSave,
+                password: passwordSave,
+                relay: icloudmailSave,
+                country: countrySave,
+                appledev: appledevSave,
+                cookies: "n",
+                note: noteSave,
+                date: dateSave ?? "No cookies added yet"
+            )
+            
+            if accountLoader.addAccount(newAccount, to: accountURL) == false {
+                showDuplicateAlert = true
+                print("duplicate")
+            } else {
+                showSheet = false
+            }
+        }else{
+            print("Submit Allowed \(String(isSubmitEnabled))")
+            print("Already Clicked \(String(alreadyClicked))")
+        }
+        
+        
+        
+    }
 
     var body: some View {
         ScrollView {
@@ -204,7 +246,7 @@ struct CreateAccountSheetView: View {
         }
         .padding(.bottom,-9.5)
         .onAppear {
-                        accountLoader.loadAccounts(from: accountURL) 
+                        accountLoader.loadAccounts(from: accountURL)
                     }
         .alert("Error", isPresented: $showAlert) {
             Button("OK", role: .cancel) {}
@@ -250,37 +292,7 @@ struct CreateAccountSheetView: View {
             
             
             Button(action: {
-                
-                
-                alreadyClicked = true
-                
-                if isSubmitEnabled == true{
-                    
-                    if cookiesSave != "y"{
-                        
-                        dateSave = nil
-                        
-                    }
-                    
-                    
-                    let newAccount = Account(
-                        account: icloudmailSave,
-                        icloudmail: icloudmailSave,
-                        password: passwordSave,
-                        relay: icloudmailSave,
-                        country: countrySave,
-                        appledev: appledevSave,
-                        cookies: "n",
-                        note: noteSave,
-                        date: dateSave ?? "No cookies added yet"
-                    )
-                    
-                    if accountLoader.addAccount(newAccount, to: accountURL) == false {
-                        showDuplicateAlert = true
-                    } else {
-                        showSheet = false
-                    }
-                }
+                save()
             }) {
                 Text("Save")
                     .padding(.vertical,6.3)
@@ -304,6 +316,18 @@ struct CreateAccountSheetView: View {
             .foregroundColor(.white)
             .cornerRadius(5)
             .padding([.trailing,])
+            .onDisappear{
+                icloudmailSave = ""
+                passwordSave = ""
+                noteSave = "Notes"
+                cookiesSave = "n"
+                appledevSave = ""
+                countrySave = ""
+                isEmailInvalid = false
+                alreadyClicked = false
+                isSubmitEnabled = false
+            }
+
 
         }
         .padding(.top,-9.5)
@@ -312,6 +336,8 @@ struct CreateAccountSheetView: View {
         
         
     }
+    
+    
        
 }
 

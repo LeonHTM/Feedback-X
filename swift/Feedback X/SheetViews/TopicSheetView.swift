@@ -382,7 +382,7 @@ struct TopicSheetView: View {
                 .cornerRadius(5)
                 .padding([.trailing,])
                 .shadow(radius:1)
-                
+            
                 
                 
                 .alert("Topic not available", isPresented: $showAlert) {

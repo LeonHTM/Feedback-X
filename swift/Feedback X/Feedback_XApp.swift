@@ -105,6 +105,15 @@ struct Feedback_XApp: App {
                 }
         }
         .commands {
+            CommandGroup(replacing: .appTermination) {
+                    Button("Quit Feedback X") {
+                        reset()
+                        NSApplication.shared.windows.forEach { $0.close() }
+                        NSApplication.shared.terminate(nil)                     }
+                    .keyboardShortcut("q", modifiers: [.command])
+                }
+           
+            
             CommandGroup(replacing: CommandGroupPlacement.appInfo) {
                 Button(action: {
                     selectedPageSideBar = "About"
