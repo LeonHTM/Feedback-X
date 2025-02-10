@@ -4,16 +4,17 @@
 //
 //  Created by LeonHTM on 11.12.2024.
 //  Copyright © 2024 LeonHTM. All rights reserved.
+//
 
 import SwiftUI
 
+/// A view for creating feedback.
 struct CreateFeedbackView: View {
     @State private var isRunning = false
     @State private var showAlert = false
     @AppStorage("CreateshowSheet2") var showSheet: Bool = false
     @AppStorage("topicShowSheet2") var topicShowSheet: Bool = false
     @State private var topicSave: String = "iOS & iPadOS"
-    
     
     @State private var showAccountSheet = false
     @State private var feedbackTitle: String = ""
@@ -23,7 +24,7 @@ struct CreateFeedbackView: View {
     @AppStorage("AppLaunchCounter") var appLaunchCounter: Int = 1
     @EnvironmentObject var accountLoader: AccountLoader
     @EnvironmentObject var feedbackPython: FeedbackPython
-    @EnvironmentObject var fileLoader : FileLoader
+    @EnvironmentObject var fileLoader: FileLoader
     let accountURL = URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json")
 
     var body: some View {
@@ -41,9 +42,9 @@ struct CreateFeedbackView: View {
 
             Button(action: {
                 accountLoader.loadAccounts(from: accountURL)
-                if accountLoader.accounts.count >= 2{
+                if accountLoader.accounts.count >= 2 {
                     topicShowSheet = true
-                }else{
+                } else {
                     showAccountAlert = true
                 }
             }) {
@@ -56,26 +57,25 @@ struct CreateFeedbackView: View {
                 Button("OK", role: .cancel) {}
             } message: {
                 if accountLoader.accounts.count == 0 {
-                    Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) accounts.")}else{
-                        
-                        Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) account.")
-                    }
+                    Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) accounts.")
+                } else {
+                    Text("You need to have at least 2 accounts to create feedback. You currently only have \(accountLoader.accounts.count) account.")
+                }
             }
             .sheet(isPresented: $topicShowSheet, onDismiss: { feedbackPython.stop() }) {
-                TopicSheetView(showSheet : $topicShowSheet, showSheet2: $showSheet, topicSave: $topicSave)
+                TopicSheetView(showSheet: $topicShowSheet, showSheet2: $showSheet, topicSave: $topicSave)
                     .environmentObject(accountLoader)
                     .environmentObject(feedbackPython)
                     .environmentObject(fileLoader)
             }
-        
             .sheet(isPresented: $showSheet, onDismiss: { feedbackPython.stop() }) {
-                CreateFeedbackSheetView(showSheet : $showSheet, topicSave: $topicSave)
+                CreateFeedbackSheetView(showSheet: $showSheet, topicSave: $topicSave)
                     .environmentObject(accountLoader)
                     .environmentObject(feedbackPython)
                     .environmentObject(fileLoader)
             }
         }
-        .frame(minWidth: 500,maxWidth:700)
+        .frame(minWidth: 500, maxWidth: 700)
         .frame(maxHeight: .infinity)
         .alert("Legal Notice", isPresented: $showAlert) {
             Button("Quit Feedback X", role: .cancel) {
@@ -94,5 +94,3 @@ struct CreateFeedbackView: View {
 #Preview {
     CreateFeedbackView()
 }
-
-

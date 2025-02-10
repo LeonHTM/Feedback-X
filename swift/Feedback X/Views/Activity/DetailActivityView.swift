@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// A view that displays the details of a selected feedback activity.
 struct DetailActivityView: View {
     let fileToShow: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)
     @State private var hoveredFile: String? = nil
@@ -17,9 +18,7 @@ struct DetailActivityView: View {
     @State private var noFileAlert: Bool = false
     @Binding var index: Int?
     
-    
     public let onDeleteActivity: () -> Void
-    
 
     // Computed properties for derived lists
     private var filesList: [String] {
@@ -48,7 +47,9 @@ struct DetailActivityView: View {
                             Text("Iterations:")
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
-                            Text(fileToShow.iteration).textSelection(.enabled).padding(-5)
+                            Text(fileToShow.iteration)
+                                .textSelection(.enabled)
+                                .padding(-5)
                         }
                         HStack(alignment: .top) {
                             Text("FB on all Accounts:")
@@ -77,7 +78,8 @@ struct DetailActivityView: View {
                     VStack(alignment: .leading) {
                         Text("What area are you seeing an issue with?")
                             .fontWeight(.bold)
-                        Text(fileToShow.path.prefix(while: { $0 != "," })) .textSelection(.enabled)
+                        Text(fileToShow.path.prefix(while: { $0 != "," }))
+                            .textSelection(.enabled)
                     }
 
                     VStack(alignment: .leading) {
@@ -91,7 +93,8 @@ struct DetailActivityView: View {
                             feedbackType == "4" ? "Battery Life" :
                             feedbackType == "5" ? "Suggestion" :
                             "Unknown"
-                        ) .textSelection(.enabled)
+                        )
+                        .textSelection(.enabled)
                     }
                     
                     Divider()
@@ -102,14 +105,16 @@ struct DetailActivityView: View {
                     VStack(alignment: .leading) {
                         Text("What is the path to your Issue?")
                             .fontWeight(.bold)
-                        Text(fileToShow.path.split(separator: ",").dropFirst(2).joined(separator: ",")) .textSelection(.enabled)
+                        Text(fileToShow.path.split(separator: ",").dropFirst(2).joined(separator: ","))
+                            .textSelection(.enabled)
                     }
 
                     VStack(alignment: .leading) {
                         Text("What time was it when this last occurred?")
                             .fontWeight(.bold)
                         HStack {
-                            (Text(fileToShow.date) + Text(" ") + Text(fileToShow.time)).textSelection(.enabled)
+                            (Text(fileToShow.date) + Text(" ") + Text(fileToShow.time))
+                                .textSelection(.enabled)
                         }
                     }
 
@@ -121,7 +126,8 @@ struct DetailActivityView: View {
                     VStack(alignment: .leading) {
                         Text("Please describe your Issue and what one can take to reproduce it:")
                             .fontWeight(.bold)
-                        Text(fileToShow.content) .textSelection(.enabled)
+                        Text(fileToShow.content)
+                            .textSelection(.enabled)
                     }
 
                     Divider()
@@ -132,61 +138,52 @@ struct DetailActivityView: View {
                     VStack(alignment: .leading) {
                         if fileToShow.files != "No Uploads" {
                             ForEach(filesList, id: \.self) { fileName in
-                                HStack{
-                                    let absoluteFilePath = (fileName)
+                                HStack {
+                                    let absoluteFilePath = fileName
                                     if FileManager.default.fileExists(atPath: absoluteFilePath) {
                                         let nsImage = NSWorkspace.shared.icon(forFile: absoluteFilePath)
                                         Image(nsImage: nsImage)
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 16, height: 16)
-                                    }else{
-                                        
+                                    } else {
                                         Image("custom.document.2.badge.questionmark")
-                                            
                                     }
-                                    Button(action:{
-                                        
+                                    Button(action: {
                                         let fileURL = URL(fileURLWithPath: absoluteFilePath)
                                         if FileManager.default.fileExists(atPath: absoluteFilePath) {
-                                            NSWorkspace.shared.activateFileViewerSelecting([fileURL])}
-                                        else{
-                                            
+                                            NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+                                        } else {
                                             noFileAlert = true
                                         }
-                                        
-                                    })
-                                    {
+                                    }) {
                                         Text(hoveredFile == fileName ? fileName : fileName.split(separator: "/").last.map(String.init) ?? fileName)
                                             .background(hoveredFile == fileName ? Color.accentColor.opacity(0.2) : Color.clear)
                                             .onHover { hovering in
                                                 hoveredFile = hovering ? fileName : nil
                                             }
-                                    }.buttonStyle(PlainButtonStyle())
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
                                     Button(action: {
-                                        
                                         let fileURL = URL(fileURLWithPath: absoluteFilePath)
                                         if FileManager.default.fileExists(atPath: absoluteFilePath) {
-                                            NSWorkspace.shared.activateFileViewerSelecting([fileURL])}
-                                        else{
-                                            
+                                            NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+                                        } else {
                                             noFileAlert = true
                                         }
-                                        
-                                        
                                     }) {
                                         Image(systemName: "magnifyingglass")
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                     .foregroundStyle(Color.secondary)
-                                }.padding(.bottom,-5)
+                                }
+                                .padding(.bottom, -5)
                             }
-
-
                         } else {
                             Text("No files were uploaded in this feedback")
                         }
-                    }.alert(isPresented: $noFileAlert) {
+                    }
+                    .alert(isPresented: $noFileAlert) {
                         Alert(
                             title: Text("This file doesn't exist"),
                             message: Text("The file must have been deleted or moved since the feedback was created."),
@@ -194,46 +191,31 @@ struct DetailActivityView: View {
                         )
                     }
                     Divider()
-                    HStack{
+                    HStack {
                         Spacer()
-                        Button(action:{
+                        Button(action: {
                             showDeleteAlert = true
-                        }){
-                            
-                            HStack{
+                        }) {
+                            HStack {
                                 Text("Delete Feedback")
                                 Image(systemName: "trash")
                             }
                             .foregroundStyle(Color.red)
                         }
                         .padding(20)
-                        
                         Spacer()
                     }
                     .alert(isPresented: $showDeleteAlert) {
-                                            Alert(
-                                                title: Text("Delete \(fileToShow.title)?"),
-                                                message: Text("Are you sure you want to delete FB\(fileToShow.name.prefix(fileToShow.name.count - 4))?"),
-                                                primaryButton: .destructive(Text("Confirm")) {
-                                                    
-                                                    fileLoader.deleteFile(named:fileToShow.name)
-                                                    onDeleteActivity()
-                                                    
-                                                    
-                                                    
-
-                                                    
-                                                },
-                                                secondaryButton: .cancel()
-                                            )
-                                        }
-                    
-
-
-                    
-                    
-                    
-                    
+                        Alert(
+                            title: Text("Delete \(fileToShow.title)?"),
+                            message: Text("Are you sure you want to delete FB\(fileToShow.name.prefix(fileToShow.name.count - 4))?"),
+                            primaryButton: .destructive(Text("Confirm")) {
+                                fileLoader.deleteFile(named: fileToShow.name)
+                                onDeleteActivity()
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
                 }
                 .padding()
                 .padding(.bottom, 10)

@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// A view that displays the recent activities.
 struct RecentActivityView: View {
     @Binding var selectedFile: (name: String, title: String, content: String, date: String, time: String, iteration: String, path: String, fdb: String, files: String)?
     @Binding var selectedIndex: Int?
@@ -29,7 +30,6 @@ struct RecentActivityView: View {
                             Button(action: {
                                 selectedFile = file
                                 selectedIndex = index
-                                
                             }) {
                                 VStack(alignment: .leading, spacing: 8) {
                                     HStack {
@@ -60,35 +60,24 @@ struct RecentActivityView: View {
                                     title: Text("Delete \(selectedFile?.title ?? "Unknown")?"),
                                     message: Text("Are you sure you want to delete feedback FB\(selectedFile?.name.dropLast(4) ?? "Unknown")?"),
                                     primaryButton: .destructive(Text("Confirm")) {
-                                        
-                                        fileLoader.deleteFile(named:selectedFile?.name ?? "yo")
-                                        if index + 1 < fileLoader.files.count{
-                                            
-                                            
-                                            selectedFile = fileLoader.files[index+1]
-                                        }else{
-                                            
+                                        fileLoader.deleteFile(named: selectedFile?.name ?? "Unknown")
+                                        if index + 1 < fileLoader.files.count {
+                                            selectedFile = fileLoader.files[index + 1]
+                                        } else {
                                             selectedFile = nil
                                         }
-
-                                       
-                                        
                                     },
                                     secondaryButton: .cancel()
                                 )
                             }
                             .contextMenu {
-                                
-                                
                                 Button(role: .destructive) {
-                                    
                                     showDeleteAlert = true
                                     selectedFile = file
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
-                            
 
                             if index < fileLoader.files.count - 1 {
                                 Divider()
@@ -101,16 +90,11 @@ struct RecentActivityView: View {
         }
         .onAppear {
             fileLoader.loadFolderFiles()
-            if selectedIndex ?? -1 >= 0{
+            if selectedIndex ?? -1 >= 0 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                     selectedFile = fileLoader.files[selectedIndex ?? 0]
-                    
                 }
             }
-            
-            
-            
         }
     }
 }
-
