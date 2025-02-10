@@ -127,17 +127,58 @@ struct CreateAccountSheetView: View {
                 Text("Details").font(.title).fontWeight(.bold)
                 
                 // Apple Developer selection
-                Picker("Apple Developer", selection: $appledevSave) {
-                    Text("Set up").tag("y")
-                    Text("Not set up").tag("n")
-                }.labelsHidden()
+                HStack(spacing:0){
+                                    if alreadyClicked == true && appledevSave.isEmpty{
+                                        Image(systemName:"arrow.right.circle.fill")
+                                            .foregroundStyle(Color.red)
+                                            .padding(.horizontal,-17)
+                                            .offset(y:5)
+                                    }
+                                    
+                                    Text("Does the Account have Apple Developer?")
+                                        .padding(.bottom,-10)
+                                        .offset(x:3)
+                                        
+                                }
+                ZStack(alignment:.leading){
+                                  
+                                  Picker("", selection: $appledevSave) {
+                                      Text("Set up").tag("y")
+                                      Text("Not set up").tag("n")
+                                  }.labelsHidden()
+                                  if appledevSave == ""{
+                                      Text("Apple Developer").padding(.leading, 7)
+                                          .foregroundStyle(.primary.opacity(0.7))
+                                          .opacity(0.5)
+                                  }
+                              }
                 
                 // Country selection
-                Picker("Country", selection: $countrySave) {
-                    ForEach(PublicSaves.countriesAndTerritories, id: \ .self) { country in
-                        Text(country)
+                HStack(spacing:0){
+                    if alreadyClicked == true && countrySave.isEmpty{
+                        Image(systemName:"arrow.right.circle.fill")
+                            .foregroundStyle(Color.red)
+                            .padding(.horizontal,-17)
+                            .offset(y:5)
                     }
-                }.labelsHidden()
+                    
+                    Text("Please select the country of origin")
+                        .padding(.bottom,-10)
+                        .offset(x:3)
+                }
+                ZStack(alignment:.leading){
+                                    
+                                    Picker("", selection: $countrySave) {
+                                        ForEach(PublicSaves.countriesAndTerritories, id: \.self) { country in
+                                            Text(country)
+                                        }
+                                    }.labelsHidden()
+                                    if countrySave == ""{
+                                        Text("Country").padding(.leading, 7)
+                                            .foregroundStyle(.primary.opacity(0.5))
+                                            .opacity(0.5)
+                                    }
+                                }
                 
                 // Notes input
                 Text("Add note").padding(.bottom, -10)
@@ -150,23 +191,67 @@ struct CreateAccountSheetView: View {
         .alert("Error", isPresented: $showAlert) { Button("OK", role: .cancel) {} } message: { Text(errorMessage) }
         
         // Action buttons
-        HStack {
-            Button(action: { helpSelectedPage = "Add Accounts"; OpenHelpWindow.open() }) {
-                Image(systemName: "questionmark.circle").font(.system(size: 20))
+        Divider()
+        HStack{
+            Button(action: {
+                helpSelectedPage = "Add Accounts"
+                OpenHelpWindow.open()
+                
+                
+            }) {
+                ZStack{
+                    Image(systemName: "circle.fill")
+                        .font(.system(size:20))
+                        .foregroundStyle(colorScheme == .dark ? Color.gray.opacity(0.5) : Color.white)
+                        .shadow(radius: 1)
+                    Text("?")
+                        .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                        .font(.system(size:17))
+                    
+                }
             }
             .buttonStyle(PlainButtonStyle())
             .padding()
             Spacer()
-            Button("Close") { showSheet = false }.padding(5)
-            Button("Save", action: save)
-                .padding(.vertical, 6.3)
-                .padding(.horizontal, 10)
-                .background(Color.accentColor)
-                .foregroundColor(.white)
-                .cornerRadius(5)
+            Button(action: {
+                showSheet = false
+            }) {
+                Text("Close")
+                    .padding(5) // Add padding around the text
+            }
+            
+            
+            
+            
+            
+            Button(action: {
+                save()
+            }) {
+                Text("Save")
+                    .padding(.vertical,6.3)
+                    .padding(.horizontal,10) // Add padding around the text
+            }
+            //.disabled(!isSubmitEnabled)
+            .alert("Account already exists", isPresented: $showDuplicateAlert) {
+                
+                Button("Quit Add Account", role: .cancel) {
+                    showSheet = false
+                }
+                Button("OK", role: .cancel) {
+                    // This is where we handle the alert dismissing logic
+                    showDuplicateAlert = false
+                }
+            } message: {
+                Text("The account you tried to add already exists.")
+            }
+            .buttonStyle(PlainButtonStyle())
+            .background(Color.accentColor)
+            .foregroundColor(.white)
+            .cornerRadius(5)
+            .padding([.trailing,])
         }
-        .padding(.top, -9.5)
-        .frame(width: 1000)
+        .padding(.top,-9.5)
+        .frame(width:1000)
     }
 }
 
