@@ -1,39 +1,258 @@
 .
-├── myenv
-│   ├── bin
-│   ├── include
-│   │   └── python3.13
-│   └── lib
-│       └── python3.13
-├── python
-│   ├── accounts
-│   │   └── accounts.txt
-│   ├── code
-│   │   ├── files.py
-│   │   ├── logic.py
-│   │   ├── main.py
-│   │   ├── option_lists.py
-│   │   └── read.py
-│   ├── cookies
-│   ├── current_fdb
-│   │   └── content.txt
-│   └── saves
-│       └── example.txt
-├── swift
+├── Feedback X
 │   ├── Feedback X
 │   │   ├── Assets.xcassets
 │   │   │   ├── AccentColor.colorset
 │   │   │   │   └── Contents.json
 │   │   │   ├── AppIcon.appiconset
-│   │   │   │   └── Contents.json
-│   │   │   └── Contents.json
-│   │   ├── ContentView.swift
+│   │   │   │   ├── Contents.json
+│   │   │   │   ├── FeedbackX_Newhurensohn.png
+│   │   │   │   ├── FeedbackX_V2_128.png
+│   │   │   │   ├── FeedbackX_V2_16.png
+│   │   │   │   ├── FeedbackX_V2_256 1.png
+│   │   │   │   ├── FeedbackX_V2_256.png
+│   │   │   │   ├── FeedbackX_V2_32 1.png
+│   │   │   │   ├── FeedbackX_V2_32.png
+│   │   │   │   ├── FeedbackX_V2_512 1.png
+│   │   │   │   ├── FeedbackX_V2_512.png
+│   │   │   │   └── FeedbackX_V2_64.png
+│   │   │   ├── Contents.json
+│   │   │   ├── Custom_Symbols
+│   │   │   │   ├── Contents.json
+│   │   │   │   ├── cookies.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── cookies-2.png
+│   │   │   │   ├── custom.document.2.badge.questionmark.symbolset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── custom.document.2.badge.questionmark.svg
+│   │   │   │   ├── github.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── github.png
+│   │   │   │   └── ko-fi.imageset
+│   │   │   │       ├── Contents.json
+│   │   │   │       └── ko-fi.png
+│   │   │   ├── Device_Images
+│   │   │   │   ├── Contents.json
+│   │   │   │   ├── Lock_Screen_MacOS.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── Lock_Screen_MacOS.png
+│   │   │   │   ├── MacBookAir.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── IMG_3214-2.png
+│   │   │   │   ├── MacBookPro4Gen15.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── IMG_3217_u2net.png
+│   │   │   │   ├── MacBookPro4Gen16.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── IMG_3218_bria.png
+│   │   │   │   ├── MacBookPro5Gen14.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── IMG_3215-2.png
+│   │   │   │   ├── MacBookPro5Gen6.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── IMG_3216-2.png
+│   │   │   │   ├── Welcome_to_Mac.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── Welcome_to_Mac.png
+│   │   │   │   ├── iMac24.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── IMG_3219-2.png
+│   │   │   │   └── iMac27.imageset
+│   │   │   │       ├── Contents.json
+│   │   │   │       └── image_bria.png
+│   │   │   ├── FeedbackX_Icon_V1
+│   │   │   │   ├── Contents.json
+│   │   │   │   ├── FeedbackX_V1_1024.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX.png
+│   │   │   │   ├── FeedbackX_V1_128.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX copy 2.png
+│   │   │   │   ├── FeedbackX_V1_16.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX copy 5.png
+│   │   │   │   ├── FeedbackX_V1_256.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX copy 3.png
+│   │   │   │   ├── FeedbackX_V1_32.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX copy 6.png
+│   │   │   │   ├── FeedbackX_V1_512.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX copy.png
+│   │   │   │   └── FeedbackX_V1_64.imageset
+│   │   │   │       ├── Contents.json
+│   │   │   │       └── FeedbackX copy 4.png
+│   │   │   ├── FeedbackX_Icon_V2
+│   │   │   │   ├── Contents.json
+│   │   │   │   ├── FeedbackX_1024.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX_V2_1024.png
+│   │   │   │   ├── FeedbackX_128.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX_V2_128.png
+│   │   │   │   ├── FeedbackX_16.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX_V2_16.png
+│   │   │   │   ├── FeedbackX_256.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX_V2_256.png
+│   │   │   │   ├── FeedbackX_32.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX_V2_32.png
+│   │   │   │   ├── FeedbackX_512.imageset
+│   │   │   │   │   ├── Contents.json
+│   │   │   │   │   └── FeedbackX_V2_512.png
+│   │   │   │   └── FeedbackX_64.imageset
+│   │   │   │       ├── Contents.json
+│   │   │   │       └── FeedbackX_V2_64.png
+│   │   │   └── User_Guide
+│   │   │       ├── AddAccount
+│   │   │       │   ├── AddAccount1_Dark.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 20.37.50.png
+│   │   │       │   ├── AddAccount1_Light.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 20.38.12.png
+│   │   │       │   └── Contents.json
+│   │   │       ├── Contents.json
+│   │   │       ├── Cookies
+│   │   │       │   ├── Contents.json
+│   │   │       │   ├── Cookies1_Dark.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 19.55.47.png
+│   │   │       │   ├── Cookies1_Light.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 19.56.00.png
+│   │   │       │   ├── Cookies2_Dark.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 19.57.02.png
+│   │   │       │   ├── Cookies2_Light.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 19.56.46.png
+│   │   │       │   └── Cookies3.imageset
+│   │   │       │       ├── Contents.json
+│   │   │       │       └── Cookies3.png
+│   │   │       ├── CreateAccount
+│   │   │       │   ├── Contents.json
+│   │   │       │   ├── CreateAccount1.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── CreateFeedback.png
+│   │   │       │   ├── CreateAccount2_Dark.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── IMG_0082.jpg
+│   │   │       │   └── CreateAccount2_Light.imageset
+│   │   │       │       ├── Contents.json
+│   │   │       │       └── CreateAccount2.jpg
+│   │   │       ├── CreateFeedback
+│   │   │       │   ├── Contents.json
+│   │   │       │   ├── CreateFeedback1_Dark.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 19.59.03.png
+│   │   │       │   ├── CreateFeedback1_Light.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 19.59.13.png
+│   │   │       │   ├── CreateFeedback2_Dark.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 20.02.03.png
+│   │   │       │   ├── CreateFeedback2_Light.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 20.01.48.png
+│   │   │       │   ├── CreateFeedback3_Dark.imageset
+│   │   │       │   │   ├── Contents.json
+│   │   │       │   │   └── Screenshot 2025-01-25 at 21.22.44.jpg
+│   │   │       │   └── CreateFeedback3_Light.imageset
+│   │   │       │       ├── Contents.json
+│   │   │       │       └── Screenshot 2025-01-25 at 21.24.15.jpg
+│   │   │       ├── FeedbackFailed.imageset
+│   │   │       │   ├── Contents.json
+│   │   │       │   └── FeedbackFailed.png
+│   │   │       └── Icons
+│   │   │           ├── Contents.json
+│   │   │           ├── FeedbackAssistantIcon.imageset
+│   │   │           │   ├── Contents.json
+│   │   │           │   └── FeedbackAssistantLogo.png
+│   │   │           ├── SettingsIcon.imageset
+│   │   │           │   ├── Contents.json
+│   │   │           │   └── SettingsIcon.png
+│   │   │           ├── arrowright.imageset
+│   │   │           │   ├── Contents.json
+│   │   │           │   └── arrowright.png
+│   │   │           └── plus.imageset
+│   │   │               ├── Contents.json
+│   │   │               └── plus.png
 │   │   ├── Feedback_X.entitlements
 │   │   ├── Feedback_XApp.swift
-│   │   └── Preview Content
-│   │       └── Preview Assets.xcassets
-│   │           └── Contents.json
-│   └── Feedback X.xcodeproj
+│   │   ├── HelpViews
+│   │   │   ├── HelpAddAccountView.swift
+│   │   │   ├── HelpCreateAccountView.swift
+│   │   │   ├── HelpCreateFeedbackView.swift
+│   │   │   ├── HelpFeedbackFailedView.swift
+│   │   │   ├── HelpFeedbackSystemView.swift
+│   │   │   ├── HelpGetFeedbackPathView.swift
+│   │   │   ├── HelpGetStartedView.swift
+│   │   │   ├── HelpSetUpCookiesView.swift
+│   │   │   ├── HelpView.swift
+│   │   │   └── HelpWelcomeView.swift
+│   │   ├── Logic
+│   │   │   ├── AccountLoader.swift
+│   │   │   ├── ColorForWaitingTime.swift
+│   │   │   ├── CookiesCheck.swift
+│   │   │   ├── CookiesPython.swift
+│   │   │   ├── DeviceImage.swift
+│   │   │   ├── Extensions.swift
+│   │   │   ├── FeedbackPython.swift
+│   │   │   ├── FileLoader.swift
+│   │   │   ├── GetVersionBuild.swift
+│   │   │   ├── OnlineCheck.swift
+│   │   │   ├── OpenHelpWindow.swift
+│   │   │   ├── PublicSaves.swift
+│   │   │   ├── SecureInputView.swift
+│   │   │   ├── StringToFile.swift
+│   │   │   ├── runPythonScript.swift
+│   │   │   ├── setupAppDirectory.swift
+│   │   │   └── stringToList.swift
+│   │   ├── Preview Content
+│   │   │   └── Preview Assets.xcassets
+│   │   │       └── Contents.json
+│   │   ├── Ressources
+│   │   │   └── Python
+│   │   │       └── code
+│   │   │           ├── chill.py
+│   │   │           ├── cycles.py
+│   │   │           ├── error.py
+│   │   │           ├── files.py
+│   │   │           ├── main.py
+│   │   │           ├── main_cookies.py
+│   │   │           ├── option_lists.py
+│   │   │           ├── rewrite.py
+│   │   │           ├── selenium_feedback.py
+│   │   │           └── selenium_rewrite.py
+│   │   ├── SheetViews
+│   │   │   ├── CookiesSheetView.swift
+│   │   │   ├── CreateAccountSheetView.swift
+│   │   │   ├── CreateFeedbackSheetView.swift
+│   │   │   └── TopicSheetView.swift
+│   │   └── Views
+│   │       ├── AboutView.swift
+│   │       ├── Accounts
+│   │       │   ├── CombinedAccountsView.swift
+│   │       │   ├── CreateAccountView.swift
+│   │       │   ├── DetailAccountsView.swift
+│   │       │   └── RecentAccountsView.swift
+│   │       ├── Activity
+│   │       │   ├── CombinedActivityView.swift
+│   │       │   ├── CreateFeedbackView.swift
+│   │       │   ├── DetailActivityView.swift
+│   │       │   └── RecentActivityView.swift
+│   │       ├── CookiesView.swift
+│   │       ├── SettingsView.swift
+│   │       ├── SidebarView.swift
+│   │       └── TestView.swift
+│   ├── Feedback X.xcodeproj
+│   └── Feedback-X-Info.plist
+├── LICENSE
 ├── README.md
 └── tree.txt
 
+76 directories, 180 files
