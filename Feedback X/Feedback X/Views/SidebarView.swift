@@ -120,10 +120,6 @@ struct SidebarView: View {
                 CookiesView()
                     .environmentObject(accountLoader)
                     .environmentObject(cookiesPython)
-            case "Rewrite Cycle":
-                TestRewriteView()
-            case "Login Cycle":
-                TestLoginView()
             default:
                 CombinedView()
             }

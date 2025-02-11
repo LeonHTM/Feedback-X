@@ -42,7 +42,7 @@ struct CreateAccountSheetView: View {
     // Checks if all required fields are filled before allowing submission
     func submitTest() {
         if !icloudmailSave.isEmpty && !passwordSave.isEmpty && !appledevSave.isEmpty && !countrySave.isEmpty {
-            isSubmitEnabled = true
+            isSubmitEnabled = true && !isEmailInvalid
         }
     }
     
