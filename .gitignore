@@ -1,14 +1,3 @@
-#Python
-python/saves/*
-!python/saves/.gitkeep
-
-python/accounts/*
-!python/accounts/.gitkeep
-
-python/cookies/*
-!python/cookies/.gitkeep
-
-python/current_fdb/*
 
 .vscode/
 python/code/__pycache__
@@ -18,10 +7,11 @@ myenv/
 #git
 git/*
 
+Feedback X Failsave/*
 
 #Swift
-swift/Feedback X.xcodeproj/*
-!swift/Feedback X.xcodeproj/.gitkeep
+Feedback X/Feedback X.xcodeproj/*
+!Feedback X/Feedback X.xcodeproj/.gitkeep
 
 #Gimp
 FeedbackX_Gimp.xcf
