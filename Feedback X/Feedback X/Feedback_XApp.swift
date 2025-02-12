@@ -36,8 +36,8 @@ struct Feedback_XApp: App {
         URL(fileURLWithPath: accountsPath)
     }
     
-    @AppStorage("mainPath") var mainPath: String = (Bundle.main.path(forResource: "main", ofType: "py", inDirectory: "Python/code") ?? "Users")
-    @AppStorage("cookiesPath") var cookiesPath: String = (Bundle.main.path(forResource: "main_cookies", ofType: "py", inDirectory: "Python/code") ?? "Couldn't find File")
+    @AppStorage("mainPath") var mainPath: String = (Bundle.main.path(forResource: "main", ofType: "py", inDirectory: "Python/code") ?? "")
+    @AppStorage("cookiesPath") var cookiesPath: String = (Bundle.main.path(forResource: "main_cookies", ofType: "py", inDirectory: "Python/code") ?? "")
     
         
     
@@ -79,9 +79,9 @@ struct Feedback_XApp: App {
         
         
         // Load AppStorage into State Objects
-        _fileLoader = StateObject(wrappedValue: FileLoader(folderURL: URL(fileURLWithPath: UserDefaults.standard.string(forKey: "savesPath") ?? "/Users/")))
-        _feedbackPython = StateObject(wrappedValue: FeedbackPython(scriptPath:Bundle.main.path(forResource: "main", ofType: "py", inDirectory: "Python/code") ?? "Users"))
-        _cookiesPython = StateObject(wrappedValue: CookiesPython(scriptPath:Bundle.main.path(forResource: "main_cookies", ofType: "py", inDirectory: "Python/code") ?? "Couldn't find File"))
+        _fileLoader = StateObject(wrappedValue: FileLoader(folderURL: URL(fileURLWithPath: UserDefaults.standard.string(forKey: "savesPath") ?? "")))
+        _feedbackPython = StateObject(wrappedValue: FeedbackPython(scriptPath:Bundle.main.path(forResource: "main", ofType: "py", inDirectory: "Python/code") ?? ""))
+        _cookiesPython = StateObject(wrappedValue: CookiesPython(scriptPath:Bundle.main.path(forResource: "main_cookies", ofType: "py", inDirectory: "Python/code") ?? ""))
         
         appLaunchCounter += 1
         print("App has launched \(appLaunchCounter) times")

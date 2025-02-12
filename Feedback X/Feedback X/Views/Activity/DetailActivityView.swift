@@ -22,11 +22,11 @@ struct DetailActivityView: View {
 
     // Computed properties for derived lists
     private var filesList: [String] {
-        stringToList(inputString: fileToShow.files)
+        StringLogic.stringToList(inputString: fileToShow.files)
     }
 
     private var fdbList: [String] {
-        stringToList(inputString: fileToShow.fdb)
+        StringLogic.stringToList(inputString: fileToShow.fdb)
     }
 
     var body: some View {

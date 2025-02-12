@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/leon/Desktop/Project FeedbackX/Feedback-X/myenv/bin/python3.13" "$0" "$@"
-' '''
+#!/Users/leon/Desktop/Feedbackenv/bin/python3.13
 # -*- coding: utf-8 -*-
 import re
 import sys

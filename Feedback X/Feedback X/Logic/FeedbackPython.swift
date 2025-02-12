@@ -10,7 +10,7 @@ import Foundation
 
 class FeedbackPython: ObservableObject {
     let scriptPath: String
-    let pythonPath: String = "/Users/leon/Desktop/Feedback-X/feedbackenv/bin/python3"
+    let pythonPath: String = Bundle.main.path(forResource: "python3", ofType: nil, inDirectory: "Feedbackenv/bin") ?? ""
     
     // Published properties for observing changes
     @Published var isRunning: Bool = false

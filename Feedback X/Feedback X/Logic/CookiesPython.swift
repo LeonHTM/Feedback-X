@@ -27,7 +27,7 @@ class CookiesPython: ObservableObject {
     
     
     // Initializer to set the script and Python paths
-    init(scriptPath: String, pythonPath: String = Bundle.main.path(forResource: "python3", ofType: nil, inDirectory: "Feedbackenv/bin") ?? "fei") {
+    init(scriptPath: String, pythonPath: String = Bundle.main.path(forResource: "python3", ofType: nil, inDirectory: "Feedbackenv/bin") ?? "") {
         self.scriptPath = scriptPath
         self.pythonPath = pythonPath
     }

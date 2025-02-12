@@ -715,7 +715,7 @@ struct CreateFeedbackSheetView: View {
                         
                         if isSubmitEnabled{
                             do {
-                                try StringToFile.writeToFile(input: feedbackDescription, filePath: contentURL)
+                                try StringLogic.writeToFile(input: feedbackDescription, filePath: contentURL)
                             } catch {
                                 print("Failed to write file: \(error)")
                             }

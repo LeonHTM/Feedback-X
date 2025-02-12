@@ -48,10 +48,9 @@ struct RecentAccountsView: View {
                                 Button(action: {
                                     showSheet.toggle() // Toggle the correct state
                                 }) {
-                                    Text(isRunning ? "Adding New Account" : "Add Account")
+                                    Text("Add Account")
                                         .padding(1)
                                 }
-                                .disabled(isRunning)
                                 .sheet(isPresented: $showSheet) {
                                     CreateAccountSheetView(showSheet: $showSheet)
                                         .environmentObject(accountLoader)
