@@ -842,7 +842,7 @@ struct CreateFeedbackSheetView: View {
 
 #Preview {
     @Previewable @StateObject var accountLoader = AccountLoader()
-    @Previewable @StateObject var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py")
+    @Previewable @StateObject var feedbackPython = FeedbackPython(scriptPath:"/Users/leon/Desktop/Feedback-X/python/code/main.py",pythonPath: "")
     @Previewable @StateObject var fileLoader = FileLoader(folderURL: URL(fileURLWithPath: "/Users/leon/Desktop/Feedback-X/python/saves"))
     
     @Previewable @State  var topic: String = "iOS & iPadOS"

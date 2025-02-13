@@ -10,7 +10,7 @@ import Foundation
 
 class FeedbackPython: ObservableObject {
     let scriptPath: String
-    let pythonPath: String = Bundle.main.path(forResource: "python3", ofType: nil, inDirectory: "Feedbackenv/bin") ?? ""
+    let pythonPath: String
     
     // Published properties for observing changes
     @Published var isRunning: Bool = false
@@ -20,8 +20,9 @@ class FeedbackPython: ObservableObject {
     // Shared variable to keep track of the running process
     private var process: Process?
 
-    init(scriptPath: String) {
+    init(scriptPath: String,pythonPath: String) {
         self.scriptPath = scriptPath
+        self.pythonPath = pythonPath
     }
 
     func preventSleep() {

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Sparkle
+import PythonKit
 
 @main
 struct Feedback_XApp: App {
@@ -31,13 +33,17 @@ struct Feedback_XApp: App {
     @AppStorage("aboutSelectedPage") var selectedPageAbout: String = "Privacy"
     
     // File paths for external resources
-    @AppStorage("accountsPath") var accountsPath: String = "/Users/leon/Desktop/Feedback-X/python/accounts/accounts.json"
+    @AppStorage("accountsPath") var accountsPath: String = ""
     var accountURL: URL {
         URL(fileURLWithPath: accountsPath)
     }
     
-    @AppStorage("mainPath") var mainPath: String = (Bundle.main.path(forResource: "main", ofType: "py", inDirectory: "Python/code") ?? "")
-    @AppStorage("cookiesPath") var cookiesPath: String = (Bundle.main.path(forResource: "main_cookies", ofType: "py", inDirectory: "Python/code") ?? "")
+    
+    
+    //@AppStorage("feedbackEnvPythonPath") var feedbackEnvPythonPath: String = ""
+  
+    //@AppStorage("mainPath") var mainPath: String = ""
+    //@AppStorage("cookiesPath") var cookiesPath: String = ""
     
         
     
@@ -52,6 +58,7 @@ struct Feedback_XApp: App {
     @StateObject private var fileLoader: FileLoader
     
     var fullDelete: Bool = true
+    private let updaterController: SPUStandardUpdaterController
     
     // Function to reset various UI states
     func reset() {
@@ -73,21 +80,23 @@ struct Feedback_XApp: App {
     
     // App initialization
     init() {
-        setupAppDirectories()
-             
-           
-        
-        
-        // Load AppStorage into State Objects
-        _fileLoader = StateObject(wrappedValue: FileLoader(folderURL: URL(fileURLWithPath: UserDefaults.standard.string(forKey: "savesPath") ?? "")))
-        _feedbackPython = StateObject(wrappedValue: FeedbackPython(scriptPath:Bundle.main.path(forResource: "main", ofType: "py", inDirectory: "Python/code") ?? ""))
-        _cookiesPython = StateObject(wrappedValue: CookiesPython(scriptPath:Bundle.main.path(forResource: "main_cookies", ofType: "py", inDirectory: "Python/code") ?? ""))
-        
-        appLaunchCounter += 1
-        print("App has launched \(appLaunchCounter) times")
-        
-        
-    }
+            setupAppDirectories()
+   
+            // Load AppStorage into State Objects
+            _fileLoader = StateObject(wrappedValue: FileLoader(folderURL: URL(fileURLWithPath: UserDefaults.standard.string(forKey: "savesPath") ?? "")))
+            _feedbackPython = StateObject(wrappedValue: FeedbackPython(scriptPath: UserDefaults.standard.string(forKey: "mainPath") ?? "", pythonPath: UserDefaults.standard.string(forKey: "feedbackEnvPythonPath") ?? ""))
+            _cookiesPython = StateObject(wrappedValue: CookiesPython(scriptPath: UserDefaults.standard.string(forKey: "cookiesPath") ?? "", pythonPath: UserDefaults.standard.string(forKey: "feedbackEnvPythonPath") ?? "" ))
+            
+            updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+            
+            
+            appLaunchCounter += 1
+            print("App has launched \(appLaunchCounter) times")
+            
+            
+            
+        }
+
 
 
     
@@ -134,8 +143,11 @@ struct Feedback_XApp: App {
                         NSApplication.shared.terminate(nil)                     }
                     .keyboardShortcut("q", modifiers: [.command])
                 }
-           
             
+            
+            
+
+            // Separate "About" section
             CommandGroup(replacing: CommandGroupPlacement.appInfo) {
                 Button(action: {
                     selectedPageSideBar = "About"
@@ -143,7 +155,11 @@ struct Feedback_XApp: App {
                 }) {
                     Text("About Feedback X")
                 }
+                Divider()
+                CheckForUpdatesView(updater: updaterController.updater)
+                Divider()
             }
+            
             CommandGroup(replacing: .newItem) {
                 Button("New Feedback") {
                     accountLoader.loadAccounts(from: accountURL)

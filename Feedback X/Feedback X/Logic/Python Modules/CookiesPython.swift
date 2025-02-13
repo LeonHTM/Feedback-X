@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 // ObservableObject class to manage running a Python script from Swift
 class CookiesPython: ObservableObject {
     // Path to the Python script to be run
@@ -27,7 +29,7 @@ class CookiesPython: ObservableObject {
     
     
     // Initializer to set the script and Python paths
-    init(scriptPath: String, pythonPath: String = Bundle.main.path(forResource: "python3", ofType: nil, inDirectory: "Feedbackenv/bin") ?? "") {
+    init(scriptPath: String, pythonPath: String) {
         self.scriptPath = scriptPath
         self.pythonPath = pythonPath
     }
@@ -94,6 +96,8 @@ class CookiesPython: ObservableObject {
             } catch {
                 //self.isRunning = false
                 print("Error running Python script: \(error.localizedDescription)")
+                print(self.scriptPath)
+                print(self.pythonPath)
                 completion(false, error.localizedDescription, error)
             }
         }
