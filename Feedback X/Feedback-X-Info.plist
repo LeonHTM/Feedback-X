@@ -2,15 +2,43 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SUEnableDownloaderService</key>
-	<true/>
-	<key>SUEnableInstallerLauncherService</key>
-	<true/>
-	<key>SUFeedURL</key>
-	<string> https://leonhtm.github.io/FeedbackXUpdate/appcast.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>dW3R8VPW3TynNEf+uSHpEPXUPG8ZE5BpiuFJ6EEszh4=</string>
-	<key>om.apple.security.cs.disable-library-validation</key>
-	<true/>
+    <!-- Sparkle Updater -->
+    <key>SUEnableDownloaderService</key>
+    <true/>
+    <key>SUEnableInstallerLauncherService</key>
+    <true/>
+    <key>SUFeedURL</key>
+    <string>https://leonhtm.github.io/FeedbackXUpdate/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>dW3R8VPW3TynNEf+uSHpEPXUPG8ZE5BpiuFJ6EEszh4=</string>
+
+    <!-- Sicherheitsausnahmen für Chrome und Chromedriver -->
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+
+    <!-- Erlaubt Lese-/Schreibzugriff auf den Chrome-Ordner -->
+    <key>com.apple.security.temporary-exception.files.absolute-path.read-write</key>
+    <array>
+        <string>/Users/leon/Downloads/chrome-mac-arm64/Google Chrome for Testing.app/</string>
+        <string>/Users/leon/Downloads/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/</string>
+    </array>
+
+    <!-- Erlaubt das Starten externer Prozesse (z. B. ChromeDriver) -->
+    <key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
+    <array>
+        <string>org.chromium.chromedriver</string>
+    </array>
+
+    <!-- Erlaubt Netzwerkzugriff für Selenium (wichtig für Web-Testing) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+
+    <!-- Erlaubt das Starten externer Prozesse -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+
+    <!-- Deaktiviert Library Validation (hast du bereits, aber falscher Key-Name) -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
 </dict>
 </plist>

@@ -45,8 +45,14 @@ def startup(headless: bool,cookies_file_path: str) -> None:
     Example:
         startup(headless = True, cookies_file_path = "/User/FeedbackX") will start the browser in headless mode.
     """
+    service = webdriver.ChromeService(executable_path="/Users/leon/Downloads/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing")
+    
+    
+    
     global driver
     chrome_options = Options()
+    chrome_options.add_argument("--no-sandbox")
+
 
     #print(user_data_dir)
     chrome_options.add_argument(f"user-data-dir={cookies_file_path}")
@@ -56,7 +62,7 @@ def startup(headless: bool,cookies_file_path: str) -> None:
         chrome_options.add_argument("--enable-javascript")
         chrome_options.add_argument("--disable-features=EnableAccessibilityObjectModel")
         chrome_options.add_argument("--remote-debugging-port=9222") 
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
     
 def login(account: str, password: str,path:str) -> None:

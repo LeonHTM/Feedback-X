@@ -122,7 +122,10 @@ class cycles():
             
                 
             
-
+    def test_cycle(self):
+         
+        startup(headless=True,cookies_file_path="test")
+    
 
     def login_cycle(self,start_value: int, iteration_value: int,chill_value: int,headless_value: bool,accounts_file_path:str,cookies_file_path:str) -> None:
         """
@@ -162,6 +165,8 @@ class cycles():
 
         if error1 == True or error2 == True:
              print("Failed " + str(account_list[0]))
+             
+        
         
     
 

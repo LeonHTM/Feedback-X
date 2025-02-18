@@ -9,6 +9,7 @@ import SwiftUI
 import Sparkle
 import PythonKit
 
+
 @main
 struct Feedback_XApp: App {
     // App launch counter stored in UserDefaults
@@ -179,6 +180,15 @@ struct Feedback_XApp: App {
                     }
                 }
                 .keyboardShortcut("a", modifiers: [.command])
+                Divider()
+                Button(action:{
+                    selectedPageSideBar = "Test"
+                }){
+                    Text("Open Testing Panel")
+                }
+                
+                
+                .keyboardShortcut("t", modifiers: [.command])
             }
         }
         Settings {
